@@ -1,10 +1,10 @@
-/* =============================================
-   RESET & BASE
-============================================= */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
     scroll-behavior: smooth;
 }
 
@@ -12,16 +12,22 @@ body {
     font-family: 'Lato', sans-serif;
     color: #333;
     background: #fff;
+    overflow-x: hidden;
 }
 
-img { display: block; max-width: 100%; }
+img {
+    display: block;
+    max-width: 100%;
+}
 
 h1, h2, h3 {
     font-family: 'Playfair Display', serif;
 }
+h2{
+    color: #c0392b;
+}
 
-/* Utilitaire réutilisable partout */
-#subsub_title  {
+.subsub_title {
     font-size: 11px;
     font-weight: 700;
     color: #c0392b;
@@ -31,14 +37,17 @@ h1, h2, h3 {
 }
 
 /* =============================================
-   HEADER
+   HEADER — Barre de navigation fixe en haut
 ============================================= */
 header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: #fff;
-    border-bottom: 1px solid #ede8e0;
+    /* Fond semi-transparent avec effet de flou (glassmorphism) */
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(237, 232, 224, 0.8);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -46,6 +55,7 @@ header {
     height: 64px;
 }
 
+/* Logo */
 .logo a {
     text-decoration: none;
     display: flex;
@@ -67,6 +77,7 @@ header {
     color: #c0392b;
 }
 
+/* Navigation desktop */
 nav ul {
     display: flex;
     align-items: center;
@@ -90,6 +101,7 @@ nav ul li a.active {
     color: #c0392b;
 }
 
+/* Dernier lien = bouton rouge (Contact) */
 nav ul li:last-child a {
     background: #c0392b;
     color: #fff;
@@ -100,14 +112,75 @@ nav ul li:last-child a:hover {
     color: #fff;
 }
 
+/* ----------------------------------------------------------
+   BOUTON HAMBURGER (mobile uniquement)
+---------------------------------------------------------- */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #333;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Animation : croix quand le menu est ouvert */
+.menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle.active span:nth-child(2) { opacity: 0; }
+.menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ----------------------------------------------------------
+   MENU MOBILE déroulant
+   Caché par défaut, s'ouvre avec la classe .open
+---------------------------------------------------------- */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #ede8e0;
+    z-index: 99;
+    padding: 16px 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.mobile-menu.open { display: block; }
+
+.mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+.mobile-menu ul li a {
+    display: block;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.mobile-menu ul li a:hover { background: #f5f0eb; color: #c0392b; }
+
 /* =============================================
-   HERO
+   HERO — Section plein écran avec image de fond
 ============================================= */
 #hero {
     position: relative;
     min-height: 100vh;
-    background: url(assets/image/eleve.png) no-repeat center center / cover;
-    
+    background: url(assets/image/cour_interieur.png) no-repeat center center / cover;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -117,51 +190,78 @@ nav ul li:last-child a:hover {
     padding: 0 20px;
 }
 
-
+/* Overlay sombre pour rendre le texte lisible sur la photo */
 #hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.45);
 }
 
+/* Tout le contenu du hero passe au-dessus de l'overlay */
 #hero > * { position: relative; z-index: 1; }
 
 #hero h1 {
-    font-size: 8rem;
+    font-size: clamp(2rem, 6vw, 4.5rem);
     margin-bottom: 20px;
-    letter-spacing: -10px;
+    line-height: 1.15;
+    max-width: 800px;
 }
+
+/* Le span colore le premier mot en rouge */
+#hero h1 span { color: #e85c4a; }
 
 #hero > p {
-    font-size: 1.2rem;
-    color: #e1e1e1;
-    margin-bottom: 36px;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 40px;
+    max-width: 560px;
 }
 
-#hero div {
+/* Conteneur des deux boutons */
+.hero-buttons {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 14px;
 }
 
-#hero a {
-    padding: 12px 28px;
+/* Bouton principal (rouge plein) */
+.btn-primary {
+    padding: 14px 32px;
     border-radius: 6px;
     background: #c0392b;
     color: #fff;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 15px;
-    width: fit-content;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.2s;
 }
 
-#hero a:hover { background: #a93226; }
+.btn-primary:hover {
+    background: #a93226;
+    transform: translateY(-2px);
+}
+
+/* Bouton secondaire (contour blanc transparent) */
+.btn-secondary {
+    padding: 14px 32px;
+    border-radius: 6px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+}
 
 /* =============================================
-   NEWS
+   NEWS — Grille d'actualités
 ============================================= */
 #news {
     max-width: 1100px;
@@ -187,6 +287,7 @@ nav ul li:last-child a:hover {
     padding-bottom: 2px;
 }
 
+/* 1 grande card + 2 petites sur la même ligne */
 .news-grid {
     display: grid;
     grid-template-columns: 1.6fr 1fr 1fr;
@@ -248,12 +349,7 @@ nav ul li:last-child a:hover {
 .news-sep { width: 1px; height: 12px; background: #ddd; }
 .news-date { font-size: 12px; color: #888; }
 
-.news-body h3 {
-    font-size: 16px;
-    margin: 0 0 10px;
-    line-height: 1.5;
-}
-
+.news-body h3 { font-size: 16px; margin: 0 0 10px; line-height: 1.5; }
 .news-card.featured .news-body h3 { font-size: 20px; }
 
 .news-body p {
@@ -275,13 +371,13 @@ nav ul li:last-child a:hover {
 .news-lien:hover { text-decoration: underline; }
 
 /* =============================================
-   À PROPOS
+   À PROPOS — Image gauche + texte droite
 ============================================= */
 #about {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 40px;
+    gap: 60px;
     max-width: 1100px;
     margin: 0 auto;
     padding: 80px 20px;
@@ -296,7 +392,7 @@ nav ul li:last-child a:hover {
 .devise { font-weight: 700; color: #1a1a1a; }
 
 /* =============================================
-   CHIFFRES CLÉS
+   CHIFFRES CLÉS — 4 stats en ligne
 ============================================= */
 .key_section {
     max-width: 1100px;
@@ -315,6 +411,7 @@ nav ul li:last-child a:hover {
 
 .feature { padding: 0 20px; position: relative; }
 
+/* Séparateur vertical entre les stats */
 .feature::after {
     content: '';
     position: absolute;
@@ -328,6 +425,7 @@ nav ul li:last-child a:hover {
 
 .feature:last-child::after { display: none; }
 
+/* Petite barre rouge au-dessus de chaque chiffre */
 .feature::before {
     content: '';
     display: block;
@@ -348,7 +446,7 @@ nav ul li:last-child a:hover {
 .feature p { font-size: 14px; color: #777; }
 
 /* =============================================
-   FORMATIONS
+   FORMATIONS — Grille de 4 cards
 ============================================= */
 #formation {
     max-width: 1100px;
@@ -365,6 +463,7 @@ nav ul li:last-child a:hover {
 .formation_content h2 { font-size: 1.8rem; margin-bottom: 14px; }
 .formation_content p { font-size: 15px; color: #666; line-height: 1.7; }
 
+/* auto-fit : s'adapte automatiquement à la largeur disponible */
 .formation-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -437,7 +536,7 @@ nav ul li:last-child a:hover {
 }
 
 /* =============================================
-   VIE SCOLAIRE
+   VIE SCOLAIRE — Alternance image/texte
 ============================================= */
 #vie_scolaire {
     max-width: 1100px;
@@ -445,17 +544,22 @@ nav ul li:last-child a:hover {
     padding: 80px 20px;
 }
 
-.vie_scolaire_content {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
+.vie_scolaire_content { text-align: center; margin-bottom: 60px; }
 .vie_scolaire_content h2 { font-size: 1.8rem; margin-bottom: 14px; }
-.vie_scolaire_content p { font-size: 15px; color: #666; line-height: 1.7; max-width: 640px; margin: 0 auto; }
+.vie_scolaire_content p {
+    font-size: 15px;
+    color:  #666;
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 auto;
+}
 
 .vie_scolaire_content2 > div {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    margin-bottom: 40px;
+    gap: 40px;
+    align-items: center;
 }
 
 .vie_scolaire_content2 > div img {
@@ -466,11 +570,12 @@ nav ul li:last-child a:hover {
     border-radius: 8px;
 }
 
+/* Les lignes paires s'inversent avec direction: rtl */
 .vie_scolaire_content2 > div:nth-child(even) { direction: rtl; }
 .vie_scolaire_content2 > div:nth-child(even) > * { direction: ltr; }
 
 .vs-text {
-    padding: 48px 40px;
+    padding: 24px 32px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -509,15 +614,11 @@ nav ul li:last-child a:hover {
     padding: 80px 20px;
 }
 
-.equipe_content {
-    text-align: center;
-    margin-bottom: 64px;
-}
-
+.equipe_content { text-align: center; margin-bottom: 64px; }
 .equipe_content h2 { font-size: 1.8rem; margin-bottom: 12px; }
 .equipe_content p { font-size: 15px; color: #666; line-height: 1.75; max-width: 500px; margin: 0 auto; }
 
-/* Fondateur */
+/* Grande carte fondateur */
 .main-member {
     display: grid;
     grid-template-columns: 360px 1fr;
@@ -560,11 +661,7 @@ nav ul li:last-child a:hover {
 .member-body h3 { font-size: 30px; color: #1a1a1a; margin-bottom: 14px; }
 .member-body > p { font-size: 14px; color: #555; line-height: 1.85; }
 
-.member-divider {
-    border: none;
-    border-top: 1px solid #ede8e0;
-    margin: 28px 0;
-}
+.member-divider { border: none; border-top: 1px solid #ede8e0; margin: 28px 0; }
 
 .engagement-title { font-size: 20px; color: #1a1a1a; margin-bottom: 8px; }
 
@@ -603,7 +700,7 @@ nav ul li:last-child a:hover {
     margin-top: 1px;
 }
 
-/* Direction */
+/* Grille de direction */
 .direction { margin-bottom: 80px; }
 
 .direction-title {
@@ -621,7 +718,7 @@ nav ul li:last-child a:hover {
     gap: 20px;
 }
 
-/* Cards direction & enseignants — même style */
+/* Cards direction ET enseignants partagent le même style */
 .dir-card, .ens-card {
     border: 1px solid #ede8e0;
     border-radius: 10px;
@@ -653,7 +750,7 @@ nav ul li:last-child a:hover {
 .dir-card:hover .dir-card-photo img,
 .ens-card:hover .ens-card-photo img { transform: scale(1.04); }
 
-/* Badge rôle sur photo */
+/* Badge de rôle positionné en absolu sur la photo */
 .role-badge {
     position: absolute;
     top: 12px;
@@ -667,7 +764,7 @@ nav ul li:last-child a:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Initiale quand pas de photo */
+/* Quand il n'y a pas de photo : afficher une initiale */
 .dir-card-photo--initiale {
     display: flex;
     align-items: center;
@@ -709,10 +806,7 @@ nav ul li:last-child a:hover {
 .dir-card-body p, .ens-card-body p { font-size: 13px; color: #777; line-height: 1.65; }
 
 /* Corps enseignant */
-.enseignant-section {
-    border-top: 1px solid #ede8e0;
-    padding-top: 60px;
-}
+.enseignant-section { border-top: 1px solid #ede8e0; padding-top: 60px; }
 
 .enseignant-header {
     display: flex;
@@ -732,7 +826,6 @@ nav ul li:last-child a:hover {
 }
 
 .btn-voir-plus {
-    display: inline-block;
     padding: 10px 24px;
     border: 1.5px solid #c0392b;
     color: #c0392b;
@@ -789,7 +882,7 @@ nav ul li:last-child a:hover {
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.07);
 }
 
-/* Guillemet décoratif */
+/* Grand guillemet décoratif en arrière-plan */
 .testi-card::before {
     content: '\201C';
     font-family: 'Playfair Display', serif;
@@ -799,9 +892,10 @@ nav ul li:last-child a:hover {
     position: absolute;
     top: 12px;
     left: 20px;
+    pointer-events: none;
 }
 
-/* Étoiles */
+/* Étoiles en haut à droite */
 .testi-card::after {
     content: '★★★★★';
     font-size: 13px;
@@ -810,6 +904,7 @@ nav ul li:last-child a:hover {
     top: 24px;
     right: 24px;
     letter-spacing: 2px;
+    pointer-events: none;
 }
 
 .testi-content p {
@@ -849,17 +944,11 @@ nav ul li:last-child a:hover {
 }
 
 /* =============================================
-   FAQ
+   FAQ — Accordion
 ============================================= */
-.FAQ {
-    background: #faf8f5;
-    padding: 80px 20px;
-}
+.FAQ { background: #faf8f5; padding: 80px 20px; }
 
-.FAQ-inner {
-    max-width: 780px;
-    margin: 0 auto;
-}
+.FAQ-inner { max-width: 780px; margin: 0 auto; }
 
 .FAQ h2 { font-size: 1.8rem; text-align: center; margin-bottom: 48px; }
 
@@ -902,6 +991,7 @@ nav ul li:last-child a:hover {
     transition: transform 0.3s, background 0.2s;
 }
 
+/* Le + devient une croix quand la question est ouverte */
 .faq-item.open .faq-icon {
     transform: rotate(45deg);
     background: #c0392b;
@@ -909,6 +999,7 @@ nav ul li:last-child a:hover {
     border-color: #c0392b;
 }
 
+/* La réponse est masquée (max-height: 0), animée à l'ouverture */
 .faq-answer {
     max-height: 0;
     overflow: hidden;
@@ -970,10 +1061,12 @@ nav ul li:last-child a:hover {
     margin-bottom: 3px;
 }
 
-.contact-item-text p:last-child {
+.contact-item-text p:last-child,
+.contact-item-text p:last-child a {
     font-size: 14px;
     color: #333;
     font-weight: 600;
+    text-decoration: none;
 }
 
 .contact-form-wrap {
@@ -1001,6 +1094,7 @@ nav ul li:last-child a:hover {
     margin-bottom: 7px;
 }
 
+/* Champs du formulaire : même style pour input, select et textarea */
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -1017,6 +1111,7 @@ nav ul li:last-child a:hover {
     appearance: none;
 }
 
+/* Bordure rouge au focus */
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
@@ -1026,11 +1121,7 @@ nav ul li:last-child a:hover {
 
 .form-group textarea { resize: vertical; min-height: 120px; }
 
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
 .btn-submit {
     width: 100%;
@@ -1126,31 +1217,83 @@ footer {
 .footer-bottom .credit span { color: #c0392b; font-weight: 600; }
 
 /* =============================================
-   RESPONSIVE
+   RESPONSIVE — Adaptations par taille d'écran
+
+   Breakpoints utilisés :
+   - 900px : tablette paysage
+   - 600px : mobile (téléphone)
 ============================================= */
+
+/* --- Tablette (max 900px) --- */
 @media (max-width: 900px) {
-    #about { flex-direction: column; }
+
+    header { padding: 0 20px; }
+
+    /* À propos : empile verticalement */
+    #about { flex-direction: column; gap: 32px; }
+    .content { max-width: 100%; }
+
+    /* News : 2 colonnes, la grande card prend toute la largeur */
     .news-grid { grid-template-columns: 1fr 1fr; }
     .news-card.featured { grid-column: span 2; }
+
+    /* Fondateur : empile verticalement */
     .main-member { grid-template-columns: 1fr; gap: 32px; }
     .member-photo-wrap { aspect-ratio: 4 / 3; }
+
+    /* Direction et enseignants : 2 colonnes */
     .direction-grid, .enseignant-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Témoignages : 1 colonne */
     .testimonials_cards { grid-template-columns: 1fr; }
+
+    /* Contact : empile verticalement */
     .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+
+    /* Footer : 2 colonnes */
     .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-    .vie_scolaire_content2 > div { grid-template-columns: 1fr; direction: ltr !important; }
-    .vs-text { padding: 32px 24px; }
+
+    /* Vie scolaire : image au-dessus du texte */
+    .vie_scolaire_content2 > div {
+        grid-template-columns: 1fr;
+        direction: ltr !important;
+        gap: 0;
+    }
+    .vs-text { padding: 28px 0; }
 }
 
+/* --- Mobile (max 600px) --- */
 @media (max-width: 600px) {
-    #hero h1 { font-size: 2rem; }
+
+    /* Hero : titre plus petit, boutons empilés */
+    #hero h1 { font-size: 3rem; letter-spacing: 0; }
+    .hero-buttons { flex-direction: column; align-items: center; width: 100%; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+
+    /* Navigation desktop cachée, hamburger visible */
     nav { display: none; }
+    .menu-toggle { display: flex; }
+
+    /* News : 1 colonne */
     .news-grid { grid-template-columns: 1fr; }
     .news-card.featured { grid-column: span 1; }
-    .key-features { grid-template-columns: 1fr 1fr; gap: 32px 0; padding: 32px 20px; }
+
+    /* Chiffres clés : 1 colonnes */
+    .key-features { grid-template-columns: 1fr; gap: 32px 0; padding: 32px 20px; }
     .feature::after { display: none; }
-    .formation-cards { grid-template-columns: 1fr 1fr; }
+
+    /* Formations : 2 colonnes */
+    .formation-cards { grid-template-columns: 1fr; }
+
+    /* Direction et enseignants : 1 colonne */
     .direction-grid, .enseignant-grid { grid-template-columns: 1fr; }
+
+    /* Formulaire contact : champs empilés */
     .form-row { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr; }
+
+    /* Footer : 1 colonne */
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+
+    /* Chiffres clés : padding réduit */
+    .key_section { padding: 0 16px 60px; }
 }

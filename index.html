@@ -1,26 +1,108 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GSCOM</title>
+
+    
+    <title>G.SCO.M — Groupe Scolaire de Mont-Ngafula | Kinshasa, RDC</title>
+    <meta name="description" content="Le Groupe Scolaire de Mont-Ngafula forme l'élite de demain depuis 1986. École maternelle, primaire et humanités à Kinshasa, République Démocratique du Congo.">
+    <meta name="keywords" content="école Kinshasa, GSCOM, Groupe Scolaire Mont-Ngafula, école primaire Kinshasa, humanités RDC, inscription scolaire Kinshasa">
+    <meta name="author" content="JorkaDev">
+    <meta name="robots" content="index, follow">
+
+    <!-- ============================================================
+         OPEN GRAPH (Facebook, WhatsApp, LinkedIn)
+         Ce que WhatsApp ou Facebook affiche quand on partage le lien
+    ============================================================ -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gscom-montngafula.com/">
+    <meta property="og:title" content="G.SCO.M — Groupe Scolaire de Mont-Ngafula">
+    <meta property="og:description" content="Une école de confiance depuis 1986. Maternelle, primaire et humanités à Mont-Ngafula, Kinshasa.">
+    <meta property="og:image" content="assets/image/og-image.jpg">
+    <meta property="og:locale" content="fr_CD">
+    <meta property="og:site_name" content="G.SCO.M">
+
+    <!-- ============================================================
+         TWITTER CARD
+         Ce que Twitter affiche quand on partage le lien
+    ============================================================ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="G.SCO.M — Groupe Scolaire de Mont-Ngafula">
+    <meta name="twitter:description" content="Une école de confiance depuis 1986 à Kinshasa, RDC.">
+    <meta name="twitter:image" content="assets/image/og-image.jpg">
+
+    <!-- ============================================================
+         COULEUR DU NAVIGATEUR MOBILE
+         Colorie la barre de navigation sur Android Chrome
+    ============================================================ -->
+    <meta name="theme-color" content="#c0392b">
+
+    <!-- ============================================================
+         FAVICON (icône dans l'onglet du navigateur)
+         Place ton logo en .ico ou .png dans assets/image/
+    ============================================================ -->
+    <link rel="icon" type="image/png" href="assets/image/LOGO_GSCOM.png">
+    <link rel="apple-touch-icon" href="assets/image/LOGO_GSCOM.png">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- ============================================================
+         DONNÉES STRUCTURÉES (Schema.org)
+         Aide Google à comprendre que c'est un établissement scolaire.
+         Peut afficher des infos enrichies dans les résultats de recherche.
+    ============================================================ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "School",
+        "name": "Groupe Scolaire de Mont-Ngafula",
+        "alternateName": "G.SCO.M",
+        "url": "https://gscom-montngafula.com",
+        "logo": "https://gscom-montngafula.com/assets/image/LOGO_GSCOM.png",
+        "image": "https://gscom-montngafula.com/assets/image/og-image.jpg",
+        "description": "Établissement d'enseignement général de la maternelle aux humanités, fondé en 1986 à Mont-Ngafula, Kinshasa.",
+        "foundingDate": "1986",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Mont-Ngafula",
+            "addressRegion": "Kinshasa",
+            "addressCountry": "CD"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+243-XX-XXX-XXXX",
+            "email": "gscom.montngafula@gmail.com",
+            "contactType": "Secrétariat"
+        },
+        "openingHours": "Mo,Tu,We,Th,Fr,Sa 07:30-14:00",
+        "numberOfStudents": 578
+    }
+    </script>
 </head>
+
 <body>
 
-    <!-- ========== HEADER ========== -->
+    <!-- ============================================================
+         HEADER — Barre de navigation sticky (reste en haut au scroll)
+    ============================================================ -->
     <header>
+
         <div class="logo">
-            <a href="#">
+            <a href="#hero" aria-label="Retour à l'accueil G.SCO.M">
                 <div class="logo_content">
-                    <img src="assets/image/LOGO_GSCOM.png" alt="GSCOM Logo">
+                    <img src="assets/image/LOGO_GSCOM.png" alt="Logo G.SCO.M">
                     <p>G.SCO.M</p>
                 </div>
             </a>
         </div>
-        <nav>
+
+        <!-- Navigation principale (desktop) -->
+        <nav aria-label="Navigation principale">
             <ul>
                 <li><a href="#hero">Accueil</a></li>
                 <li><a href="#news">Actualités</a></li>
@@ -30,89 +112,117 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
+
+        <!-- Bouton hamburger visible uniquement sur mobile -->
+        <button class="menu-toggle" aria-label="Ouvrir le menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
     </header>
+
+    <!-- Menu mobile déroulant (caché par défaut, visible après clic sur hamburger) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#hero" onclick="toggleMenu()">Accueil</a></li>
+            <li><a href="#news" onclick="toggleMenu()">Actualités</a></li>
+            <li><a href="#about" onclick="toggleMenu()">À propos</a></li>
+            <li><a href="#formation" onclick="toggleMenu()">Formation</a></li>
+            <li><a href="#vie_scolaire" onclick="toggleMenu()">Vie scolaire</a></li>
+            <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+        </ul>
+    </div>
 
     <main>
 
-        <!-- ========== HERO ========== -->
-        <div id="hero">
-            <h1><span>Groupe Scolaire</span><br> de Mont-Ngafula</h1>
+        <!-- ==== HERO — Section ==== -->
+        <section id="hero" aria-label="Accueil">
+            <h1><span>Groupe Scolaire</span><br>de Mont-Ngafula</h1>
             <p>Former l'élite de demain dans un cadre rigoureux et épanouissant — depuis 1986.</p>
-            <div>
-                <a href="#formation">Inscriptions ouvertes pour l'année scolaire 2025–2026</a>
-                <a href="#contact">En savoir plus sur nous</a>
+            <div class="hero-buttons">
+                <a href="#formation" class="btn-primary">Inscriptions 2025 – 2026</a>
+                <a href="#about" class="btn-secondary">En savoir plus</a>
             </div>
-        </div>
+        </section>
 
-        <!-- ========== NEWS ========== -->
-        <div id="news">
+        <!-- ============================================================
+             NEWS — Dernières actualités de l'école
+        ============================================================ -->
+        <section id="news" aria-label="Actualités">
             <div class="news-top">
                 <div class="news-left">
-                    <p id="subsub_title">Actualités</p>
+                    <p class="subsub_title">Actualités</p>
                     <h2>Dernières nouvelles</h2>
                 </div>
-                <a href="actualites.html" class="news-voir-tout">Toutes les actualités <span>→</span></a>
+                <a href="actualites.html" class="news-voir-tout">Toutes les actualités <span aria-hidden="true">→</span></a>
             </div>
+
             <div class="news-grid">
 
-                <div class="news-card featured">
+                <!-- Card principale (grande) -->
+                <article class="news-card featured">
                     <div class="news-img">
-                        <img src="assets/image/eleve.png" alt="40 ans GSCOM">
+                        <img src="assets/image/eleve.png" alt="Cérémonie du 40e anniversaire du G.SCO.M" loading="lazy">
                     </div>
                     <div class="news-body">
                         <div class="news-meta">
                             <span class="news-cat">Événement</span>
-                            <span class="news-sep"></span>
-                            <span class="news-date">12 mai 2025</span>
+                            <span class="news-sep" aria-hidden="true"></span>
+                            <time class="news-date" datetime="2025-05-12">12 mai 2025</time>
                         </div>
                         <h3>GSCOM célèbre 40 ans d'excellence éducative</h3>
                         <p>Le Groupe Scolaire de Mont-Ngafula a célébré son 40e anniversaire avec une cérémonie réunissant élèves, enseignants, anciens élèves et partenaires. Depuis 1986, GSCOM forme des leaders dans un environnement rigoureux et épanouissant.</p>
-                        <a href="actualites/40-ans.html" class="news-lien">Lire l'article <span>→</span></a>
+                        <a href="actualites/40-ans.html" class="news-lien">Lire l'article <span aria-hidden="true">→</span></a>
                     </div>
-                </div>
+                </article>
 
-                <div class="news-card">
+                <!-- Card secondaire 1 -->
+                <article class="news-card">
                     <div class="news-img">
-                        <img src="assets/image/eleve.png" alt="Bourses GSCOM">
+                        <img src="assets/image/eleve.png" alt="Programme de bourses GSCOM" loading="lazy">
                     </div>
                     <div class="news-body">
                         <div class="news-meta">
                             <span class="news-cat">Programme</span>
-                            <span class="news-sep"></span>
-                            <span class="news-date">3 avril 2025</span>
+                            <span class="news-sep" aria-hidden="true"></span>
+                            <time class="news-date" datetime="2025-04-03">3 avril 2025</time>
                         </div>
                         <h3>Nouveau programme de bourses pour les étudiants méritants</h3>
                         <p>GSCOM soutient les élèves à potentiel exceptionnel grâce à un programme de bourses inédit.</p>
-                        <a href="actualites/bourses.html" class="news-lien">Lire l'article <span>→</span></a>
+                        <a href="actualites/bourses.html" class="news-lien">Lire l'article <span aria-hidden="true">→</span></a>
                     </div>
-                </div>
+                </article>
 
-                <div class="news-card">
+                <!-- Card secondaire 2 -->
+                <article class="news-card">
                     <div class="news-img">
-                        <img src="assets/image/extérieur_ecole.png" alt="Rentrée 2025">
+                        <img src="assets/image/extérieur_ecole.png" alt="Rentrée scolaire 2025-2026 au G.SCO.M" loading="lazy">
                     </div>
                     <div class="news-body">
                         <div class="news-meta">
                             <span class="news-cat">Rentrée</span>
-                            <span class="news-sep"></span>
-                            <span class="news-date">20 août 2025</span>
+                            <span class="news-sep" aria-hidden="true"></span>
+                            <time class="news-date" datetime="2025-08-20">20 août 2025</time>
                         </div>
                         <h3>Rentrée scolaire 2025–2026 : informations pratiques</h3>
                         <p>Dates, documents à fournir et procédures d'inscription pour la nouvelle année scolaire.</p>
-                        <a href="actualites/rentree-2025.html" class="news-lien">Lire l'article <span>→</span></a>
+                        <a href="actualites/rentree-2025.html" class="news-lien">Lire l'article <span aria-hidden="true">→</span></a>
                     </div>
-                </div>
+                </article>
 
             </div>
-        </div>
+        </section>
 
-        <!-- ========== À PROPOS ========== -->
-        <div id="about">
+        <!-- ============================================================
+             À PROPOS — Histoire et présentation de l'école
+        ============================================================ -->
+        <section id="about" aria-label="À propos">
             <div class="img_about">
-                <img src="assets/image/extérieur_ecole.png" alt="Photo de l'école GSCOM">
+                <img src="assets/image/extérieur_ecole.png" alt="Façade extérieure du Groupe Scolaire de Mont-Ngafula" loading="lazy">
             </div>
             <div class="content">
-                <p id="subsub_title">À propos</p>
+                <p class="subsub_title">À propos</p>
                 <h2>Une école de confiance depuis plus de 38 ans</h2>
                 <p>Fondé le 1er septembre 1986, le Groupe Scolaire de Mont-Ngafula — le G.SCO.M — est un établissement d'enseignement général situé à Mont-Ngafula, Kinshasa. Sous la direction de M. Z. Mandina, notre école accompagne chaque élève de la maternelle jusqu'aux humanités avec rigueur et bienveillance depuis plus de 38 ans.</p>
                 <br>
@@ -120,10 +230,12 @@
                 <br>
                 <p class="devise">Notre devise : Réflexion, Travail, Discipline et Distinction.</p>
             </div>
-        </div>
+        </section>
 
-        <!-- ========== CHIFFRES CLÉS ========== -->
-        <div class="key_section">
+        <!-- ============================================================
+             CHIFFRES CLÉS — Statistiques de l'école en 4 colonnes
+        ============================================================ -->
+        <div class="key_section" aria-label="Chiffres clés">
             <div class="key-features">
                 <div class="feature">
                     <h3>+578</h3>
@@ -144,51 +256,54 @@
             </div>
         </div>
 
-        <!-- ========== FORMATIONS ========== -->
-        <div id="formation">
+        <!-- ============================================================
+             FORMATIONS — Les 4 niveaux d'enseignement proposés
+        ============================================================ -->
+        <section id="formation" aria-label="Formations">
             <div class="formation_content">
-                <p id="subsub_title">Formations</p>
+                <p class="subsub_title">Formations</p>
                 <h2>Nos formations, de la maternelle au baccalauréat</h2>
                 <p>Le G.SCO.M propose un parcours scolaire complet qui accompagne l'enfant à chaque étape de sa scolarité, de ses premiers apprentissages jusqu'à l'obtention du diplôme d'État.</p>
             </div>
+
             <div class="formation-cards">
 
-                <div class="formation-card">
+                <article class="formation-card">
                     <div class="card-img">
-                        <img src="assets/image/maternelle.png" alt="École maternelle">
+                        <img src="assets/image/maternelle.png" alt="Élèves de maternelle au G.SCO.M" loading="lazy">
                     </div>
                     <div class="card-body">
                         <span class="card-years">3 années</span>
                         <h3>École Maternelle</h3>
                         <p>Un environnement bienveillant et stimulant pour les tout-petits. Développement des aptitudes cognitives, sociales et motrices à travers le jeu et l'éveil.</p>
                     </div>
-                </div>
+                </article>
 
-                <div class="formation-card">
+                <article class="formation-card">
                     <div class="card-img">
-                        <img src="assets/image/primaire.png" alt="École primaire">
+                        <img src="assets/image/primaire.png" alt="Élèves de l'école primaire au G.SCO.M" loading="lazy">
                     </div>
                     <div class="card-body">
                         <span class="card-years">6 années</span>
                         <h3>École Primaire</h3>
                         <p>Le socle des apprentissages fondamentaux. Lecture, écriture, calcul, sciences et éducation civique enseignés dans une progression structurée.</p>
                     </div>
-                </div>
+                </article>
 
-                <div class="formation-card">
+                <article class="formation-card">
                     <div class="card-img">
-                        <img src="assets/image/education_base.png" alt="7ème et 8ème">
+                        <img src="assets/image/education_base.png" alt="Élèves en 7ème et 8ème année au G.SCO.M" loading="lazy">
                     </div>
                     <div class="card-body">
                         <span class="card-years">2 années</span>
                         <h3>7ème et 8ème</h3>
                         <p>La transition entre le primaire et les humanités. Consolidation des acquis et orientation progressive vers la filière adaptée.</p>
                     </div>
-                </div>
+                </article>
 
-                <div class="formation-card">
+                <article class="formation-card">
                     <div class="card-img">
-                        <img src="assets/image/humanité.png" alt="Humanités">
+                        <img src="assets/image/humanité.png" alt="Élèves des humanités au G.SCO.M" loading="lazy">
                     </div>
                     <div class="card-body">
                         <span class="card-years">4 années</span>
@@ -202,54 +317,62 @@
                             <li>Électricité</li>
                         </ul>
                     </div>
-                </div>
+                </article>
 
             </div>
-        </div>
+        </section>
 
-        <!-- ========== VIE SCOLAIRE ========== -->
-        <div id="vie_scolaire">
+        <!-- ============================================================
+             VIE SCOLAIRE — Infrastructures présentées en alternance
+             image gauche/texte droite, puis texte gauche/image droite
+        ============================================================ -->
+        <section id="vie_scolaire" aria-label="Vie scolaire">
             <div class="vie_scolaire_content">
-                <p id="subsub_title">Vie scolaire</p>
+                <p class="subsub_title">Vie scolaire</p>
                 <h2>Une école où il fait bon apprendre</h2>
                 <p>Au G.SCO.M, l'éducation ne s'arrête pas aux portes de la salle de classe. Nous croyons que l'épanouissement d'un élève passe aussi par la pratique du sport, la culture et l'accès aux outils du monde moderne.</p>
             </div>
+
             <div class="vie_scolaire_content2">
 
+                <!-- Ligne 1 : image gauche, texte droite (impair) -->
                 <div>
-                    <img src="assets/image/labo_chimie.png" alt="Salles de classe">
+                    <img src="assets/image/labo_chimie.png" alt="Salle de classe bien équipée au G.SCO.M" loading="lazy">
                     <div class="vs-text">
-                        <div class="vs-num">01</div>
+                        <div class="vs-num" aria-hidden="true">01</div>
                         <span class="vs-tag">Infrastructure</span>
                         <h3>Des espaces pensés pour apprendre</h3>
                         <p>Le bâtiment scolaire dispose de salles de classe bien équipées, chacune dotée d'un tableau, de tables et de bancs. L'école dispose également d'une bibliothèque, de bureaux administratifs et d'une salle d'informatique moderne.</p>
                     </div>
                 </div>
 
+                <!-- Ligne 2 : texte gauche, image droite (pair — géré par direction:rtl en CSS) -->
                 <div>
-                    <img src="assets/image/cour_interieur.png" alt="Cour intérieure">
+                    <img src="assets/image/cour_interieur.png" alt="Cour intérieure avec paniers de basket au G.SCO.M" loading="lazy">
                     <div class="vs-text">
-                        <div class="vs-num">02</div>
+                        <div class="vs-num" aria-hidden="true">02</div>
                         <span class="vs-tag">Sport</span>
                         <h3>L'éducation physique au cœur de la formation</h3>
                         <p>Dans la cour intérieure de l'école, deux paniers de basket sont installés. L'enseignement sportif favorise l'esprit d'équipe, la discipline physique et le dépassement de soi chez nos élèves.</p>
                     </div>
                 </div>
 
+                <!-- Ligne 3 : image gauche, texte droite -->
                 <div>
-                    <img src="assets/image/labo_informatique.png" alt="Salle informatique">
+                    <img src="assets/image/labo_informatique.png" alt="Salle informatique moderne au G.SCO.M" loading="lazy">
                     <div class="vs-text">
-                        <div class="vs-num">03</div>
+                        <div class="vs-num" aria-hidden="true">03</div>
                         <span class="vs-tag">Numérique</span>
                         <h3>Une salle informatique moderne</h3>
                         <p>Consciente des enjeux du numérique, la G.SCO.M a doté ses élèves d'une salle informatique moderne permettant aux jeunes de se familiariser avec les outils technologiques indispensables.</p>
                     </div>
                 </div>
 
+                <!-- Ligne 4 : texte gauche, image droite -->
                 <div>
-                    <img src="assets/image/labo_chimie.png" alt="Laboratoire de chimie">
+                    <img src="assets/image/labo_chimie.png" alt="Laboratoire de chimie au G.SCO.M" loading="lazy">
                     <div class="vs-text">
-                        <div class="vs-num">04</div>
+                        <div class="vs-num" aria-hidden="true">04</div>
                         <span class="vs-tag">Sciences</span>
                         <h3>Un laboratoire de chimie</h3>
                         <p>Le G.SCO.M dispose d'un laboratoire de chimie bien équipé, où les élèves peuvent expérimenter et approfondir leurs connaissances en sciences.</p>
@@ -257,21 +380,25 @@
                 </div>
 
             </div>
-        </div>
+        </section>
 
-        <!-- ========== ÉQUIPE ========== -->
-        <div id="equipe">
+        <!-- ============================================================
+             ÉQUIPE — Fondateur, direction et corps enseignant
+        ============================================================ -->
+        <section id="equipe" aria-label="Notre équipe">
 
+            <!-- En-tête de section -->
             <div class="equipe_content">
-                <p id="subsub_title">Équipe</p>
+                <p class="subsub_title">Équipe</p>
                 <h2>Notre Équipe</h2>
                 <p>Des hommes et des femmes engagés chaque jour pour offrir à vos enfants le meilleur encadrement possible.</p>
             </div>
 
+            <!-- --- Fondateur & Recteur (grande carte horizontale) --- -->
             <div class="main-member">
                 <div class="member-header">
                     <div class="member-photo-wrap">
-                        <img src="assets/image/promoteur.jpg" alt="M. Z. Mandina">
+                        <img src="assets/image/promoteur.jpg" alt="M. Z. Mandina, Fondateur et Recteur du G.SCO.M">
                     </div>
                     <span class="member-role-badge">Fondateur & Recteur</span>
                 </div>
@@ -289,13 +416,14 @@
                 </div>
             </div>
 
+            <!-- --- Grille de direction (6 membres) --- -->
             <div class="direction">
                 <h3 class="direction-title">Notre Direction</h3>
                 <div class="direction-grid">
 
-                    <div class="dir-card">
+                    <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/Prefet.png" alt="Pacifique Mpulusu">
+                            <img src="assets/image/Prefet.png" alt="Pacifique Mpulusu, Préfet des études" loading="lazy">
                             <span class="role-badge">Préfet des études</span>
                         </div>
                         <div class="dir-card-body">
@@ -303,11 +431,11 @@
                             <p class="role-text">Préfet des études</p>
                             <p>Responsable de la coordination pédagogique, il veille à la qualité de l'enseignement et au suivi du programme scolaire dans tous les niveaux.</p>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="dir-card">
+                    <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/Prefet.png" alt="M. Mibert Mwaba">
+                            <img src="assets/image/Prefet.png" alt="M. Mibert Mwaba, Directeur du primaire" loading="lazy">
                             <span class="role-badge">Directeur du primaire</span>
                         </div>
                         <div class="dir-card-body">
@@ -315,11 +443,11 @@
                             <p class="role-text">Directeur du primaire</p>
                             <p>Il supervise l'ensemble des activités pédagogiques et administratives du cycle primaire, de la 1ère à la 6ème année.</p>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="dir-card">
+                    <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/enseignant3.png" alt="M. Cadet Mawawu">
+                            <img src="assets/image/enseignant3.png" alt="M. Cadet Mawawu, Directeur de discipline" loading="lazy">
                             <span class="role-badge">Directeur de discipline</span>
                         </div>
                         <div class="dir-card-body">
@@ -327,11 +455,11 @@
                             <p class="role-text">Directeur de discipline</p>
                             <p>Garant du règlement intérieur et du bon comportement des élèves, il assure un environnement scolaire serein et propice à l'apprentissage.</p>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="dir-card">
+                    <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/Intendant general.png" alt="M. Philipe Lutonadio">
+                            <img src="assets/image/Intendant general.png" alt="M. Philipe Lutonadio, Secrétaire-Intendant général" loading="lazy">
                             <span class="role-badge">Secrétaire - Intendant général</span>
                         </div>
                         <div class="dir-card-body">
@@ -339,11 +467,11 @@
                             <p class="role-text">Secrétaire - Intendant général</p>
                             <p>Pivot administratif de l'école, il gère la correspondance officielle, les inscriptions et la coordination générale des affaires internes.</p>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="dir-card">
+                    <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/Caissiere.jpg" alt="Mme Lidwine Mbudi">
+                            <img src="assets/image/Caissiere.jpg" alt="Mme Lidwine Mbudi, Caissière" loading="lazy">
                             <span class="role-badge">Caissière</span>
                         </div>
                         <div class="dir-card-body">
@@ -351,11 +479,12 @@
                             <p class="role-text">Caissière</p>
                             <p>Elle assure la gestion financière quotidienne de l'établissement avec rigueur et transparence.</p>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="dir-card">
+                    <!-- Carte sans photo : initiale affichée à la place -->
+                    <article class="dir-card">
                         <div class="dir-card-photo dir-card-photo--initiale">
-                            <div class="initiale">B</div>
+                            <div class="initiale" aria-hidden="true">B</div>
                             <span class="role-badge">Surnuméraire</span>
                         </div>
                         <div class="dir-card-body">
@@ -363,21 +492,22 @@
                             <p class="role-text">Surnuméraire</p>
                             <p>Membre de l'équipe administrative, il apporte un soutien opérationnel au bon fonctionnement de l'établissement.</p>
                         </div>
-                    </div>
+                    </article>
 
                 </div>
             </div>
 
+            <!-- --- Corps enseignant --- -->
             <div class="enseignant-section">
                 <div class="enseignant-header">
                     <h3>Notre corps enseignant</h3>
-                    <button class="btn-voir-plus">Voir plus</button>
+                    <button class="btn-voir-plus" aria-label="Voir tous les enseignants">Voir plus</button>
                 </div>
                 <div class="enseignant-grid">
 
-                    <div class="ens-card">
+                    <article class="ens-card">
                         <div class="ens-card-photo">
-                            <img src="assets/image/enseignant1.png" alt="M. William Mboma">
+                            <img src="assets/image/enseignant1.png" alt="M. William Mboma, professeur de mathématiques" loading="lazy">
                             <span class="role-badge">Mathématiques</span>
                         </div>
                         <div class="ens-card-body">
@@ -385,11 +515,11 @@
                             <p class="matiere">Mathématiques</p>
                             <p>Passionné par les chiffres, il transmet son amour des mathématiques à ses élèves avec pédagogie et enthousiasme.</p>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="ens-card">
+                    <article class="ens-card">
                         <div class="ens-card-photo">
-                            <img src="assets/image/enseignant2.png" alt="M. Leon Musala">
+                            <img src="assets/image/enseignant2.png" alt="M. Leon Musala, professeur de français" loading="lazy">
                             <span class="role-badge">Français</span>
                         </div>
                         <div class="ens-card-body">
@@ -397,71 +527,76 @@
                             <p class="matiere">Français</p>
                             <p>Expert en littérature et grammaire, il encourage ses élèves à développer leur expression écrite et orale avec créativité.</p>
                         </div>
-                    </div>
+                    </article>
 
                 </div>
             </div>
 
-        </div>
+        </section>
 
-        <!-- ========== TÉMOIGNAGES ========== -->
-        <div class="testimonial">
-            <p id="subsub_title">Témoignages</p>
+        <!-- ============================================================
+             TÉMOIGNAGES — Avis de parents et anciens élèves
+        ============================================================ -->
+        <section class="testimonial" aria-label="Témoignages">
+            <p class="subsub_title">Témoignages</p>
             <h2>Ce que disent les parents</h2>
+
             <div class="testimonials_cards">
 
-                <div class="testi-card">
+                <article class="testi-card">
                     <div class="testi-content">
                         <p>Mon fils est à la G.SCO.M depuis la maternelle. Aujourd'hui il est en humanités et ses résultats sont excellents. Je recommande cette école à toutes les familles du quartier.</p>
                     </div>
                     <div class="testi-author">
-                        <img src="assets/image/parent1.png" alt="Maman Cécile">
+                        <img src="assets/image/parent1.png" alt="Maman Cécile" loading="lazy">
                         <div>
                             <h4>Maman Cécile</h4>
                             <p>Mère d'élève</p>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="testi-card">
+                <article class="testi-card">
                     <div class="testi-content">
                         <p>Ma fille a fait ses études à la G.SCO.M et elle a obtenu son diplôme avec mention. L'enseignement est de très haute qualité et les professeurs sont très dévoués.</p>
                     </div>
                     <div class="testi-author">
-                        <img src="assets/image/parent2.png" alt="Papa Jean">
+                        <img src="assets/image/parent2.png" alt="Papa Jean" loading="lazy">
                         <div>
                             <h4>Papa Jean</h4>
                             <p>Père d'élève</p>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="testi-card">
+                <article class="testi-card">
                     <div class="testi-content">
                         <p>J'ai passé toute ma scolarité à la G.SCO.M. C'est une école qui m'a appris la discipline et le goût du travail. Ces valeurs me servent encore aujourd'hui.</p>
                     </div>
                     <div class="testi-author">
-                        <img src="assets/image/parent3.png" alt="Jourdain Shongo">
+                        <img src="assets/image/parent3.png" alt="Jourdain Shongo" loading="lazy">
                         <div>
                             <h4>Jourdain Shongo</h4>
                             <p>Ancien élève — 2025</p>
                         </div>
                     </div>
-                </div>
+                </article>
 
             </div>
-        </div>
+        </section>
 
-        <!-- ========== FAQ ========== -->
-        <div class="FAQ">
+        <!-- ============================================================
+             FAQ — Questions fréquentes avec accordion JavaScript
+        ============================================================ -->
+        <section class="FAQ" aria-label="Questions fréquentes">
             <div class="FAQ-inner">
-                <p id="subsub_title">Support</p>
+                <p class="subsub_title">Support</p>
                 <h2>Questions fréquentes</h2>
 
                 <div class="faq-item open">
-                    <button class="faq-question" onclick="toggleFaq(this)">
+                    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="true">
                         <h3>Comment inscrire mon enfant au G.SCO.M ?</h3>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
                     <div class="faq-answer">
                         <p>Il suffit de vous présenter au secrétariat de l'école muni des documents scolaires de l'enfant (bulletin, extrait de naissance, photos d'identité). Notre équipe vous guidera dans les démarches.</p>
@@ -469,9 +604,9 @@
                 </div>
 
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">
+                    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
                         <h3>Quels niveaux sont disponibles à l'inscription ?</h3>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
                     <div class="faq-answer">
                         <p>Nous proposons des classes de la maternelle à la terminale. Pour plus d'informations, n'hésitez pas à contacter notre secrétariat.</p>
@@ -479,9 +614,9 @@
                 </div>
 
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">
+                    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
                         <h3>L'école est-elle reconnue par l'État congolais ?</h3>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
                     <div class="faq-answer">
                         <p>Oui, la G.SCO.M est reconnue par l'État congolais et délivre des certificats officiels validés par le Ministère de l'Éducation Nationale.</p>
@@ -489,9 +624,9 @@
                 </div>
 
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">
+                    <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
                         <h3>Quels sont les horaires de l'école ?</h3>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
                     <div class="faq-answer">
                         <p>Les horaires de l'école sont de 7h30 à 12h45, du lundi au samedi.</p>
@@ -499,97 +634,114 @@
                 </div>
 
             </div>
-        </div>
+        </section>
 
-        <!-- ========== CONTACT ========== -->
-        <div id="contact">
+        <!-- ============================================================
+             CONTACT — Formulaire + informations de contact
+        ============================================================ -->
+        <section id="contact" aria-label="Nous contacter">
             <div class="contact-inner">
 
+                <!-- Côté gauche : texte + coordonnées -->
                 <div class="contact-info">
-                    <p id="subsub_title">Nous contacter</p>
+                    <p class="subsub_title">Nous contacter</p>
                     <h2>Contactez le G.SCO.M</h2>
                     <p>Une question sur les inscriptions, les formations ou la vie scolaire ? Notre équipe vous répond dans les plus brefs délais.</p>
+
                     <div class="contact-details">
+
                         <div class="contact-item">
-                            <div class="contact-icon">📧</div>
+                            <div class="contact-icon" aria-hidden="true">📧</div>
                             <div class="contact-item-text">
                                 <p>E-mail</p>
-                                <p>gscom.montngafula@gmail.com</p>
+                                <p><a href="mailto:gscom.montngafula@gmail.com">gscom.montngafula@gmail.com</a></p>
                             </div>
                         </div>
+
                         <div class="contact-item">
-                            <div class="contact-icon">📞</div>
+                            <div class="contact-icon" aria-hidden="true">📞</div>
                             <div class="contact-item-text">
                                 <p>Téléphone</p>
-                                <p>+243 XX XXX XXXX</p>
+                                <p><a href="tel:+243XXXXXXXXX">+243 XX XXX XXXX</a></p>
                             </div>
                         </div>
+
                         <div class="contact-item">
-                            <div class="contact-icon">📍</div>
+                            <div class="contact-icon" aria-hidden="true">📍</div>
                             <div class="contact-item-text">
                                 <p>Adresse</p>
                                 <p>Quartier Mont-Ngafula, Kinshasa, RDC</p>
                             </div>
                         </div>
+
                         <div class="contact-item">
-                            <div class="contact-icon">🕐</div>
+                            <div class="contact-icon" aria-hidden="true">🕐</div>
                             <div class="contact-item-text">
                                 <p>Horaires du secrétariat</p>
                                 <p>Lun – Sam : 7h30 à 14h00</p>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
+                <!-- Côté droit : formulaire de contact -->
                 <div class="contact-form-wrap">
                     <h3>Envoyez-nous un message</h3>
-                    <form>
+                    <!-- action="" à remplacer par ton backend ou service (ex: Formspree) -->
+                    <form action="https://formspree.io/f/TON_ID" method="POST" novalidate>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="name">Nom complet</label>
-                                <input type="text" id="name" placeholder="Jean Mukendi" required>
+                                <label for="name">Nom complet <span aria-hidden="true">*</span></label>
+                                <input type="text" id="name" name="name" placeholder="Jean Mukendi" required autocomplete="name">
                             </div>
                             <div class="form-group">
-                                <label for="email">Adresse e-mail</label>
-                                <input type="email" id="email" placeholder="jean@exemple.com" required>
+                                <label for="email">Adresse e-mail <span aria-hidden="true">*</span></label>
+                                <input type="email" id="email" name="email" placeholder="jean@exemple.com" required autocomplete="email">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="objet">Objet</label>
-                            <select id="objet">
+                            <select id="objet" name="objet">
                                 <option value="">Sélectionnez un objet…</option>
-                                <option>Inscription</option>
-                                <option>Informations générales</option>
-                                <option>Partenariat</option>
-                                <option>Autre</option>
+                                <option value="inscription">Inscription</option>
+                                <option value="infos">Informations générales</option>
+                                <option value="partenariat">Partenariat</option>
+                                <option value="autre">Autre</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="message">Votre message</label>
-                            <textarea id="message" placeholder="Écrivez votre message ici…" required></textarea>
+                            <label for="message">Votre message <span aria-hidden="true">*</span></label>
+                            <textarea id="message" name="message" placeholder="Écrivez votre message ici…" required></textarea>
                         </div>
                         <button type="submit" class="btn-submit">Envoyer le message</button>
                     </form>
                 </div>
 
             </div>
-        </div>
+        </section>
 
     </main>
 
-    <!-- ========== FOOTER ========== -->
+    <!-- ============================================================
+         FOOTER — Pied de page avec logo, liens et copyright
+    ============================================================ -->
     <footer>
         <div class="footer-inner">
+
+            <!-- Partie haute : 3 colonnes -->
             <div class="footer-top">
 
+                <!-- Colonne 1 : logo + description -->
                 <div class="footer-brand">
-                    <a href="#" class="footer-logo">
-                        <img src="assets/image/LOGO_GSCOM.png" alt="Logo GSCOM">
+                    <a href="#hero" class="footer-logo" aria-label="Retour en haut de page">
+                        <img src="assets/image/LOGO_GSCOM.png" alt="Logo G.SCO.M">
                         <span class="footer-logo-text">G.SCO.M</span>
                     </a>
                     <p>Le Groupe Scolaire de Mont-Ngafula forme l'élite de demain dans un cadre rigoureux et épanouissant depuis 1986.</p>
                 </div>
 
+                <!-- Colonne 2 : liens de navigation -->
                 <div class="footer-col">
                     <h4>Liens rapides</h4>
                     <ul>
@@ -602,27 +754,48 @@
                     </ul>
                 </div>
 
+                <!-- Colonne 3 : coordonnées -->
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <p>Quartier Mont-Ngafula<br>Kinshasa, RDC</p>
                     <br>
-                    <p>gscom.montngafula@gmail.com</p>
+                    <p><a href="mailto:gscom.montngafula@gmail.com" style="color:rgba(255,255,255,0.5);">gscom.montngafula@gmail.com</a></p>
                     <br>
                     <p>Lun – Sam : 7h30 – 14h00</p>
                 </div>
 
             </div>
+
+            <!-- Partie basse : copyright + crédit -->
             <div class="footer-bottom">
                 <p>© 2025 Groupe Scolaire de Mont-Ngafula. Tous droits réservés.</p>
                 <p class="credit">Site réalisé par <span>JorkaDev</span></p>
             </div>
+
         </div>
     </footer>
 
+    <!-- ============================================================
+         JAVASCRIPT
+    ============================================================ -->
     <script>
-        // Nav active au scroll
-        const sections = document.querySelectorAll('div[id], main > div[id]');
+        /* ----------------------------------------------------------
+           MENU MOBILE — Ouvre/ferme le menu hamburger
+        ---------------------------------------------------------- */
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.querySelector('.menu-toggle');
+            menu.classList.toggle('open');
+            toggle.classList.toggle('active');
+        }
+
+        /* ----------------------------------------------------------
+           NAV ACTIVE AU SCROLL
+           Met en surbrillance le lien correspondant à la section visible
+        ---------------------------------------------------------- */
+        const sections = document.querySelectorAll('section[id], div[id]');
         const navLinks = document.querySelectorAll('nav ul li a');
+
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
@@ -638,12 +811,25 @@
             });
         });
 
-        // FAQ accordion
+        /* ----------------------------------------------------------
+           FAQ ACCORDION
+           Ouvre une question et ferme les autres
+        ---------------------------------------------------------- */
         function toggleFaq(btn) {
             const item = btn.closest('.faq-item');
             const isOpen = item.classList.contains('open');
-            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-            if (!isOpen) item.classList.add('open');
+
+            // Ferme toutes les questions
+            document.querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('open');
+                i.querySelector('button').setAttribute('aria-expanded', 'false');
+            });
+
+            // Ouvre celle cliquée si elle était fermée
+            if (!isOpen) {
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+            }
         }
     </script>
 
