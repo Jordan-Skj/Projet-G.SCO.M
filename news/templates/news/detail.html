@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }} — G.SCO.M{% endblock %}
+{% block content %}
+<section id="news" aria-label="Actualité">
+    <div class="news-top"><a href="{% url 'home:index' %}" class="news-voir-tout">← Toutes les actualités</a></div>
+    <article class="news-card featured">
+        <div class="news-img"><img src="{{ article.image_url }}" alt="{{ article.image_alt|default:article.title }}"></div>
+        <div class="news-body">
+            <div class="news-meta"><span class="news-cat">{{ article.category }}</span><span class="news-sep" aria-hidden="true"></span><time class="news-date" datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"j F Y" }}</time></div>
+            <h1>{{ article.title }}</h1>
+            {{ article.content|linebreaks }}
+        </div>
+    </article>
+</section>
+{% endblock %}

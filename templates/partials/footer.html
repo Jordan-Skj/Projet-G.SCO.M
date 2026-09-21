@@ -1,0 +1,52 @@
+{% load static %}
+    <footer>
+        <div class="footer-inner">
+
+            <!-- Partie haute : 3 colonnes -->
+            <div class="footer-top">
+
+                <!-- Colonne 1 : logo + description -->
+                <div class="footer-brand">
+                    <a href="{% url 'home:index' %}#hero" class="footer-logo" aria-label="Retour en haut de page">
+                        <img src="{% static 'assets/image/LOGO_GSCOM.png' %}" alt="Logo G.SCO.M">
+                        <span class="footer-logo-text">G.SCO.M</span>
+                    </a>
+                    <p>Le Groupe Scolaire de Mont-Ngafula forme l'élite de demain dans un cadre rigoureux et
+                        épanouissant depuis 1986.</p>
+                </div>
+
+                <!-- Colonne 2 : liens de navigation -->
+                <div class="footer-col">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="{% url 'home:index' %}#hero">Accueil</a></li>
+                        <li><a href="{% url 'home:index' %}#news">Actualités</a></li>
+                        <li><a href="{% url 'home:index' %}#about">À propos</a></li>
+                        <li><a href="{% url 'home:index' %}#formation">Formation</a></li>
+                        <li><a href="{% url 'home:index' %}#vie_scolaire">Vie scolaire</a></li>
+                        <li><a href="{% url 'home:index' %}#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Colonne 3 : coordonnées -->
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>Quartier Mont-Ngafula<br>Kinshasa, RDC</p>
+                    <br>
+                    <p><a href="mailto:gscom.montngafula@gmail.com"
+                            style="color:rgba(255,255,255,0.5);">gscom.montngafula@gmail.com</a></p>
+                    <br>
+                    <p>Lun – Sam : 7h30 – 14h00</p>
+                </div>
+
+            </div>
+
+            <!-- Partie basse : copyright + crédit -->
+            <div class="footer-bottom">
+                <p>© 2025 Groupe Scolaire de Mont-Ngafula. Tous droits réservés.</p>
+                <p class="credit">Site réalisé par <span>JorkaDev</span></p>
+            </div>
+
+        </div>
+    </footer>
+

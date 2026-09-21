@@ -1,0 +1,45 @@
+{% load static %}
+    <header>
+
+        <div class="logo">
+            <a href="{% url 'home:index' %}#hero" aria-label="Retour à l'accueil G.SCO.M">
+                <div class="logo_content">
+                    <img src="{% static 'assets/image/LOGO_GSCOM.png' %}" alt="Logo G.SCO.M">
+                    <p>G.SCO.M</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Navigation principale (desktop) -->
+        <nav aria-label="Navigation principale">
+            <ul>
+                <li><a href="{% url 'home:index' %}#hero">Accueil</a></li>
+                <li><a href="{% url 'home:index' %}#news">Actualités</a></li>
+                <li><a href="{% url 'home:index' %}#about">À propos</a></li>
+                <li><a href="{% url 'home:index' %}#formation">Formation</a></li>
+                <li><a href="{% url 'home:index' %}#vie_scolaire">Vie scolaire</a></li>
+                <li><a href="{% url 'home:index' %}#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Bouton hamburger visible uniquement sur mobile -->
+        <button class="menu-toggle" aria-label="Ouvrir le menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </header>
+
+    <!-- Menu mobile déroulant (caché par défaut, visible après clic sur hamburger) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="{% url 'home:index' %}#hero" onclick="toggleMenu()">Accueil</a></li>
+            <li><a href="{% url 'home:index' %}#news" onclick="toggleMenu()">Actualités</a></li>
+            <li><a href="{% url 'home:index' %}#about" onclick="toggleMenu()">À propos</a></li>
+            <li><a href="{% url 'home:index' %}#formation" onclick="toggleMenu()">Formation</a></li>
+            <li><a href="{% url 'home:index' %}#vie_scolaire" onclick="toggleMenu()">Vie scolaire</a></li>
+            <li><a href="{% url 'home:index' %}#contact" onclick="toggleMenu()">Contact</a></li>
+        </ul>
+    </div>
+

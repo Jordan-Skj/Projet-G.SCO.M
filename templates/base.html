@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>{% block title %}G.SCO.M — Groupe Scolaire de Mont-Ngafula | Kinshasa, RDC{% endblock %}</title>
+    <meta name="description"
+        content="Le Groupe Scolaire de Mont-Ngafula forme l'élite de demain depuis 1986. École maternelle, primaire et humanités à Kinshasa, République Démocratique du Congo.">
+    <meta name="keywords"
+        content="école Kinshasa, GSCOM, Groupe Scolaire Mont-Ngafula, école primaire Kinshasa, humanités RDC, inscription scolaire Kinshasa">
+    <meta name="author" content="JorkaDev">
+    <meta name="robots" content="index, follow">
+
+    <!-- ============================================================
+         OPEN GRAPH (Facebook, WhatsApp, LinkedIn)
+         Ce que WhatsApp ou Facebook affiche quand on partage le lien
+    ============================================================ -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gscom-montngafula.com/">
+    <meta property="og:title" content="G.SCO.M — Groupe Scolaire de Mont-Ngafula">
+    <meta property="og:description"
+        content="Une école de confiance depuis 1986. Maternelle, primaire et humanités à Mont-Ngafula, Kinshasa.">
+    <meta property="og:image" content="{% static 'assets/image/LOGO_GSCOM.png' %}">
+    <meta property="og:locale" content="fr_CD">
+    <meta property="og:site_name" content="G.SCO.M">
+
+    <!-- ============================================================
+         TWITTER CARD
+         Ce que Twitter affiche quand on partage le lien
+    ============================================================ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="G.SCO.M — Groupe Scolaire de Mont-Ngafula">
+    <meta name="twitter:description" content="Une école de confiance depuis 1986 à Kinshasa, RDC.">
+    <meta name="twitter:image" content="{% static 'assets/image/LOGO_GSCOM.png' %}">
+
+    <!-- ============================================================
+         COULEUR DU NAVIGATEUR MOBILE
+         Colorie la barre de navigation sur Android Chrome
+    ============================================================ -->
+    <meta name="theme-color" content="#c0392b">
+
+    <!-- ============================================================
+         FAVICON (icône dans l'onglet du navigateur)
+         Place ton logo en .ico ou .png dans assets/image/
+    ============================================================ -->
+    <link rel="icon" type="image/png" href="{% static 'assets/image/LOGO_GSCOM.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'assets/image/LOGO_GSCOM.png' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <!-- ============================================================
+         DONNÉES STRUCTURÉES (Schema.org)
+         Aide Google à comprendre que c'est un établissement scolaire.
+         Peut afficher des infos enrichies dans les résultats de recherche.
+    ============================================================ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "School",
+        "name": "Groupe Scolaire de Mont-Ngafula",
+        "alternateName": "G.SCO.M",
+        "url": "https://gscom-montngafula.com",
+        "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'assets/image/LOGO_GSCOM.png' %}",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'assets/image/LOGO_GSCOM.png' %}",
+        "description": "Établissement d'enseignement général de la maternelle aux humanités, fondé en 1986 à Mont-Ngafula, Kinshasa.",
+        "foundingDate": "1986",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Mont-Ngafula",
+            "addressRegion": "Kinshasa",
+            "addressCountry": "CD"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+243-XX-XXX-XXXX",
+            "email": "gscom.montngafula@gmail.com",
+            "contactType": "Secrétariat"
+        },
+        "openingHours": "Mo,Tu,We,Th,Fr,Sa 07:30-14:00",
+        "numberOfStudents": 578
+    }
+    </script>
+{% block extra_css %}{% endblock %}
+</head>
+
+<body>
+{% include 'partials/header.html' %}
+<main>{% block content %}{% endblock %}</main>
+{% include 'partials/footer.html' %}
+<script src="{% static 'js/site.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,16 @@
+<article class="news-card{% if featured %} featured{% endif %}">
+                    <div class="news-img">
+                        <img src="{{ article.image_url }}" alt="{{ article.image_alt|default:article.title }}" loading="lazy">
+                    </div>
+                    <div class="news-body">
+                        <div class="news-meta">
+                            <span class="news-cat">{{ article.category }}</span>
+                            <span class="news-sep" aria-hidden="true"></span>
+                            <time class="news-date" datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"j F Y" }}</time>
+                        </div>
+                        <h3>{{ article.title }}</h3>
+                        <p>{{ article.summary }}</p>
+                        <a href="{% url 'news:detail' article.slug %}" class="news-lien">Lire l'article <span
+                                aria-hidden="true">→</span></a>
+                    </div>
+                </article>

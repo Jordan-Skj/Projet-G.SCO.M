@@ -1,154 +1,14 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>G.SCO.M — Groupe Scolaire de Mont-Ngafula | Kinshasa, RDC</title>
-    <meta name="description"
-        content="Le Groupe Scolaire de Mont-Ngafula forme l'élite de demain depuis 1986. École maternelle, primaire et humanités à Kinshasa, République Démocratique du Congo.">
-    <meta name="keywords"
-        content="école Kinshasa, GSCOM, Groupe Scolaire Mont-Ngafula, école primaire Kinshasa, humanités RDC, inscription scolaire Kinshasa">
-    <meta name="author" content="JorkaDev">
-    <meta name="robots" content="index, follow">
-
-    <!-- ============================================================
-         OPEN GRAPH (Facebook, WhatsApp, LinkedIn)
-         Ce que WhatsApp ou Facebook affiche quand on partage le lien
-    ============================================================ -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://gscom-montngafula.com/">
-    <meta property="og:title" content="G.SCO.M — Groupe Scolaire de Mont-Ngafula">
-    <meta property="og:description"
-        content="Une école de confiance depuis 1986. Maternelle, primaire et humanités à Mont-Ngafula, Kinshasa.">
-    <meta property="og:image" content="assets/image/og-image.jpg">
-    <meta property="og:locale" content="fr_CD">
-    <meta property="og:site_name" content="G.SCO.M">
-
-    <!-- ============================================================
-         TWITTER CARD
-         Ce que Twitter affiche quand on partage le lien
-    ============================================================ -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="G.SCO.M — Groupe Scolaire de Mont-Ngafula">
-    <meta name="twitter:description" content="Une école de confiance depuis 1986 à Kinshasa, RDC.">
-    <meta name="twitter:image" content="assets/image/og-image.jpg">
-
-    <!-- ============================================================
-         COULEUR DU NAVIGATEUR MOBILE
-         Colorie la barre de navigation sur Android Chrome
-    ============================================================ -->
-    <meta name="theme-color" content="#c0392b">
-
-    <!-- ============================================================
-         FAVICON (icône dans l'onglet du navigateur)
-         Place ton logo en .ico ou .png dans assets/image/
-    ============================================================ -->
-    <link rel="icon" type="image/png" href="assets/image/LOGO_GSCOM.png">
-    <link rel="apple-touch-icon" href="assets/image/LOGO_GSCOM.png">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;600;700&display=swap"
-        rel="stylesheet">
-
-
-    <!-- ============================================================
-         DONNÉES STRUCTURÉES (Schema.org)
-         Aide Google à comprendre que c'est un établissement scolaire.
-         Peut afficher des infos enrichies dans les résultats de recherche.
-    ============================================================ -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "School",
-        "name": "Groupe Scolaire de Mont-Ngafula",
-        "alternateName": "G.SCO.M",
-        "url": "https://gscom-montngafula.com",
-        "logo": "https://gscom-montngafula.com/assets/image/LOGO_GSCOM.png",
-        "image": "https://gscom-montngafula.com/assets/image/og-image.jpg",
-        "description": "Établissement d'enseignement général de la maternelle aux humanités, fondé en 1986 à Mont-Ngafula, Kinshasa.",
-        "foundingDate": "1986",
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Mont-Ngafula",
-            "addressRegion": "Kinshasa",
-            "addressCountry": "CD"
-        },
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+243-XX-XXX-XXXX",
-            "email": "gscom.montngafula@gmail.com",
-            "contactType": "Secrétariat"
-        },
-        "openingHours": "Mo,Tu,We,Th,Fr,Sa 07:30-14:00",
-        "numberOfStudents": 578
-    }
-    </script>
-</head>
-
-<body>
-
-    <!-- ============================================================
-         HEADER — Barre de navigation sticky (reste en haut au scroll)
-    ============================================================ -->
-    <header>
-
-        <div class="logo">
-            <a href="#hero" aria-label="Retour à l'accueil G.SCO.M">
-                <div class="logo_content">
-                    <img src="assets/image/LOGO_GSCOM.png" alt="Logo G.SCO.M">
-                    <p>G.SCO.M</p>
-                </div>
-            </a>
-        </div>
-
-        <!-- Navigation principale (desktop) -->
-        <nav aria-label="Navigation principale">
-            <ul>
-                <li><a href="#hero">Accueil</a></li>
-                <li><a href="#news">Actualités</a></li>
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#formation">Formation</a></li>
-                <li><a href="#vie_scolaire">Vie scolaire</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-
-        <!-- Bouton hamburger visible uniquement sur mobile -->
-        <button class="menu-toggle" aria-label="Ouvrir le menu" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-    </header>
-
-    <!-- Menu mobile déroulant (caché par défaut, visible après clic sur hamburger) -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="#hero" onclick="toggleMenu()">Accueil</a></li>
-            <li><a href="#news" onclick="toggleMenu()">Actualités</a></li>
-            <li><a href="#about" onclick="toggleMenu()">À propos</a></li>
-            <li><a href="#formation" onclick="toggleMenu()">Formation</a></li>
-            <li><a href="#vie_scolaire" onclick="toggleMenu()">Vie scolaire</a></li>
-            <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
-        </ul>
-    </div>
-
-    <main>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 
         <!-- ==== HERO — Section ==== -->
         <section id="hero" aria-label="Accueil">
             <h1><span>Groupe Scolaire</span><br>de Mont-Ngafula</h1>
             <p>Former l'élite de demain dans un cadre rigoureux et épanouissant — depuis 1986.</p>
             <div class="hero-buttons">
-                <a href="#formation" class="btn-primary">Inscriptions 2025 – 2026</a>
-                <a href="#about" class="btn-secondary">En savoir plus</a>
+                <a href="{% url 'home:index' %}#formation" class="btn-primary">Inscriptions 2025 – 2026</a>
+                <a href="{% url 'home:index' %}#about" class="btn-secondary">En savoir plus</a>
             </div>
         </section>
 
@@ -161,69 +21,15 @@
                     <p class="subsub_title">Actualités</p>
                     <h2>Dernières nouvelles</h2>
                 </div>
-                <a href="actualites.html" class="news-voir-tout">Toutes les actualités <span
+                <a href="{% url 'news:list' %}" class="news-voir-tout">Toutes les actualités <span
                         aria-hidden="true">→</span></a>
             </div>
 
             <div class="news-grid">
 
-                <!-- Card principale (grande) -->
-                <article class="news-card featured">
-                    <div class="news-img">
-                        <img src="assets/image/eleve.png" alt="Cérémonie du 40e anniversaire du G.SCO.M" loading="lazy">
-                    </div>
-                    <div class="news-body">
-                        <div class="news-meta">
-                            <span class="news-cat">Événement</span>
-                            <span class="news-sep" aria-hidden="true"></span>
-                            <time class="news-date" datetime="2025-05-12">12 mai 2025</time>
-                        </div>
-                        <h3>GSCOM célèbre 40 ans d'excellence éducative</h3>
-                        <p>Le Groupe Scolaire de Mont-Ngafula a célébré son 40e anniversaire avec une cérémonie
-                            réunissant élèves, enseignants, anciens élèves et partenaires. Depuis 1986, GSCOM forme des
-                            leaders dans un environnement rigoureux et épanouissant.</p>
-                        <a href="actualites/40-ans.html" class="news-lien">Lire l'article <span
-                                aria-hidden="true">→</span></a>
-                    </div>
-                </article>
-
-                <!-- Card secondaire 1 -->
-                <article class="news-card">
-                    <div class="news-img">
-                        <img src="assets/image/eleve.png" alt="Programme de bourses GSCOM" loading="lazy">
-                    </div>
-                    <div class="news-body">
-                        <div class="news-meta">
-                            <span class="news-cat">Programme</span>
-                            <span class="news-sep" aria-hidden="true"></span>
-                            <time class="news-date" datetime="2025-04-03">3 avril 2025</time>
-                        </div>
-                        <h3>Nouveau programme de bourses pour les étudiants méritants</h3>
-                        <p>GSCOM soutient les élèves à potentiel exceptionnel grâce à un programme de bourses inédit.
-                        </p>
-                        <a href="actualites/bourses.html" class="news-lien">Lire l'article <span
-                                aria-hidden="true">→</span></a>
-                    </div>
-                </article>
-
-                <!-- Card secondaire 2 -->
-                <article class="news-card">
-                    <div class="news-img">
-                        <img src="assets/image/extérieur_ecole.png" alt="Rentrée scolaire 2025-2026 au G.SCO.M"
-                            loading="lazy">
-                    </div>
-                    <div class="news-body">
-                        <div class="news-meta">
-                            <span class="news-cat">Rentrée</span>
-                            <span class="news-sep" aria-hidden="true"></span>
-                            <time class="news-date" datetime="2025-08-20">20 août 2025</time>
-                        </div>
-                        <h3>Rentrée scolaire 2025–2026 : informations pratiques</h3>
-                        <p>Dates, documents à fournir et procédures d'inscription pour la nouvelle année scolaire.</p>
-                        <a href="actualites/rentree-2025.html" class="news-lien">Lire l'article <span
-                                aria-hidden="true">→</span></a>
-                    </div>
-                </article>
+{% for article in articles %}
+                {% include "news/_card.html" with featured=forloop.first %}
+                {% empty %}<p>Aucune actualité pour le moment.</p>{% endfor %}
 
             </div>
         </section>
@@ -233,7 +39,7 @@
         ============================================================ -->
         <section id="about" aria-label="À propos">
             <div class="img_about">
-                <img src="assets/image/extérieur_ecole.png" alt="Façade extérieure du Groupe Scolaire de Mont-Ngafula"
+                <img src="{% static 'assets/image/extérieur_ecole.png' %}" alt="Façade extérieure du Groupe Scolaire de Mont-Ngafula"
                     loading="lazy">
             </div>
             <div class="content">
@@ -291,7 +97,7 @@
 
                 <article class="formation-card">
                     <div class="card-img">
-                        <img src="assets/image/maternelle.png" alt="Élèves de maternelle au G.SCO.M" loading="lazy">
+                        <img src="{% static 'assets/image/maternelle.png' %}" alt="Élèves de maternelle au G.SCO.M" loading="lazy">
                     </div>
                     <div class="card-body">
                         <span class="card-years">3 années</span>
@@ -303,7 +109,7 @@
 
                 <article class="formation-card">
                     <div class="card-img">
-                        <img src="assets/image/primaire.png" alt="Élèves de l'école primaire au G.SCO.M" loading="lazy">
+                        <img src="{% static 'assets/image/primaire.png' %}" alt="Élèves de l'école primaire au G.SCO.M" loading="lazy">
                     </div>
                     <div class="card-body">
                         <span class="card-years">6 années</span>
@@ -315,7 +121,7 @@
 
                 <article class="formation-card">
                     <div class="card-img">
-                        <img src="assets/image/education_base.png" alt="Élèves en 7ème et 8ème année au G.SCO.M"
+                        <img src="{% static 'assets/image/education_base.png' %}" alt="Élèves en 7ème et 8ème année au G.SCO.M"
                             loading="lazy">
                     </div>
                     <div class="card-body">
@@ -328,7 +134,7 @@
 
                 <article class="formation-card">
                     <div class="card-img">
-                        <img src="assets/image/humanité.png" alt="Élèves des humanités au G.SCO.M" loading="lazy">
+                        <img src="{% static 'assets/image/humanité.png' %}" alt="Élèves des humanités au G.SCO.M" loading="lazy">
                     </div>
                     <div class="card-body">
                         <span class="card-years">4 années</span>
@@ -364,7 +170,7 @@
 
                 <!-- Ligne 1 : image gauche, texte droite (impair) -->
                 <div>
-                    <img src="assets/image/labo_chimie.png" alt="Salle de classe bien équipée au G.SCO.M"
+                    <img src="{% static 'assets/image/labo_chimie.png' %}" alt="Salle de classe bien équipée au G.SCO.M"
                         loading="lazy">
                     <div class="vs-text">
                         <div class="vs-num" aria-hidden="true">01</div>
@@ -378,7 +184,7 @@
 
                 <!-- Ligne 2 : texte gauche, image droite (pair — géré par direction:rtl en CSS) -->
                 <div>
-                    <img src="assets/image/cour_interieur.png" alt="Cour intérieure avec paniers de basket au G.SCO.M"
+                    <img src="{% static 'assets/image/cour_interieur.png' %}" alt="Cour intérieure avec paniers de basket au G.SCO.M"
                         loading="lazy">
                     <div class="vs-text">
                         <div class="vs-num" aria-hidden="true">02</div>
@@ -392,7 +198,7 @@
 
                 <!-- Ligne 3 : image gauche, texte droite -->
                 <div>
-                    <img src="assets/image/labo_informatique.png" alt="Salle informatique moderne au G.SCO.M"
+                    <img src="{% static 'assets/image/labo_informatique.png' %}" alt="Salle informatique moderne au G.SCO.M"
                         loading="lazy">
                     <div class="vs-text">
                         <div class="vs-num" aria-hidden="true">03</div>
@@ -406,7 +212,7 @@
 
                 <!-- Ligne 4 : texte gauche, image droite -->
                 <div>
-                    <img src="assets/image/labo_chimie.png" alt="Laboratoire de chimie au G.SCO.M" loading="lazy">
+                    <img src="{% static 'assets/image/labo_chimie.png' %}" alt="Laboratoire de chimie au G.SCO.M" loading="lazy">
                     <div class="vs-text">
                         <div class="vs-num" aria-hidden="true">04</div>
                         <span class="vs-tag">Sciences</span>
@@ -418,7 +224,7 @@
 
                 <!-- Ligne 5 :  -->
                 <div>
-                    <img src="assets/image/labo_chimie.png" alt="Laboratoire de chimie au G.SCO.M" loading="lazy">
+                    <img src="{% static 'assets/image/labo_chimie.png' %}" alt="Laboratoire de chimie au G.SCO.M" loading="lazy">
                     <div class="vs-text">
                         <div class="vs-num" aria-hidden="true">05</div>
                         <span class="vs-tag">Littéraire</span>
@@ -447,7 +253,7 @@
             <div class="main-member">
                 <div class="member-header">
                     <div class="member-photo-wrap">
-                        <img src="assets/image/promoteur.jpg" alt="M. Z. Mandina, Fondateur et Recteur du G.SCO.M">
+                        <img src="{% static 'assets/image/promoteur.jpg' %}" alt="M. Z. Mandina, Fondateur et Recteur du G.SCO.M">
                     </div>
                     <span class="member-role-badge">Fondateur & Recteur</span>
                 </div>
@@ -475,7 +281,7 @@
 
                     <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/Prefet.png" alt="Pacifique Mpulusu, Préfet des études"
+                            <img src="{% static 'assets/image/Prefet.png' %}" alt="Pacifique Mpulusu, Préfet des études"
                                 loading="lazy">
                             <span class="role-badge">Préfet des études</span>
                         </div>
@@ -489,7 +295,7 @@
 
                     <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/Directeur.png" alt="M. Mibert Mwaba, Directeur du primaire"
+                            <img src="{% static 'assets/image/Directeur.png' %}" alt="M. Mibert Mwaba, Directeur du primaire"
                                 loading="lazy">
                             <span class="role-badge">Directeur du primaire</span>
                         </div>
@@ -503,7 +309,7 @@
 
                     <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/enseignant3.png" alt="M. Cadet Mawawu, Directeur de discipline"
+                            <img src="{% get_static_prefix %}assets/image/enseignant3.png" alt="M. Cadet Mawawu, Directeur de discipline"
                                 loading="lazy">
                             <span class="role-badge">Directeur de discipline</span>
                         </div>
@@ -517,7 +323,7 @@
 
                     <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/Intendant general.png"
+                            <img src="{% static 'assets/image/Intendant general.png' %}"
                                 alt="M. Philipe Lutonadio, Secrétaire-Intendant général" loading="lazy">
                             <span class="role-badge">Secrétaire - Intendant général</span>
                         </div>
@@ -531,7 +337,7 @@
 
                     <article class="dir-card">
                         <div class="dir-card-photo">
-                            <img src="assets/image/Caissiere.jpg" alt="Mme Lidwine Mbudi, Caissière" loading="lazy">
+                            <img src="{% static 'assets/image/Caissiere.jpg' %}" alt="Mme Lidwine Mbudi, Caissière" loading="lazy">
                             <span class="role-badge">Caissière</span>
                         </div>
                         <div class="dir-card-body">
@@ -569,7 +375,7 @@
 
                     <article class="ens-card">
                         <div class="ens-card-photo">
-                            <img src="assets/image/enseignant1.png" alt="M. William Mboma, professeur de mathématiques"
+                            <img src="{% get_static_prefix %}assets/image/enseignant1.png" alt="M. William Mboma, professeur de mathématiques"
                                 loading="lazy">
                             <span class="role-badge">Mathématiques</span>
                         </div>
@@ -583,7 +389,7 @@
 
                     <article class="ens-card">
                         <div class="ens-card-photo">
-                            <img src="assets/image/enseignant2.png" alt="M. Leon Musala, professeur de français"
+                            <img src="{% get_static_prefix %}assets/image/enseignant2.png" alt="M. Leon Musala, professeur de français"
                                 loading="lazy">
                             <span class="role-badge">Français</span>
                         </div>
@@ -615,7 +421,7 @@
                             résultats sont excellents. Je recommande cette école à toutes les familles du quartier.</p>
                     </div>
                     <div class="testi-author">
-                        <img src="assets/image/Caissiere.jpg" alt="Maman Cécile" loading="lazy">
+                        <img src="{% static 'assets/image/Caissiere.jpg' %}" alt="Maman Cécile" loading="lazy">
                         <div>
                             <h4>Maman Cécile</h4>
                             <p>Mère d'élève</p>
@@ -629,7 +435,7 @@
                             L'enseignement est de très haute qualité et les professeurs sont très dévoués.</p>
                     </div>
                     <div class="testi-author">
-                        <img src="assets/image/parent2.png" alt="Papa Jean" loading="lazy">
+                        <img src="{% get_static_prefix %}assets/image/parent2.png" alt="Papa Jean" loading="lazy">
                         <div>
                             <h4>Papa Jean</h4>
                             <p>Père d'élève</p>
@@ -643,7 +449,7 @@
                             le goût du travail. Ces valeurs me servent encore aujourd'hui.</p>
                     </div>
                     <div class="testi-author">
-                        <img src="assets/image/parent3.png" alt="Jourdain Shongo" loading="lazy">
+                        <img src="{% get_static_prefix %}assets/image/parent3.png" alt="Jourdain Shongo" loading="lazy">
                         <div>
                             <h4>Jourdain Shongo</h4>
                             <p>Ancien élève — 2025</p>
@@ -776,17 +582,22 @@
                 <!-- Côté droit : formulaire de contact -->
                 <div class="contact-form-wrap">
                     <h3>Envoyez-nous un message</h3>
-                    <!-- action="" à remplacer par ton backend ou service (ex: Formspree) -->
-                    <form action="https://formspree.io/f/TON_ID" method="POST" novalidate>
+                    <form id="contact-form" action="{% url 'contact:send' %}" method="POST" novalidate>
+                        {% csrf_token %}
+                        <div id="contact-feedback" role="status" aria-live="polite"{% if not form.errors and not messages %} hidden{% endif %}>
+                        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+                        {% for field in form %}{% for error in field.errors %}<p>{{ field.label }} : {{ error }}</p>{% endfor %}{% endfor %}
+                        {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+                        </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="name">Nom complet <span aria-hidden="true">*</span></label>
-                                <input type="text" id="name" name="name" placeholder="Jean Mukendi" required
+                                <input type="text" id="name" name="name" value="{{ form.name.value|default_if_none:'' }}" maxlength="150" placeholder="Jean Mukendi" required
                                     autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label for="email">Adresse e-mail <span aria-hidden="true">*</span></label>
-                                <input type="email" id="email" name="email" placeholder="jean@exemple.com" required
+                                <input type="email" id="email" name="email" value="{{ form.email.value|default_if_none:'' }}" placeholder="jean@exemple.com" required
                                     autocomplete="email">
                             </div>
                         </div>
@@ -794,16 +605,16 @@
                             <label for="objet">Objet</label>
                             <select id="objet" name="objet">
                                 <option value="">Sélectionnez un objet…</option>
-                                <option value="inscription">Inscription</option>
-                                <option value="infos">Informations générales</option>
-                                <option value="partenariat">Partenariat</option>
-                                <option value="autre">Autre</option>
+                                <option value="inscription"{% if form.objet.value == "inscription" %} selected{% endif %}>Inscription</option>
+                                <option value="infos"{% if form.objet.value == "infos" %} selected{% endif %}>Informations générales</option>
+                                <option value="partenariat"{% if form.objet.value == "partenariat" %} selected{% endif %}>Partenariat</option>
+                                <option value="autre"{% if form.objet.value == "autre" %} selected{% endif %}>Autre</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="message">Votre message <span aria-hidden="true">*</span></label>
                             <textarea id="message" name="message" placeholder="Écrivez votre message ici…"
-                                required></textarea>
+                                required maxlength="10000">{{ form.message.value|default_if_none:"" }}</textarea>
                         </div>
                         <button type="submit" class="btn-submit">Envoyer le message</button>
                     </form>
@@ -812,120 +623,5 @@
             </div>
         </section>
 
-    </main>
-
-    <!-- ============================================================
-         FOOTER — Pied de page avec logo, liens et copyright
-    ============================================================ -->
-    <footer>
-        <div class="footer-inner">
-
-            <!-- Partie haute : 3 colonnes -->
-            <div class="footer-top">
-
-                <!-- Colonne 1 : logo + description -->
-                <div class="footer-brand">
-                    <a href="#hero" class="footer-logo" aria-label="Retour en haut de page">
-                        <img src="assets/image/LOGO_GSCOM.png" alt="Logo G.SCO.M">
-                        <span class="footer-logo-text">G.SCO.M</span>
-                    </a>
-                    <p>Le Groupe Scolaire de Mont-Ngafula forme l'élite de demain dans un cadre rigoureux et
-                        épanouissant depuis 1986.</p>
-                </div>
-
-                <!-- Colonne 2 : liens de navigation -->
-                <div class="footer-col">
-                    <h4>Liens rapides</h4>
-                    <ul>
-                        <li><a href="#hero">Accueil</a></li>
-                        <li><a href="#news">Actualités</a></li>
-                        <li><a href="#about">À propos</a></li>
-                        <li><a href="#formation">Formation</a></li>
-                        <li><a href="#vie_scolaire">Vie scolaire</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-
-                <!-- Colonne 3 : coordonnées -->
-                <div class="footer-col">
-                    <h4>Contact</h4>
-                    <p>Quartier Mont-Ngafula<br>Kinshasa, RDC</p>
-                    <br>
-                    <p><a href="mailto:gscom.montngafula@gmail.com"
-                            style="color:rgba(255,255,255,0.5);">gscom.montngafula@gmail.com</a></p>
-                    <br>
-                    <p>Lun – Sam : 7h30 – 14h00</p>
-                </div>
-
-            </div>
-
-            <!-- Partie basse : copyright + crédit -->
-            <div class="footer-bottom">
-                <p>© 2025 Groupe Scolaire de Mont-Ngafula. Tous droits réservés.</p>
-                <p class="credit">Site réalisé par <span>JorkaDev</span></p>
-            </div>
-
-        </div>
-    </footer>
-
-    <!-- ============================================================
-         JAVASCRIPT
-    ============================================================ -->
-    <script>
-        /* ----------------------------------------------------------
-           MENU MOBILE — Ouvre/ferme le menu hamburger
-        ---------------------------------------------------------- */
-        function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
-            const toggle = document.querySelector('.menu-toggle');
-            menu.classList.toggle('open');
-            toggle.classList.toggle('active');
-        }
-
-        /* ----------------------------------------------------------
-           NAV ACTIVE AU SCROLL
-           Met en surbrillance le lien correspondant à la section visible
-        ---------------------------------------------------------- */
-        const sections = document.querySelectorAll('section[id], div[id]');
-        const navLinks = document.querySelectorAll('nav ul li a');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                if (window.scrollY >= section.offsetTop - 80) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        /* ----------------------------------------------------------
-           FAQ ACCORDION
-           Ouvre une question et ferme les autres
-        ---------------------------------------------------------- */
-        function toggleFaq(btn) {
-            const item = btn.closest('.faq-item');
-            const isOpen = item.classList.contains('open');
-
-            // Ferme toutes les questions
-            document.querySelectorAll('.faq-item').forEach(i => {
-                i.classList.remove('open');
-                i.querySelector('button').setAttribute('aria-expanded', 'false');
-            });
-
-            // Ouvre celle cliquée si elle était fermée
-            if (!isOpen) {
-                item.classList.add('open');
-                btn.setAttribute('aria-expanded', 'true');
-            }
-        }
-    </script>
-
-</body>
-
-</html>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/contact.js' %}"></script>{% endblock %}
