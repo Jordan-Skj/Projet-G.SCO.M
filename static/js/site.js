@@ -7,6 +7,8 @@
             const toggle = document.querySelector('.menu-toggle');
             menu.classList.toggle('open');
             toggle.classList.toggle('active');
+            toggle.setAttribute('aria-expanded', String(menu.classList.contains('open')));
+            toggle.setAttribute('aria-label', menu.classList.contains('open') ? 'Fermer le menu' : 'Ouvrir le menu');
         }
 
         /* ----------------------------------------------------------
@@ -51,3 +53,24 @@
                 btn.setAttribute('aria-expanded', 'true');
             }
         }
+
+// Une seule apparition par élément, sans masquer le contenu avant JavaScript.
+(() => {
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (motion.matches || !('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            if (!motion.matches) entry.target.classList.add('reveal-visible');
+            observer.unobserve(entry.target);
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.news-card, .formation-card, .feature, .img_about, .content, .vie_scolaire_content2 > div, .main-member, .dir-card, .ens-card, .testi-card, .contact-info, .contact-form-wrap').forEach(element => observer.observe(element));
+})();
+
+document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && document.getElementById('mobileMenu')?.classList.contains('open')) {
+        toggleMenu();
+        document.querySelector('.menu-toggle').focus();
+    }
+});

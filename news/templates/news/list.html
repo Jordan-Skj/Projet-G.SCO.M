@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Toutes les actualités — G.SCO.M{% endblock %}
+{% block content %}
+<section id="news" aria-label="Toutes les actualités">
+    <div class="news-top">
+        <div class="news-left">
+            <p class="subsub_title">Actualités</p>
+            <h1>Toutes les actualités</h1>
+        </div>
+        <a href="{% url 'home:index' %}#news" class="news-voir-tout">Retour à l'accueil</a>
+    </div>
+
+    <div class="news-grid">
+        {% for article in articles %}
+            {% include "news/_card.html" %}
+        {% empty %}
+            <p class="news-empty">Aucune actualité pour le moment.</p>
+        {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+        <nav class="news-pagination" aria-label="Pagination des actualités">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" rel="prev">← Précédent</a>
+            {% endif %}
+            <span>Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" rel="next">Suivant →</a>
+            {% endif %}
+        </nav>
+    {% endif %}
+</section>
+{% endblock %}

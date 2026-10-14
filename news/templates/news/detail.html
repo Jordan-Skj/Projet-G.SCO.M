@@ -2,7 +2,7 @@
 {% block title %}{{ article.title }} — G.SCO.M{% endblock %}
 {% block content %}
 <section id="news" aria-label="Actualité">
-    <div class="news-top"><a href="{% url 'home:index' %}" class="news-voir-tout">← Toutes les actualités</a></div>
+    <div class="news-top"><a href="{% url 'news:list' %}" class="news-voir-tout">← Toutes les actualités</a></div>
     <article class="news-card featured">
         <div class="news-img"><img src="{{ article.image_url }}" alt="{{ article.image_alt|default:article.title }}"></div>
         <div class="news-body">

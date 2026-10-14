@@ -14,6 +14,10 @@ class NewsTests(TestCase):
         self.assertEqual(News.objects.published().count(), 3)
         for url in ['/', '/news/', '/news/40-ans/', '/admin/login/']:
             self.assertEqual(self.client.get(url).status_code, 200)
+        listing = self.client.get('/news/')
+        self.assertContains(listing, 'Toutes les actualités')
+        self.assertContains(listing, '/news/40-ans/')
+        self.assertContains(self.client.get('/'), 'Voir tous les articles')
         for title, published, date in [('Draft', False, timezone.now()), ('Future', True, timezone.now() + timedelta(days=1))]:
             article = News.objects.create(title=title, slug=title.lower(), summary='Summary', content='Body', is_published=published, published_at=date)
             self.assertEqual(self.client.get(article.get_absolute_url()).status_code, 404)
