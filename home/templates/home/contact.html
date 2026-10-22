@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Contact et accès — G.SCO.M{% endblock %}
+{% block meta_description %}Une question ou une visite à préparer ? Retrouvez nos coordonnées et écrivez au secrétariat.{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'pages.css' %}">{% endblock %}
+{% block content %}
+<div class="page-heading"><nav class="page-breadcrumb" aria-label="Fil d’Ariane"><a href="{% url 'home:index' %}">Accueil</a><span aria-hidden="true">/</span><span aria-current="page">Contact et accès</span></nav><h1>Contact et accès</h1><p>Une question ou une visite à préparer ? Retrouvez nos coordonnées et écrivez au secrétariat.</p></div>
+<section id="contact" aria-label="Nous contacter">
+            <div class="contact-inner">
+
+                <!-- Côté gauche : texte + coordonnées -->
+                <div class="contact-info">
+                    <p class="subsub_title">Nous contacter</p>
+                    <h2>Le secrétariat à votre écoute</h2>
+                    <p>Une question sur les inscriptions, les formations ou la vie scolaire ? Notre équipe vous répond
+                        dans les plus brefs délais.</p>
+
+                    <div class="contact-details">
+
+                        <div class="contact-item">
+                            <div class="contact-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#c0392b">
+                                    <path
+                                        d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z" />
+                                </svg>
+                            </div>
+                            <div class="contact-item-text">
+                                <p>E-mail</p>
+                                <p><a href="mailto:gscom.montngafula@gmail.com">gscom.montngafula@gmail.com</a></p>
+                            </div>
+                        </div>
+
+                        
+
+                        <div class="contact-item">
+                            <div class="contact-icon" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#c0392b"><path d="M536.5-503.5Q560-527 560-560t-23.5-56.5Q513-640 480-640t-56.5 23.5Q400-593 400-560t23.5 56.5Q447-480 480-480t56.5-23.5ZM480-186q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg></div>
+                            <div class="contact-item-text">
+                                <p>Adresse</p>
+                                <p>Quartier Mont-Ngafula, Kinshasa, RDC</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#c0392b"><path d="M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm-99.5 291.5Q275-137 226-186t-77.5-114.5Q120-366 120-440t28.5-139.5Q177-645 226-694t114.5-77.5Q406-800 480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80q-74 0-139.5-28.5ZM678-242q82-82 82-198t-82-198q-82-82-198-82t-198 82q-82 82-82 198t82 198q82 82 198 82t198-82ZM480-440Z"/></svg></div>
+                            <div class="contact-item-text">
+                                <p>Horaires du secrétariat</p>
+                                <p>Lun – Sam : 7h30 à 14h00</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Côté droit : formulaire de contact -->
+                <div class="contact-form-wrap">
+                    <h3>Envoyez-nous un message</h3>
+                    <form id="contact-form" action="{% url 'contact:send' %}" method="POST" novalidate>
+                        {% csrf_token %}
+                        <div id="contact-feedback" role="status" aria-live="polite"{% if not form.errors and not messages %} hidden{% endif %}>
+                        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+                        {% for field in form %}{% for error in field.errors %}<p>{{ field.label }} : {{ error }}</p>{% endfor %}{% endfor %}
+                        {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Nom complet <span aria-hidden="true">*</span></label>
+                                <input type="text" id="name" name="name" value="{{ form.name.value|default_if_none:'' }}" maxlength="150" placeholder="Jean Mukendi" required
+                                    autocomplete="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Adresse e-mail <span aria-hidden="true">*</span></label>
+                                <input type="email" id="email" name="email" value="{{ form.email.value|default_if_none:'' }}" placeholder="jean@exemple.com" required
+                                    autocomplete="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="objet">Objet</label>
+                            <select id="objet" name="objet">
+                                <option value="">Sélectionnez un objet…</option>
+                                <option value="inscription"{% if form.objet.value == "inscription" %} selected{% endif %}>Inscription</option>
+                                <option value="infos"{% if form.objet.value == "infos" %} selected{% endif %}>Informations générales</option>
+                                <option value="partenariat"{% if form.objet.value == "partenariat" %} selected{% endif %}>Partenariat</option>
+                                <option value="autre"{% if form.objet.value == "autre" %} selected{% endif %}>Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Votre message <span aria-hidden="true">*</span></label>
+                            <textarea id="message" name="message" placeholder="Écrivez votre message ici…"
+                                required maxlength="10000">{{ form.message.value|default_if_none:"" }}</textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Envoyer le message</button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/contact.js' %}"></script>{% endblock %}

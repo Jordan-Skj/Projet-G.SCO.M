@@ -1,0 +1,33 @@
+/* Une lecture directe, sans onglets ni contenu masqué. */
+.courses-page { max-width: 1100px; margin: auto; padding: 28px 24px 64px; }
+.courses-breadcrumb { display: flex; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: 14px; }
+.courses-page a:not(.btn-primary) { color: var(--accent-text); text-underline-offset: 4px; }
+.courses-intro { max-width: 740px; padding: 48px 0; }
+.courses-intro h1 { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.2; color: var(--heading); margin: 12px 0 20px; }
+.courses-page p, .course-card li { color: var(--muted); line-height: 1.75; }
+.courses-intro > p:not(.subsub_title) { font-size: 17px; }
+.courses-page .btn-primary { display: inline-block; text-align: center; line-height: 1.5; }
+.courses-intro .btn-primary { margin-top: 24px; }
+.courses-page h2 { font-size: 1.65rem; margin-bottom: 20px; }
+.courses-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.course-card { padding: 28px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.course-card h3 { color: var(--heading); font-size: 1.45rem; margin-bottom: 12px; }
+.course-card ul { padding-left: 20px; margin-top: 16px; }
+.course-card li { margin: 6px 0; }
+.course-card li::marker { color: var(--accent-text); }
+.course-card > a { display: inline-block; margin-top: 16px; font-weight: 700; }
+.courses-streams { padding-top: 48px; }
+.courses-stream-list { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+.courses-stream-list li { background: var(--soft); border: 1px solid var(--border); border-radius: 8px; padding: 12px 20px; font-weight: 700; color: var(--heading); }
+.courses-note { font-size: 14px; max-width: 720px; }
+.courses-next { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 28px; padding: 32px; background: var(--tint); border: 1px solid var(--border); border-radius: 12px; margin-top: 48px; }
+.courses-next h2 { margin-bottom: 12px; }
+.courses-actions { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+@media (max-width: 700px) {
+    .courses-grid, .courses-next { grid-template-columns: 1fr; }
+    .courses-page { padding: 24px 20px 48px; }
+    .courses-breadcrumb { display: flex; }
+    .course-card, .courses-next { padding: 24px; }
+    .courses-intro { padding: 32px 0; }
+    .courses-actions { align-items: stretch; }
+}

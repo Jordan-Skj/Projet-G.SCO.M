@@ -1377,17 +1377,17 @@ footer {
 :focus-visible { outline: 3px solid var(--accent-text); outline-offset: 4px; }
 section[id], div[id] { scroll-margin-top: 80px; }
 .news-card, .formation-card, .dir-card, .ens-card, .key-features { background: var(--surface); }
-@media (max-width: 1050px) {
+@media (max-width: 1150px) {
     header nav { display: none; }
     .menu-toggle { display: flex; }
 }
-@media (min-width: 1051px) { .mobile-menu.open { display: none; } }
+@media (min-width: 1151px) { .mobile-menu.open { display: none; } }
 @keyframes gentle-reveal {
-    from { opacity: 0; translate: 0 14px; }
+    from { opacity: 0; translate: 0 24px; }
     to { opacity: 1; translate: 0 0; }
 }
 @media (prefers-reduced-motion: no-preference) {
-    .reveal-visible { animation: gentle-reveal .5s ease-out both; }
+    .reveal-visible { animation: gentle-reveal .65s cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms) both; }
     #hero h1, #hero > p, .hero-buttons { animation: gentle-reveal .6s ease-out both; }
     #hero > p { animation-delay: .08s; }
     .hero-buttons { animation-delay: .16s; }
@@ -1405,3 +1405,6 @@ section[id], div[id] { scroll-margin-top: 80px; }
         transform: none;
     }
 }
+
+.formations-home-link { text-align: center; margin: 0 0 28px; }
+header nav a[aria-current="page"], .mobile-menu a[aria-current="page"] { background: var(--soft); color: var(--accent-text); }

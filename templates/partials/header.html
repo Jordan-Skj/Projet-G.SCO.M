@@ -14,11 +14,12 @@
         <nav aria-label="Navigation principale">
             <ul>
                 <li><a href="{% url 'home:index' %}#hero">Accueil</a></li>
-                <li><a href="{% url 'home:index' %}#news">Actualités</a></li>
-                <li><a href="{% url 'home:index' %}#about">À propos</a></li>
-                <li><a href="{% url 'home:index' %}#formation">Formation</a></li>
-                <li><a href="{% url 'home:index' %}#vie_scolaire">Vie scolaire</a></li>
-                <li><a href="{% url 'home:index' %}#contact">Contact</a></li>
+                <li><a href="{% url 'news:list' %}">Actualités</a></li>
+                <li><a href="{% url 'home:ecole' %}">Notre école</a></li>
+                <li><a href="{% url 'home:formations' %}"{% if request.resolver_match.url_name == 'formations' %} aria-current="page"{% endif %}>Formations</a></li>
+                <li><a href="{% url 'home:vie_scolaire' %}">Vie scolaire</a></li>
+                <li><a href="{% url 'home:inscriptions' %}"{% if request.resolver_match.url_name == 'inscriptions' %} aria-current="page"{% endif %}>Inscriptions</a></li>
+                <li><a href="{% url 'home:contact' %}">Contact</a></li>
             </ul>
         </nav>
 
@@ -41,11 +42,12 @@
     <div class="mobile-menu" id="mobileMenu">
         <ul>
             <li><a href="{% url 'home:index' %}#hero" onclick="toggleMenu()">Accueil</a></li>
-            <li><a href="{% url 'home:index' %}#news" onclick="toggleMenu()">Actualités</a></li>
-            <li><a href="{% url 'home:index' %}#about" onclick="toggleMenu()">À propos</a></li>
-            <li><a href="{% url 'home:index' %}#formation" onclick="toggleMenu()">Formation</a></li>
-            <li><a href="{% url 'home:index' %}#vie_scolaire" onclick="toggleMenu()">Vie scolaire</a></li>
-            <li><a href="{% url 'home:index' %}#contact" onclick="toggleMenu()">Contact</a></li>
+            <li><a href="{% url 'news:list' %}" onclick="toggleMenu()">Actualités</a></li>
+            <li><a href="{% url 'home:ecole' %}" onclick="toggleMenu()">Notre école</a></li>
+            <li><a href="{% url 'home:formations' %}"{% if request.resolver_match.url_name == 'formations' %} aria-current="page"{% endif %} onclick="toggleMenu()">Formations</a></li>
+            <li><a href="{% url 'home:vie_scolaire' %}" onclick="toggleMenu()">Vie scolaire</a></li>
+            <li><a href="{% url 'home:inscriptions' %}"{% if request.resolver_match.url_name == 'inscriptions' %} aria-current="page"{% endif %}>Inscriptions</a></li>
+                <li><a href="{% url 'home:contact' %}" onclick="toggleMenu()">Contact</a></li>
         </ul>
     </div>
 

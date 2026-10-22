@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Nos formations — Maternelle, primaire et humanités | G.SCO.M{% endblock %}
+{% block meta_description %}Découvrez les quatre cycles du G.SCO.M, de la maternelle aux humanités, et les cinq filières proposées. Retrouvez les démarches pour inscrire votre enfant.{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'formations.css' %}">{% endblock %}
+{% block content %}
+<div class="courses-page">
+    <nav class="courses-breadcrumb" aria-label="Fil d’Ariane"><a href="{% url 'home:index' %}">Accueil</a><span aria-hidden="true">/</span><span aria-current="page">Formations</span></nav>
+    <section class="courses-intro" aria-labelledby="courses-title">
+        <p class="subsub_title">Les parcours au G.SCO.M</p>
+        <h1 id="courses-title">Une formation à chaque étape.</h1>
+        <p>Le G.SCO.M suit le programme national et complète les cours par des activités culturelles, sportives et parascolaires. Retrouvez le niveau adapté à votre enfant.</p>
+        <a class="btn-primary" href="{% url 'home:inscriptions' %}">Comment inscrire mon enfant</a>
+    </section>
+    <section aria-labelledby="cycles-title">
+        <h2 id="cycles-title">Nos quatre cycles</h2>
+        <div class="courses-grid">
+            <article class="course-card">
+                <span class="card-years">3 années</span><h3>Maternelle</h3>
+                <p>Découvrir l'école, apprendre à vivre ensemble et développer son autonomie.</p>
+                <ul><li>Jeu et activités d'éveil</li><li>Développement des aptitudes cognitives</li><li>Développement social et moteur</li><li>Salles spacieuses, aérées et éclairées, avec supports pédagogiques, jeux et jouets</li><li>Un téléviseur dans chaque classe</li></ul>
+            </article>
+            <article class="course-card">
+                <span class="card-years">6 années</span><h3>Primaire</h3>
+                <p>Construire des bases solides pour la suite de la scolarité.</p>
+                <ul><li>Lecture et écriture</li><li>Calcul et sciences</li><li>Éducation civique</li><li>35 élèves maximum par classe pour faciliter le suivi individuel ; au-delà, la classe est scindée</li></ul>
+            </article>
+            <article class="course-card">
+                <span class="card-years">2 années</span><h3>7ème et 8ème</h3>
+                <p>Faire le lien entre le primaire et les humanités.</p>
+                <ul><li>Consolidation des acquis</li><li>Approfondissement des apprentissages</li><li>Orientation progressive vers une filière</li><li>Classes de recrutement du secondaire, avec des critères rigoureux de passage en classe supérieure</li></ul>
+            </article>
+            <article class="course-card">
+                <span class="card-years">4 années</span><h3>Humanités</h3>
+                <p>Approfondir ses connaissances dans une filière adaptée à son projet.</p>
+                <ul><li>Cinq filières proposées</li><li>Un parcours jusqu'au diplôme d'État</li><li>Une orientation à préciser avec l'équipe scolaire</li></ul>
+                <a href="#filieres">Voir les cinq filières ↓</a>
+            </article>
+        </div>
+    </section>
+    <section id="filieres" class="courses-streams" aria-labelledby="streams-title">
+        <h2 id="streams-title">Les filières des humanités</h2>
+        <p>Cinq parcours proposés au G.SCO.M :</p>
+        <ul class="courses-stream-list"><li>Scientifique</li><li>Littéraire</li><li>Pédagogie</li><li>Commercial</li><li>Électricité</li></ul>
+        <p class="courses-note">Pour connaître les matières détaillées, les conditions d'accès et les places disponibles, contactez le secrétariat.</p>
+    </section>
+    <section class="courses-next" aria-labelledby="next-title">
+        <div><h2 id="next-title">Prêt à préparer l'inscription ?</h2><p>Retrouvez les étapes, les documents et les horaires du secrétariat.</p></div>
+        <div class="courses-actions"><a class="btn-primary" href="{% url 'home:inscriptions' %}">Voir les démarches d'inscription</a><a href="{% url 'home:contact' %}">Besoin d'aide pour choisir ? Contactez-nous</a></div>
+    </section>
+</div>
+{% endblock %}

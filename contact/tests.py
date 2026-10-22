@@ -27,9 +27,17 @@ class ContactTests(TestCase):
     def test_csrf_and_non_ajax(self):
         client = Client(enforce_csrf_checks=True)
         self.assertEqual(client.post('/contact/', self.data).status_code, 403)
-        client.get('/')
+        client.get('/nous-contacter/')
         token = client.cookies['csrftoken'].value
-        self.assertEqual(client.post('/contact/', {**self.data, 'csrfmiddlewaretoken': token}).status_code, 302)
+        self.assertRedirects(client.post('/contact/', {**self.data, 'csrfmiddlewaretoken': token}), '/nous-contacter/#contact-feedback')
         response = self.client.post('/contact/', {'name': 'Retained'})
         self.assertEqual(response.status_code, 400)
+        self.assertTemplateUsed(response, 'home/contact.html')
         self.assertContains(response, 'value="Retained"', status_code=400)
+
+    def test_non_ajax_delivery_failure_preserves_form(self):
+        with patch('contact.views.EmailMessage.send', side_effect=OSError('SMTP offline')), self.assertLogs('contact.views', level='ERROR'):
+            response = self.client.post('/contact/', self.data)
+        self.assertTemplateUsed(response, 'home/contact.html')
+        self.assertContains(response, 'Test Parent', status_code=503)
+        self.assertContains(response, 'L’envoi a échoué.', status_code=503)

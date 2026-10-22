@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Inscriptions — Procédure et documents | G.SCO.M{% endblock %}
+{% block meta_description %}Préparez l'inscription de votre enfant au G.SCO.M : niveaux proposés, démarches au secrétariat, documents à préparer et renseignements pratiques.{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'inscriptions.css' %}">{% endblock %}
+{% block content %}
+<div class="admissions">
+    <nav class="admissions-breadcrumb" aria-label="Fil d’Ariane"><a href="{% url 'home:index' %}">Accueil</a><span aria-hidden="true">/</span><span aria-current="page">Inscriptions</span></nav>
+    <section class="admissions-intro" aria-labelledby="admissions-title">
+        <div>
+            <p class="subsub_title">Rejoindre le G.SCO.M</p>
+            <h1 id="admissions-title">Un nouveau chapitre<br>pour votre enfant.</h1>
+            <p class="admissions-lead">De la maternelle aux humanités, préparez votre démarche avec les informations essentielles. Le secrétariat vous accompagne pour choisir le niveau adapté et constituer le dossier.</p>
+            <div class="admissions-actions"><a class="btn-primary" href="#procedure">Découvrir les étapes</a><a class="news-voir-tout" href="{% url 'home:contact' %}">Contacter le secrétariat</a></div>
+        </div>
+        <aside class="admissions-panel" aria-labelledby="visit-title">
+            <p class="subsub_title">Votre point de départ</p>
+            <h2 id="visit-title">Le secrétariat vous accueille</h2>
+            <dl><dt>Horaires du secrétariat</dt><dd>Du lundi au samedi, de 7h30 à 14h00</dd><dt>Adresse</dt><dd>Quartier Mont-Ngafula, Kinshasa, RDC</dd><dt>E-mail</dt><dd><a href="mailto:gscom.montngafula@gmail.com">gscom.montngafula@gmail.com</a></dd></dl>
+            <p>Avant votre déplacement, demandez les dates d'inscription et les disponibilités pour la classe souhaitée.</p>
+        </aside>
+    </section>
+    <section class="admissions-section" aria-labelledby="levels-title">
+        <p class="subsub_title">Les parcours</p><h2 id="levels-title">À chaque étape, un accompagnement</h2>
+        <div class="admissions-levels">
+            <article><span>01</span><h3>Maternelle</h3><p>Les premiers apprentissages, le jeu et l'éveil.</p></article>
+            <article><span>02</span><h3>Primaire</h3><p>Les bases de la lecture, de l'écriture et du calcul.</p></article>
+            <article><span>03</span><h3>7ème et 8ème</h3><p>Consolider les acquis et préparer l'orientation.</p></article>
+            <article><span>04</span><h3>Humanités</h3><p>Scientifique, littéraire, pédagogie, commercial et électricité.</p></article>
+        </div>
+        <p class="admissions-note">Le secrétariat précise les conditions d'admission et les places disponibles selon le niveau et la filière.</p>
+    </section>
+    <section id="procedure" class="admissions-section" aria-labelledby="steps-title">
+        <p class="subsub_title">La démarche</p><h2 id="steps-title">Préparer l'inscription, étape par étape</h2>
+        <ol class="admissions-steps">
+            <li><h3>Renseignez-vous sur la classe souhaitée</h3><p>Indiquez le niveau actuel de votre enfant et la classe envisagée. Demandez au secrétariat les conditions d'admission, le calendrier et les frais applicables.</p></li>
+            <li><h3>Préparez les documents de votre enfant</h3><p>Rassemblez les pièces indiquées ci-dessous. Faites confirmer la liste exacte, le nombre de copies et le format des photos avant de vous déplacer.</p></li>
+            <li><h3>Présentez-vous au secrétariat</h3><p>Apportez votre dossier pendant les horaires d'accueil. L'équipe vous guidera dans les formalités et vous indiquera les éventuelles pièces complémentaires.</p></li>
+            <li><h3>Faites confirmer la suite de la démarche</h3><p>Vérifiez auprès du secrétariat que votre dossier est complet et demandez comment obtenir la confirmation de l'inscription ainsi que les consignes pour la rentrée.</p></li>
+        </ol>
+    </section>
+    <div class="admissions-columns">
+        <section class="admissions-panel" aria-labelledby="documents-title">
+            <p class="subsub_title">Le dossier</p><h2 id="documents-title">Les documents à préparer</h2>
+            <ul class="admissions-documents"><li><strong>Bulletin scolaire</strong><span>Pour le parcours scolaire déjà effectué. En cas de première scolarisation, demandez quelles pièces fournir.</span></li><li><strong>Extrait de naissance</strong><span>Pour les informations d'identité de l'enfant.</span></li><li><strong>Photos d'identité</strong><span>Le nombre et le format sont à confirmer au secrétariat.</span></li></ul>
+            <p class="admissions-note">Cette liste reprend les documents indiqués par l'école sur ce site. Le secrétariat confirme les pièces nécessaires à votre situation.</p>
+        </section>
+        <section class="admissions-panel" aria-labelledby="practical-title">
+            <p class="subsub_title">Avant de venir</p><h2 id="practical-title">Les points à confirmer</h2>
+            <dl><dt>Dates d'inscription et de rentrée</dt><dd>Demandez le calendrier de l'année scolaire concernée.</dd><dt>Frais et paiement</dt><dd>Demandez les montants, les échéances et les moyens de paiement acceptés directement au secrétariat.</dd><dt>Conditions d'admission</dt><dd>Faites préciser les critères d'âge ou de niveau et l'existence éventuelle d'un entretien ou d'une évaluation.</dd><dt>Préparation de la rentrée</dt><dd>Demandez la liste des fournitures, les consignes vestimentaires et les horaires de la classe.</dd></dl>
+        </section>
+    </div>
+    <section class="admissions-section admissions-questions" aria-labelledby="questions-title">
+        <h2 id="questions-title">Vos questions fréquentes</h2>
+        <details><summary>Peut-on s'inscrire directement sur le site ?</summary><p>Cette page vous aide à préparer la démarche. Le formulaire de contact permet de demander des renseignements ; il ne valide pas une inscription. Contactez le secrétariat pour connaître les formalités à accomplir.</p></details>
+        <details><summary>Mon enfant vient d'une autre école. Comment procéder ?</summary><p>Précisez sa dernière classe et présentez son bulletin au secrétariat. L'équipe vous indiquera les documents complémentaires éventuels et les conditions pour rejoindre le niveau souhaité.</p></details>
+        <details><summary>Quels documents fournir pour une première scolarisation ?</summary><p>Signalez qu'il s'agit d'une première inscription à l'école. Le secrétariat vous indiquera les pièces adaptées à cette situation et les conditions d'accueil en maternelle.</p></details>
+    </section>
+    <section class="admissions-help" aria-labelledby="help-title"><h2 id="help-title">Préparons ensemble son arrivée.</h2><p>Précisez la classe souhaitée dans votre message : notre équipe pourra vous orienter.</p><a class="btn-primary" href="{% url 'home:contact' %}">Demander des renseignements</a></section>
+</div>
+{% endblock %}

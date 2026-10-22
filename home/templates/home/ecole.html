@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Notre école — G.SCO.M{% endblock %}
+{% block meta_description %}Découvrez notre histoire, nos valeurs et les personnes qui accompagnent les élèves.{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'pages.css' %}">{% endblock %}
+{% block content %}
+<div class="page-heading"><nav class="page-breadcrumb" aria-label="Fil d’Ariane"><a href="{% url 'home:index' %}">Accueil</a><span aria-hidden="true">/</span><span aria-current="page">Notre école</span></nav><h1>Notre école</h1><p>Découvrez notre histoire, nos valeurs et les personnes qui accompagnent les élèves.</p></div>
+<section id="about" aria-label="À propos">
+            <div class="img_about">
+                <img src="{% static 'assets/image/extérieur_ecole.png' %}" alt="Façade extérieure du Groupe Scolaire de Mont-Ngafula"
+                    loading="lazy">
+            </div>
+            <div class="content">
+                <p class="subsub_title">À propos</p>
+                <h2>Une école de confiance depuis 1986</h2>
+                <p>Fondé le 1er septembre 1986, le Groupe Scolaire de Mont-Ngafula — le G.SCO.M — est un établissement
+                    d'enseignement général situé à Mont-Ngafula, Kinshasa. Sous la direction de M. Z. Mandina, notre
+                    école accompagne chaque élève de la maternelle jusqu'aux humanités avec rigueur et bienveillance
+                    depuis sa fondation.</p>
+                <br>
+                <p>Avec plus de 578 élèves, des salles équipées, une salle d'informatique moderne et une cour de sport,
+                    la G.SCO.M offre un cadre complet pour apprendre et s'épanouir. Nos enseignants transmettent chaque
+                    jour des savoirs solides et des valeurs humaines durables.</p>
+                <br>
+                <p class="devise">Notre devise : Réflexion, Travail, Discipline et Distinction.</p>
+            </div>
+        </section>
+<section class="page-callout" aria-labelledby="education-title"><h2 id="education-title">Une formation complète</h2><p>Le respect du programme national s'accompagne d'activités culturelles, sportives et parascolaires. Des enseignants qualifiés, expérimentés et dévoués assurent l'accompagnement des élèves.</p><details class="school-recognition"><summary>Les distinctions mentionnées par l'école</summary><p>Dans sa présentation, l'école indique que son professeur de géographie a été distingué comme meilleur enseignant de son domaine dans le pool Mont-Ngafula 1. Elle rapporte également de bonnes évaluations dans les unités pédagogiques externes.</p><p>Elle mentionne le titre « Forgeron de la Nation : Meilleure école de la décennie », attribué par le Regroupement des Enseignants de la République Démocratique du Congo (REC). L'année de remise de cette distinction n'est pas précisée dans cette présentation.</p></details></section>
+<section id="equipe" aria-label="Notre équipe">
+
+            <!-- En-tête de section -->
+            <div class="equipe_content">
+                <p class="subsub_title">Équipe</p>
+                <h2>Notre Équipe</h2>
+                <p>Des hommes et des femmes engagés chaque jour pour offrir à vos enfants le meilleur encadrement
+                    possible.</p>
+            </div>
+
+            <!-- --- Fondateur & Recteur (grande carte horizontale) --- -->
+            <div class="main-member">
+                <div class="member-header">
+                    <div class="member-photo-wrap">
+                        <img src="{% static 'assets/image/promoteur.jpg' %}" alt="M. Z. Mandina, Fondateur et Recteur du G.SCO.M">
+                    </div>
+                    <span class="member-role-badge">Fondateur & Recteur</span>
+                </div>
+                <div class="member-body">
+                    <h3>M. Z. Mandina</h3>
+                    <p>Fondateur et recteur du Groupe Scolaire de Mont-Ngafula depuis 1986, Monsieur Z. Mandina incarne
+                        la vision et les valeurs de la G.SCO.M. Son leadership a permis à l'école de devenir l'un des
+                        établissements de référence du quartier de Mont-Ngafula à Kinshasa.</p>
+                    <hr class="member-divider">
+                    <h4 class="engagement-title">M. Z. Mandina — Son engagement</h4>
+                    <p class="engagement-sub">Un parcours entièrement dédié à l'éducation et au développement de la
+                        jeunesse congolaise.</p>
+                    <ul class="engagement-list">
+                        <li>Un engagement éducatif depuis 1986</li>
+                        <li>Fondateur d'un établissement accueillant aujourd'hui plus de 578 élèves</li>
+                        <li>Promoteur d'une éducation alliant rigueur académique et épanouissement personnel</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- --- Grille de direction (8 membres) --- -->
+            <div class="direction">
+                <h3 class="direction-title">Notre Direction</h3>
+                <div class="direction-grid">
+<article class="dir-card"><div class="dir-card-photo dir-card-photo--initiale"><span class="initiale" aria-hidden="true">J</span></div><div class="dir-card-body"><h4>Jean-Luc Doudou MANDINA MFUMU</h4><p class="role-text">Inspecteur général</p></div></article>
+<article class="dir-card"><div class="dir-card-photo dir-card-photo--initiale"><span class="initiale" aria-hidden="true">K</span></div><div class="dir-card-body"><h4>Kyky MANDINA KIMANGA</h4><p class="role-text">Directrice financière</p></div></article>
+
+
+                    <article class="dir-card">
+                        <div class="dir-card-photo">
+                            <img src="{% static 'assets/image/Prefet.png' %}" alt="Pacifique Guylain MPULUSU TUABANZULUA, Préfet des études"
+                                loading="lazy">
+                            <span class="role-badge">Préfet des études</span>
+                        </div>
+                        <div class="dir-card-body">
+                            <h4>Pacifique Guylain MPULUSU TUABANZULUA</h4>
+                            <p class="role-text">Préfet des études</p>
+                            <p>Responsable de la coordination pédagogique, il veille à la qualité de l'enseignement et
+                                au suivi du programme scolaire dans tous les niveaux.</p>
+                        </div>
+                    </article>
+
+                    <article class="dir-card">
+                        <div class="dir-card-photo">
+                            <img src="{% static 'assets/image/Directeur.png' %}" alt="Mibert MWABA UBA DA A YALA, Directeur du primaire"
+                                loading="lazy">
+                            <span class="role-badge">Directeur du primaire</span>
+                        </div>
+                        <div class="dir-card-body">
+                            <h4>Mibert MWABA UBA DA A YALA</h4>
+                            <p class="role-text">Directeur du primaire</p>
+                            <p>Il supervise l'ensemble des activités pédagogiques et administratives du cycle primaire,
+                                de la 1ère à la 6ème année.</p>
+                        </div>
+                    </article>
+
+                    <article class="dir-card">
+                        <div class="dir-card-photo">
+                            <span class="portrait-initial" aria-hidden="true">C</span>
+                            <span class="role-badge">Directeur de discipline</span>
+                        </div>
+                        <div class="dir-card-body">
+                            <h4>Cadet MAWAWU</h4>
+                            <p class="role-text">Directeur de discipline, chargé des activités culturelles et de la bibliothèque</p>
+                            <p>Garant du règlement intérieur et du bon comportement des élèves, il assure un
+                                environnement scolaire serein et propice à l'apprentissage. Il est également chargé des activités culturelles et de la bibliothèque.</p>
+                        </div>
+                    </article>
+
+                    <article class="dir-card">
+                        <div class="dir-card-photo">
+                            <img src="{% static 'assets/image/Intendant general.png' %}"
+                                alt="Philippe LUTONADIO KUNGANZI, Intendant général et opérateur de saisie" loading="lazy">
+                            <span class="role-badge">Intendant général et opérateur de saisie</span>
+                        </div>
+                        <div class="dir-card-body">
+                            <h4>Philippe LUTONADIO KUNGANZI</h4>
+                            <p class="role-text">Intendant général et opérateur de saisie</p>
+                            <p>Pivot administratif de l'école, il gère la correspondance officielle, les inscriptions et
+                                la coordination générale des affaires internes.</p>
+                        </div>
+                    </article>
+
+                    <article class="dir-card">
+                        <div class="dir-card-photo">
+                            <img src="{% static 'assets/image/Caissiere.jpg' %}" alt="Lidwine MBUDI NZENGO, Caissière" loading="lazy">
+                            <span class="role-badge">Caissière</span>
+                        </div>
+                        <div class="dir-card-body">
+                            <h4>Lidwine MBUDI NZENGO</h4>
+                            <p class="role-text">Caissière</p>
+                            <p>Elle assure la gestion financière quotidienne de l'établissement avec rigueur et
+                                transparence.</p>
+                        </div>
+                    </article>
+
+                    <!-- Carte sans photo : initiale affichée à la place -->
+                    <article class="dir-card">
+                        <div class="dir-card-photo dir-card-photo--initiale">
+                            <div class="initiale" aria-hidden="true">B</div>
+                            <span class="role-badge">Surnuméraire</span>
+                        </div>
+                        <div class="dir-card-body">
+                            <h4>Cléophas BILO MANGAFU</h4>
+                            <p class="role-text">Surnuméraire</p>
+                            <p>Membre de l'équipe administrative, il apporte un soutien opérationnel au bon
+                                fonctionnement de l'établissement.</p>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <!-- --- Corps enseignant --- -->
+            <div class="enseignant-section">
+                <div class="enseignant-header">
+                    <h3>Notre corps enseignant</h3>
+                    
+                </div>
+                <div class="enseignant-grid">
+
+                    <article class="ens-card">
+                        <div class="ens-card-photo">
+                            <span class="portrait-initial" aria-hidden="true">W</span>
+                            <span class="role-badge">Mathématiques</span>
+                        </div>
+                        <div class="ens-card-body">
+                            <h4>M. William Mboma</h4>
+                            <p class="matiere">Mathématiques</p>
+                            <p>Passionné par les chiffres, il transmet son amour des mathématiques à ses élèves avec
+                                pédagogie et enthousiasme.</p>
+                        </div>
+                    </article>
+
+                    <article class="ens-card">
+                        <div class="ens-card-photo">
+                            <span class="portrait-initial" aria-hidden="true">L</span>
+                            <span class="role-badge">Français</span>
+                        </div>
+                        <div class="ens-card-body">
+                            <h4>M. Leon Musala</h4>
+                            <p class="matiere">Français</p>
+                            <p>Expert en littérature et grammaire, il encourage ses élèves à développer leur expression
+                                écrite et orale avec créativité.</p>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+        </section><section class="testimonial" aria-label="Témoignages">
+            <p class="subsub_title">Témoignages</p>
+            <h2>Ce que disent les parents</h2>
+
+            <div class="testimonials_cards">
+
+                <article class="testi-card">
+                    <div class="testi-content">
+                        <p>Mon fils est à la G.SCO.M depuis la maternelle. Aujourd'hui il est en humanités et ses
+                            résultats sont excellents. Je recommande cette école à toutes les familles du quartier.</p>
+                    </div>
+                    <div class="testi-author">
+                        <img src="{% static 'assets/image/Caissiere.jpg' %}" alt="Maman Cécile" loading="lazy">
+                        <div>
+                            <h4>Maman Cécile</h4>
+                            <p>Mère d'élève</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testi-card">
+                    <div class="testi-content">
+                        <p>Ma fille a fait ses études à la G.SCO.M et elle a obtenu son diplôme avec mention.
+                            L'enseignement est de très haute qualité et les professeurs sont très dévoués.</p>
+                    </div>
+                    <div class="testi-author">
+                        <span class="portrait-initial" aria-hidden="true">P</span>
+                        <div>
+                            <h4>Papa Jean</h4>
+                            <p>Père d'élève</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testi-card">
+                    <div class="testi-content">
+                        <p>J'ai passé toute ma scolarité à la G.SCO.M. C'est une école qui m'a appris la discipline et
+                            le goût du travail. Ces valeurs me servent encore aujourd'hui.</p>
+                    </div>
+                    <div class="testi-author">
+                        <span class="portrait-initial" aria-hidden="true">J</span>
+                        <div>
+                            <h4>Jourdain Shongo</h4>
+                            <p>Ancien élève — 2025</p>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+{% endblock %}

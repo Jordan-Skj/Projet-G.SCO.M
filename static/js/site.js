@@ -15,22 +15,10 @@
            NAV ACTIVE AU SCROLL
            Met en surbrillance le lien correspondant à la section visible
         ---------------------------------------------------------- */
-        const sections = document.querySelectorAll('section[id], div[id]:not(#contact-feedback)');
-        const navLinks = document.querySelectorAll('nav ul li a');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                if (window.scrollY >= section.offsetTop - 80) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (new URL(link.href).pathname === window.location.pathname && new URL(link.href).hash === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
+        document.querySelectorAll('header nav a, .mobile-menu a').forEach(link => {
+            if (new URL(link.href).pathname === window.location.pathname) {
+                link.setAttribute('aria-current', 'page');
+            }
         });
 
         /* ----------------------------------------------------------
@@ -54,18 +42,37 @@
             }
         }
 
-// Une seule apparition par élément, sans masquer le contenu avant JavaScript.
+// Fade-up progressif : une apparition par bloc, sans cacher le contenu sans JS.
 (() => {
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (motion.matches || !('IntersectionObserver' in window)) return;
+    const selector = '.home-shortcuts > h2, .news-top, .page-heading, .courses-intro, .admissions-intro, .page-callout, .vie_scolaire_content, .home-shortcut, .course-card, .admissions-levels article, .admissions-steps li, .admissions-panel, .news-card, .formation-card, .feature, .img_about, .content, .vie_scolaire_content2 > div, .main-member, .dir-card, .ens-card, .testi-card, .contact-info, .contact-form-wrap';
     const observer = new IntersectionObserver(entries => {
+        let position = 0;
         entries.forEach(entry => {
             if (!entry.isIntersecting) return;
-            if (!motion.matches) entry.target.classList.add('reveal-visible');
+            // Un bloc déjà dépassé ne doit pas clignoter en remontant la page.
+            if (!motion.matches && entry.boundingClientRect.bottom > 0) {
+                entry.target.style.setProperty('--reveal-delay', `${Math.min(position++, 3) * 70}ms`);
+                entry.target.classList.add('reveal-visible');
+            }
             observer.unobserve(entry.target);
         });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.news-card, .formation-card, .feature, .img_about, .content, .vie_scolaire_content2 > div, .main-member, .dir-card, .ens-card, .testi-card, .contact-info, .contact-form-wrap').forEach(element => observer.observe(element));
+    }, { threshold: 0, rootMargin: '0px 0px -36px 0px' });
+    document.querySelectorAll(selector).forEach(element => {
+        // Éviter de cumuler l'animation d'un parent et de son enfant.
+        if (!element.parentElement.closest(selector)) observer.observe(element);
+    });
+    document.addEventListener('focusin', event => {
+        const block = event.target.closest('.reveal-visible');
+        if (block) block.classList.remove('reveal-visible');
+    });
+    motion.addEventListener('change', event => {
+        if (event.matches) {
+            observer.disconnect();
+            document.querySelectorAll('.reveal-visible').forEach(element => element.classList.remove('reveal-visible'));
+        }
+    });
 })();
 
 document.addEventListener('keydown', event => {

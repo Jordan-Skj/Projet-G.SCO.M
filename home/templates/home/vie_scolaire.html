@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Vie scolaire — G.SCO.M{% endblock %}
+{% block meta_description %}Découvrez les espaces et les activités qui accompagnent le quotidien des élèves.{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'pages.css' %}">{% endblock %}
+{% block content %}
+<div class="page-heading"><nav class="page-breadcrumb" aria-label="Fil d’Ariane"><a href="{% url 'home:index' %}">Accueil</a><span aria-hidden="true">/</span><span aria-current="page">Vie scolaire</span></nav><h1>Vie scolaire</h1><p>Découvrez les espaces et les activités qui accompagnent le quotidien des élèves.</p></div>
+<section id="vie_scolaire" aria-label="Vie scolaire">
+            <div class="vie_scolaire_content">
+                <p class="subsub_title">Vie scolaire</p>
+                <h2>Une école où il fait bon apprendre</h2>
+                <p>Au G.SCO.M, l'éducation ne s'arrête pas aux portes de la salle de classe. Nous croyons que
+                    l'épanouissement d'un élève passe aussi par la pratique du sport, la culture et l'accès aux outils
+                    du monde moderne.</p>
+            </div>
+
+            <div class="vie_scolaire_content2">
+
+                <!-- Ligne 1 : image gauche, texte droite (impair) -->
+                <div>
+                    <img src="{% static 'assets/image/labo_chimie.png' %}" alt="Laboratoire de chimie du G.SCO.M"
+                        loading="lazy">
+                    <div class="vs-text">
+                        <div class="vs-num" aria-hidden="true">01</div>
+                        <span class="vs-tag">Infrastructure</span>
+                        <h3>Des espaces pensés pour apprendre</h3>
+                        <p>Le bâtiment scolaire dispose de salles de classe bien équipées, chacune dotée d'un tableau,
+                            de tables et de bancs. L'école dispose également d'une bibliothèque, de bureaux
+                            administratifs et d'une salle d'informatique moderne.</p>
+                    </div>
+                </div>
+
+                <!-- Ligne 2 : texte gauche, image droite (pair — géré par direction:rtl en CSS) -->
+                <div>
+                    <img src="{% static 'assets/image/cour_interieur.png' %}" alt="Cour intérieure avec paniers de basket au G.SCO.M"
+                        loading="lazy">
+                    <div class="vs-text">
+                        <div class="vs-num" aria-hidden="true">02</div>
+                        <span class="vs-tag">Sport</span>
+                        <h3>L'éducation physique au cœur de la formation</h3>
+                        <p>Le basket-ball occupe une place centrale, aux côtés du football, du volley-ball et du handball. Filles et garçons pratiquent ces sports pour développer l'esprit d'équipe et la discipline physique.</p>
+                    </div>
+                </div>
+
+                <!-- Ligne 3 : image gauche, texte droite -->
+                <div>
+                    <img src="{% static 'assets/image/labo_informatique.png' %}" alt="Salle informatique moderne au G.SCO.M"
+                        loading="lazy">
+                    <div class="vs-text">
+                        <div class="vs-num" aria-hidden="true">03</div>
+                        <span class="vs-tag">Numérique</span>
+                        <h3>Une salle informatique moderne</h3>
+                        <p>Consciente des enjeux du numérique, la G.SCO.M a doté ses élèves d'une salle informatique
+                            moderne permettant aux jeunes de se familiariser avec les outils technologiques
+                            indispensables.</p>
+                    </div>
+                </div>
+
+                <!-- Ligne 4 : texte gauche, image droite -->
+                <div>
+                    <img src="{% static 'assets/image/labo_chimie.png' %}" alt="Laboratoire de chimie au G.SCO.M" loading="lazy">
+                    <div class="vs-text">
+                        <div class="vs-num" aria-hidden="true">04</div>
+                        <span class="vs-tag">Sciences</span>
+                        <h3>Un laboratoire pour les sciences</h3>
+                        <p>Le laboratoire est équipé pour la pratique des cours de chimie, de biologie et de physique. Les élèves y expérimentent et approfondissent leurs connaissances scientifiques.</p>
+                    </div>
+                </div>
+
+                <div class="library-summary"><div class="vs-text"><span class="vs-tag">Lecture</span><h3>Une bibliothèque pour découvrir</h3><p>De la 7ème à la 3ème des humanités, chaque élève lit au moins deux romans par année et en présente un exposé : dix romans au minimum sur ce parcours. Ce programme encourage le goût de la lecture. Son extension au primaire est envisagée.</p></div></div>
+
+            </div>
+        </section>
+<section class="page-callout" aria-labelledby="activities-title"><h2 id="activities-title">Culture, musique et découvertes</h2>
+<div class="school-activities">
+<article><h3>Théâtre et rencontres littéraires</h3><p>Le G.SCO.M dispose d'une troupe théâtrale et participe à la Foire du Livre ainsi qu'au Festival du Livre et de la Bible (FE.LI.BI.), organisés par Paulines. L'école rapporte de bons classements à ces rencontres.</p><details><summary>Une annonce culturelle de 2025</summary><p>La présentation de l'école annonçait pour mai 2025 la pièce « Où est la gloire de la femme ? » au Théâtre des Intrigants, à Ndjili.</p></details></article>
+<article><h3>Un orchestre d'élèves</h3><p>L'orchestre réunit des élèves actuels et anciens pour faire vivre leurs talents musicaux.</p></article>
+<article><h3>Des classes-promenades</h3><p>Chaque année, des visites de sites pédagogiques et ludiques sont organisées à Kinshasa et dans ses environs, notamment à Kasangulu.</p></article>
+</div></section>
+<section class="page-callout"><h2>Les horaires de l'école</h2><p>Du lundi au samedi, de 7h30 à 12h45.</p><a class="news-voir-tout" href="{% url 'news:list' %}">Voir les actualités de l'école →</a></section>
+{% endblock %}
