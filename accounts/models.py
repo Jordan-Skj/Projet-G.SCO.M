@@ -1,0 +1,20 @@
+from django.db import models
+from django.conf import settings
+
+# Create your models here.
+class Parent(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="parent_profile")
+    phone_number = models.CharField(max_length=20, verbose_name="Numéro de téléphone")
+    alternate_phone_number = models.CharField(max_length=20, blank=True, verbose_name="Numéro de téléphone alternatif")
+    address = models.TextField(verbose_name="Adresse")
+    is_active = models.BooleanField(default=True, verbose_name="Actif")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Créé le")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Mis à jour le")
+    
+    
+    class Meta:
+        verbose_name = "Parent"
+        verbose_name_plural = "Parents"
+        
+    def __str__(self) -> str:
+        return f"Parent {self.user.get_username()} | {self.phone_number}"
