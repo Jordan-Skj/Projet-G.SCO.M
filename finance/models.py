@@ -26,7 +26,7 @@ class Fee(models.Model):
                 fields=['school_class', 'academic_year', 'name'], name='unique_fee_class_year_name'
             ),
             models.CheckConstraint(
-                check=models.Q(amount_due__gte=0), name='fee_amount_must_be_positive'
+                condition=models.Q(amount_due__gt=0), name='fee_amount_must_be_positive'
             )
         ]
         
@@ -41,13 +41,13 @@ class FeePayment(models.Model):
     enrollment = models.ForeignKey(Enrollment, on_delete=models.PROTECT, related_name='fee_payments', verbose_name='Inscription de l\'élève')
     fee = models.ForeignKey(Fee, on_delete=models.PROTECT, related_name='fee_payments', verbose_name='Frais concernés')
     amount_paid = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Montant payé')
-    payment_date = models.DateField(auto_now_add=True, verbose_name='Date de paiement')
+    payment_date = models.DateField(verbose_name='Date de paiement')
     payment_method = models.CharField(max_length=20, choices=PaymentMethod.choices, verbose_name='Méthode de paiement')
-    receipt_provided = models.BooleanField(default=False, verbose_name='Emetteur du reçu')
+    payment_currency = models.CharField(max_length=3, choices=Fee.Currency.choices, default=Fee.Currency.USD, verbose_name='Devise du paiement')
     receipt_reference = models.CharField(max_length=100, unique=True, verbose_name='Numéro du reçu')
     submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='submitted_fee_payments', verbose_name='Soumis par')
     created_at = models.DateTimeField(auto_now_add=True)
-    currency = models.CharField(max_length=3, choices=Fee.Currency.choices, default=Fee.Currency.USD, verbose_name='Devise')
+    exchange_rate = models.DecimalField(max_digits=34, decimal_places=6, null=True, blank=True, verbose_name='Taux de change')
     
     class Meta:
         ordering = ['-payment_date', '-created_at']
@@ -55,7 +55,7 @@ class FeePayment(models.Model):
         verbose_name_plural = 'Paiements des frais'
         constraints = [
             models.CheckConstraint(
-                check=models.Q(amount_paid__gte=0), name='fee_payment_amount_must_be_positive'
+                condition=models.Q(amount_paid__gt=0), name='fee_payment_amount_must_be_positive'
             )
         ]
         
