@@ -7,3 +7,4 @@ db.sqlite3.bak
 staticfiles/
 media/*
 !media/.gitkeep
+.idea/
