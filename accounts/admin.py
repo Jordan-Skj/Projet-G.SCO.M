@@ -1,11 +1,9 @@
 from django.contrib import admin
-from unfold.admin import UnfoldAdmin
-from accounts.models import Parent
+from django.contrib.auth.admin import UserAdmin
+from accounts.models import CustomUser
 
-# Register your models here.
-@admin.register(Parent)
-class ParentAdmin(UnfoldAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'phone_number', 'created_at', 'updated_at')
-    list_filter = ('created_at', 'updated_at')
-    search_fields = ('first_name', 'last_name', 'email', 'phone_number')
-    ordering = ('last_name', 'middle_name', 'first_name')
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    list_display : tuple[str, ...] = ('username', 'email', 'first_name', 'last_name', 'role')
+    list_filter : tuple[str, ...] = ('role',)
+    search_fields : tuple[str, ...] = ('username', 'email', 'first_name', 'last_name')

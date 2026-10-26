@@ -43,7 +43,7 @@ class Student(models.Model):
         ACTIVE = 'active', 'Actif'
         GRADUATED = 'graduated', 'Diplômé'
         TRANSFERRED = 'transferred', 'Transféré'
-        ARCHIVER = 'archived', 'Archivé'
+        ARCHIVED = 'archived', 'Archivé'
         
     admission_number = models.CharField(max_length=30, unique=True, verbose_name="Matricule")
     first_name = models.CharField(max_length=50, verbose_name="Prénom")
@@ -61,8 +61,11 @@ class Student(models.Model):
         verbose_name_plural = "Élèves"
         
     def __str__(self) -> str:
-        return f"{self.first_name} {self.middle_name} {self.last_name} | {self.admission_number}"
-    
+        full_name: str = " ".join(
+            part for part in (self.first_name, self.middle_name, self.last_name) if part
+        )
+        return f"{full_name} | {self.admission_number}"
+        
 # StudentGuardian model
 class StudentGuardian(models.Model):
     class Relationship(models.TextChoices):

@@ -32,7 +32,6 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '[::1]'])
 
 INSTALLED_APPS = [
-    'unfold', 
     'django.contrib.admin', 
     'django.contrib.auth',
     'django.contrib.contenttypes', 
@@ -42,6 +41,11 @@ INSTALLED_APPS = [
     'home', 
     'news', 
     'contact',
+    'students',
+    'accounts',
+    'finance',
+    'discipline',
+    'audit',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +78,7 @@ DATABASES = {
     'default': env.db('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}')
 }
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
