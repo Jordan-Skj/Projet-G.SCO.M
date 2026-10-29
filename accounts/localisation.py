@@ -1,4 +1,4 @@
-KINSHASA_QUARTIERS = {
+KINSHASA = {
     "Bandalungwa": [
         "Tshibangu", "Makelele", "Kasa-Vubu", "Bisengo",
         "Adoula", "Lubundi", "Molaert", "Lumumba",

@@ -18,7 +18,7 @@ class Auditlog(models.Model):
     target_type = models.CharField(max_length=100, verbose_name="Type d'objet", help_text="Ex : finance.feepayment")
     target_id = models.CharField(max_length=50, verbose_name="Identifiant de l'objet")
     target_repr = models.CharField(max_length=255, verbose_name="Description de l'objet")
-    before = models.JSONField(null=True, blank=True, encoder=DjangoJSONEncoder, verkbose_name="Valeurs avant")
+    before = models.JSONField(null=True, blank=True, encoder=DjangoJSONEncoder, verbose_name="Valeurs avant")
     after = models.JSONField(null=True, blank=True, encoder=DjangoJSONEncoder, verbose_name="Valeurs apres")
     reason = models.TextField(blank=True, verbose_name="Motif")
 

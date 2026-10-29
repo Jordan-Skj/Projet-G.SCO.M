@@ -12,7 +12,7 @@ def get_enrollments_from_parent(parent: Parent) -> list[Enrollment]:
         # Extrude the student
         student = student_link.student
         # Extrude the student enrollment
-        enrollement = Enrollment.objects.get(student=student)
+        enrollement = Enrollment.objects.filter(student=student)
         enrollements.append(enrollement)
         
     return enrollements

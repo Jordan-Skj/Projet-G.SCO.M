@@ -3,10 +3,8 @@
 <html lang="fr">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 
     <title>{% block title %}G.SCO.M — Groupe Scolaire de Mont-Ngafula | Kinshasa, RDC{% endblock %}</title>
     <meta name="description"
@@ -18,7 +16,6 @@
 
     <!-- ============================================================
          OPEN GRAPH (Facebook, WhatsApp, LinkedIn)
-         Ce que WhatsApp ou Facebook affiche quand on partage le lien
     ============================================================ -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://gscom-montngafula.com/">
@@ -31,25 +28,25 @@
 
     <!-- ============================================================
          TWITTER CARD
-         Ce que Twitter affiche quand on partage le lien
     ============================================================ -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="G.SCO.M — Groupe Scolaire de Mont-Ngafula">
     <meta name="twitter:description" content="Une école de confiance depuis 1986 à Kinshasa, RDC.">
     <meta name="twitter:image" content="{% static 'assets/image/LOGO_GSCOM.png' %}">
 
-    <!-- ============================================================
-         COULEUR DU NAVIGATEUR MOBILE
-         Colorie la barre de navigation sur Android Chrome
-    ============================================================ -->
     <meta name="theme-color" content="#c0392b">
 
-    <!-- ============================================================
-         FAVICON (icône dans l'onglet du navigateur)
-         Place ton logo en .ico ou .png dans assets/image/
-    ============================================================ -->
     <link rel="icon" type="image/png" href="{% static 'assets/image/LOGO_GSCOM.png' %}">
     <link rel="apple-touch-icon" href="{% static 'assets/image/LOGO_GSCOM.png' %}">
+
+    <!-- TAILWIND CSS CDN & CONFIG -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: ['selector', '[data-theme="dark"]'],
+        }
+    </script>
+
     <script src="{% static 'js/theme.js' %}"></script>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,11 +55,8 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;600;700&display=swap"
         rel="stylesheet">
 
-
     <!-- ============================================================
          DONNÉES STRUCTURÉES (Schema.org)
-         Aide Google à comprendre que c'est un établissement scolaire.
-         Peut afficher des infos enrichies dans les résultats de recherche.
     ============================================================ -->
     <script type="application/ld+json">
     {
