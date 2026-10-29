@@ -54,6 +54,10 @@ class Punishment(models.Model):
                 name='punishment_authorized_return_needs_authorizer',
             ),
         ]
+        permissions = [
+            ('authorize_return_to_class', 'Peut autoriser le retour en classe'),
+            ('check_class_access', "Peut vérifier les restrictions d'accès en classe"),
+        ]
 
     def blocks_class_access(self) -> bool:
         """True while the student must not return to class because of this punishment."""
