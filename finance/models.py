@@ -113,6 +113,10 @@ class FeePayment(models.Model):
                 name='fee_payment_verified_needs_verifier',
             ),
         ]
+        permissions = [
+            ('verify_feepayment', 'Peut vérifier un paiement'),
+            ('void_feepayment', 'Peut annuler un paiement'),
+        ]
 
     def clean(self) -> None:
         super().clean()
