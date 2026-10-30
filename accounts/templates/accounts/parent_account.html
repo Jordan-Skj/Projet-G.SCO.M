@@ -1,278 +1,270 @@
-<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace Parent — G.S.CO.M</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: { brand: '#D95745', ink: '#191B20' }
-                }
-            }
-        }
-        // Theme logic inline
-        (function () {
-            const saved = localStorage.getItem('gscom-theme');
-            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            }
-        })();
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .tab-content { animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-900 dark:bg-[#0f1115] dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+{% extends "base.html" %}
+{% load static %}
 
-    <!-- Minimal Header -->
-    <header class="bg-white/80 dark:bg-[#15171c]/80 backdrop-blur border-b border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-3">
-                <div class="h-9 w-9 rounded-full bg-[#D95745] text-white flex items-center justify-center font-bold">G</div>
-                <span class="font-semibold tracking-tight hidden sm:block">G.S.CO.M</span>
+{% block title %}Espace Parent — G.S.CO.M{% endblock %}
+
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .tab-content { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+{% endblock %}
+
+<!-- Override the default site header with the minimal Espace Parent header -->
+{% block header %}
+<header class="bg-white/80 dark:bg-[#15171c]/80 backdrop-blur border-b border-gray-200 dark:border-gray-800 sticky top-0 z-35">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <!-- Logo & Brand Name -->
+        <a href="{% url 'home:index' %}" class="flex items-center gap-3.5 shrink-0 mr-[100px]">
+            <img src="{% static 'assets/image/LOGO_GSCOM.png' %}" alt="Logo G.SCO.M" class="h-9 w-9 object-contain">
+            <span class="font-semibold tracking-tight hidden sm:inline-block">G.S.CO.M</span>
+        </a>
+
+        <!-- Right Header Actions with explicit separation & spacing -->
+        <div class="flex items-center gap-4 sm:gap-6 margin-right-100">
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400 hidden md:inline-block pr-4 border-r border-gray-200 dark:border-gray-800 mr-[50px]">
+                Espace Parent
+            </span>
+            
+            <!-- Theme toggle matching site's theme.js mechanism -->
+            <button type="button" class="theme-toggle h-9 w-9 rounded-full border border-gray-200 mr-[50px] dark:border-gray-700 flex items-center justify-center hover:border-[#D95745] transition shrink-0" aria-label="Changer de thème" aria-pressed="false">
+                <svg class="theme-moon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>
+                <svg class="theme-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+            </button>
+
+            <a href="{% url 'account:parent_logout' %}" class="text-sm font-medium text-red-600 hover:underline shrink-0 ml-1">
+                Déconnexion
             </a>
-            <div class="flex items-center gap-4">
-                <span class="text-sm font-medium text-gray-500 hidden sm:block">Espace Parent</span>
-                <button id="theme-toggle" aria-label="Changer de thème" class="h-9 w-9 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:border-[#D95745] transition">
-                    <svg class="h-4 w-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg>
-                    <svg class="h-4 w-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                </button>
-                <a href="{% url 'account:parent_logout' %}" class="text-sm font-medium text-red-600 hover:underline">Déconnexion</a>
-            </div>
         </div>
-    </header>
+    </div>
+</header>
+{% endblock %}
 
-    <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-8">
-        {% if not student %}
-        <!-- Empty State -->
-        <div class="min-h-[60vh] flex items-center justify-center">
-            <div class="text-center max-w-md">
-                <div class="mx-auto h-20 w-20 rounded-full bg-[#D95745]/10 text-[#D95745] flex items-center justify-center mb-6">
-                    <svg class="h-10 w-10" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"/>
-                    </svg>
-                </div>
-                <h1 class="text-2xl font-bold mb-2">Aucun enfant inscrit</h1>
-                <p class="text-gray-500 dark:text-gray-400 mb-8">
-                    Vous n'avez encore inscrit aucun enfant à notre établissement. Commencez dès maintenant.
-                </p>
-                <a href="#" class="inline-flex items-center gap-2 bg-[#D95745] hover:bg-[#c94b3a] text-white font-semibold px-6 py-3 rounded-lg transition">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
-                    Inscrire un enfant
-                </a>
+{% block content %}
+<div class="max-w-7xl mx-auto w-full px-4 py-8 min-h-[calc(100vh-10rem)]">
+    {% if not student %}
+    <!-- Empty State -->
+    <div class="min-h-[60vh] flex items-center justify-center">
+        <div class="text-center max-w-md">
+            <div class="mx-auto h-20 w-20 rounded-full bg-[#D95745]/10 text-[#D95745] flex items-center justify-center mb-6">
+                <svg class="h-10 w-10" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"/>
+                </svg>
             </div>
-        </div>
-        {% else %}
-        
-        <!-- Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-            <div>
-                <h1 class="text-2xl font-bold">Tableau de bord</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Suivi de la scolarité de votre enfant.</p>
-            </div>
-            <a href="#" class="inline-flex items-center gap-2 border border-gray-300 dark:border-gray-700 hover:border-[#D95745] hover:text-[#D95745] text-sm font-medium px-4 py-2.5 rounded-lg transition">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+            <h1 class="text-2xl font-bold mb-2">Aucun enfant inscrit</h1>
+            <p class="text-gray-500 dark:text-gray-400 mb-8">
+                Vous n'avez encore inscrit aucun enfant à notre établissement. Commencez dès maintenant.
+            </p>
+            <a href="#" class="inline-flex items-center gap-2 bg-[#D95745] hover:bg-[#c94b3a] text-white font-semibold px-6 py-3 rounded-lg transition">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
                 Inscrire un enfant
             </a>
         </div>
-
-        <div class="grid lg:grid-cols-[260px,1fr] gap-6">
-            <!-- Sidebar -->
-            <aside class="lg:sticky lg:top-24 self-start">
-                <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-4 shadow-sm">
-                    <label class="block text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">Élève</label>
-                    <div class="relative mb-6">
-                        <select id="student-selector" class="w-full appearance-none rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#191B20] px-3 py-2.5 text-sm focus:border-[#D95745] focus:outline-none focus:ring-4 focus:ring-[#D95745]/15">
-                            {% for item in student %}
-                            <option value="{{ forloop.counter0 }}">
-                                {{ item.student_info.first_name }} {{ item.student_info.last_name }} — {{ item.student_info.school_class }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                        <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
-                    </div>
-
-                    <nav class="space-y-1" id="side-nav">
-                        <button data-tab="summary" class="side-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition">
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12 11.955 2.295a.75.75 0 0 1 1.09 0L22.75 12M4.5 9.75v10.125A1.125 1.125 0 0 0 5.625 21h12.75A1.125 1.125 0 0 0 19.5 19.875V9.75"/></svg>
-                            Vue d'ensemble
-                        </button>
-                        <button data-tab="payments" class="side-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition">
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3-9h16.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25H4.5a2.25 2.25 0 0 1-2.25-2.25V6.75A2.25 2.25 0 0 1 4.5 4.5h15a2.25 2.25 0 0 1 2.25 2.25v.75"/></svg>
-                            Paiements
-                        </button>
-                        <button data-tab="punishments" class="side-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition">
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
-                            Discipline
-                        </button>
-                        <button data-tab="fees" class="side-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition">
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185Z"/></svg>
-                            Frais scolaires
-                        </button>
-                    </nav>
-                </div>
-            </aside>
-
-            <!-- Main Content -->
-            <section class="min-w-0">
-                {% for item in student %}
-                <div class="student-panel {% if not forloop.first %}hidden{% endif %}" data-index="{{ forloop.counter0 }}">
-                    
-                    <!-- Summary -->
-                    <div class="tab-content" data-tab="summary">
-                        <div class="grid sm:grid-cols-2 gap-4 mb-6">
-                            <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
-                                <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Élève</p>
-                                <p class="text-lg font-semibold">{{ item.student_info.first_name }} {{ item.student_info.middle_name }} {{ item.student_info.last_name }}</p>
-                            </div>
-                            <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
-                                <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Classe</p>
-                                <p class="text-lg font-semibold">{{ item.student_info.school_class }}</p>
-                            </div>
-                        </div>
-                        <div class="grid sm:grid-cols-3 gap-4">
-                            <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
-                                <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Paiements</p>
-                                <p class="text-2xl font-bold">{{ item.payments|length }}</p>
-                                <p class="text-xs text-gray-500 mt-1">enregistrés</p>
-                            </div>
-                            <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
-                                <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Discipline</p>
-                                <p class="text-2xl font-bold">{{ item.punishment|length }}</p>
-                                <p class="text-xs text-gray-500 mt-1">sanction(s)</p>
-                            </div>
-                            <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
-                                <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Frais</p>
-                                <p class="text-2xl font-bold">{{ item.fee|length }}</p>
-                                <p class="text-xs text-gray-500 mt-1">à régler</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Payments -->
-                    <div class="tab-content hidden" data-tab="payments">
-                        <h2 class="text-lg font-semibold mb-4">Historique des paiements</h2>
-                        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] overflow-hidden">
-                            {% if item.payments %}
-                            <table class="w-full text-sm">
-                                <thead class="bg-gray-50 dark:bg-[#191B20] text-left text-xs uppercase tracking-wide text-gray-500">
-                                    <tr>
-                                        <th class="px-4 py-3">Date</th>
-                                        <th class="px-4 py-3">Frais</th>
-                                        <th class="px-4 py-3">Montant</th>
-                                        <th class="px-4 py-3">Statut</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                                    {% for payment in item.payments %}
-                                    <tr>
-                                        <td class="px-4 py-3">{{ payment.payment_date }}</td>
-                                        <td class="px-4 py-3">{{ payment.fee.name }}</td>
-                                        <td class="px-4 py-3">{{ payment.amount_paid }} {{ payment.payment_currency }}</td>
-                                        <td class="px-4 py-3">{{ payment.get_status_display }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            {% else %}
-                            <p class="p-6 text-sm text-gray-500">Aucun paiement enregistré.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <!-- Punishments -->
-                    <div class="tab-content hidden" data-tab="punishments">
-                        <h2 class="text-lg font-semibold mb-4">Discipline</h2>
-                        <div class="space-y-3">
-                            {% for p in item.punishment %}
-                            <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
-                                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                                    <span class="text-sm font-semibold">{{ p.incident_date }}</span>
-                                    <span class="text-xs px-2 py-1 rounded-full bg-[#D95745]/10 text-[#D95745] font-medium">{{ p.get_status_display }}</span>
-                                </div>
-                                <p class="text-sm text-gray-600 dark:text-gray-300">{{ p.description }}</p>
-                                <p class="text-xs text-gray-500 mt-2"><strong>Sanction :</strong> {{ p.sanction }}</p>
-                            </div>
-                            {% empty %}
-                            <p class="p-6 text-sm text-gray-500 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c]">Aucune sanction enregistrée.</p>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <!-- Fees -->
-                    <div class="tab-content hidden" data-tab="fees">
-                        <h2 class="text-lg font-semibold mb-4">Frais scolaires</h2>
-                        <div class="space-y-3">
-                            {% for f in item.fee %}
-                            <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5 flex flex-wrap items-center justify-between gap-3">
-                                <div>
-                                    <p class="font-semibold">{{ f.name }}</p>
-                                    {% if f.due_date %}<p class="text-xs text-gray-500">Échéance : {{ f.due_date }}</p>{% endif %}
-                                </div>
-                                <p class="text-lg font-bold text-[#D95745]">{{ f.amount_due }} {{ f.currency }}</p>
-                            </div>
-                            {% empty %}
-                            <p class="p-6 text-sm text-gray-500 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c]">Aucun frais enregistré.</p>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                </div>
-                {% endfor %}
-            </section>
+    </div>
+    {% else %}
+    
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold">Tableau de bord</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Suivi de la scolarité de votre enfant.</p>
         </div>
-        {% endif %}
-    </main>
+        <a href="#" class="inline-flex items-center gap-2 border border-gray-300 dark:border-gray-700 hover:border-[#D95745] hover:text-[#D95745] text-sm font-medium px-4 py-2.5 rounded-lg transition">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+            Inscrire un enfant
+        </a>
+    </div>
 
-    <script>
-        // Theme Toggle
-        document.getElementById('theme-toggle')?.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('gscom-theme', isDark ? 'dark' : 'light');
-        });
+    <div class="grid lg:grid-cols-[260px,1fr] gap-6">
+        <!-- Sidebar -->
+        <aside class="lg:sticky lg:top-24 self-start">
+            <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-4 shadow-sm">
+                <label class="block text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">Élève</label>
+                <div class="relative mb-6">
+                    <select id="student-selector" class="w-full appearance-none rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#191B20] px-3 py-2.5 text-sm focus:border-[#D95745] focus:outline-none focus:ring-4 focus:ring-[#D95745]/15">
+                        {% for item in student %}
+                        <option value="{{ forloop.counter0 }}">
+                            {{ item.student_info.first_name }} {{ item.student_info.last_name }} — {{ item.student_info.school_class }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+                </div>
 
-        // Tabs and Student Selector
-        (function () {
-            const links = document.querySelectorAll('.side-link');
-            const panels = document.querySelectorAll('.student-panel');
+                <nav class="space-y-1" id="side-nav">
+                    <button data-tab="summary" class="side-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12 11.955 2.295a.75.75 0 0 1 1.09 0L22.75 12M4.5 9.75v10.125A1.125 1.125 0 0 0 5.625 21h12.75A1.125 1.125 0 0 0 19.5 19.875V9.75"/></svg>
+                        Vue d'ensemble
+                    </button>
+                    <button data-tab="payments" class="side-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3-9h16.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25H4.5a2.25 2.25 0 0 1-2.25-2.25V6.75A2.25 2.25 0 0 1 4.5 4.5h15a2.25 2.25 0 0 1 2.25 2.25v.75"/></svg>
+                        Paiements
+                    </button>
+                    <button data-tab="punishments" class="side-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
+                        Discipline
+                    </button>
+                    <button data-tab="fees" class="side-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185Z"/></svg>
+                        Frais scolaires
+                    </button>
+                </nav>
+            </div>
+        </aside>
 
-            function setActive(tab) {
-                links.forEach(l => {
-                    const active = l.dataset.tab === tab;
-                    l.classList.toggle('bg-[#D95745]/10', active);
-                    l.classList.toggle('text-[#D95745]', active);
-                    l.classList.toggle('hover:bg-gray-100', !active);
-                    l.classList.toggle('dark:hover:bg-gray-800', !active);
-                });
-                panels.forEach(p => {
-                    if (!p.classList.contains('hidden')) {
-                        p.querySelectorAll('.tab-content').forEach(c => {
-                            c.classList.toggle('hidden', c.dataset.tab !== tab);
-                        });
-                    }
-                });
-            }
+        <!-- Main Content -->
+        <section class="min-w-0">
+            {% for item in student %}
+            <div class="student-panel {% if not forloop.first %}hidden{% endif %}" data-index="{{ forloop.counter0 }}">
+                
+                <!-- Summary -->
+                <div class="tab-content" data-tab="summary">
+                    <div class="grid sm:grid-cols-2 gap-4 mb-6">
+                        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
+                            <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Élève</p>
+                            <p class="text-lg font-semibold">{{ item.student_info.first_name }} {{ item.student_info.middle_name }} {{ item.student_info.last_name }}</p>
+                        </div>
+                        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
+                            <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Classe</p>
+                            <p class="text-lg font-semibold">{{ item.student_info.school_class }}</p>
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
+                            <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Paiements</p>
+                            <p class="text-2xl font-bold">{{ item.payments|length }}</p>
+                            <p class="text-xs text-gray-500 mt-1">enregistrés</p>
+                        </div>
+                        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
+                            <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Discipline</p>
+                            <p class="text-2xl font-bold">{{ item.punishment|length }}</p>
+                            <p class="text-xs text-gray-500 mt-1">sanction(s)</p>
+                        </div>
+                        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
+                            <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Frais</p>
+                            <p class="text-2xl font-bold">{{ item.fee|length }}</p>
+                            <p class="text-xs text-gray-500 mt-1">à régler</p>
+                        </div>
+                    </div>
+                </div>
 
-            links.forEach(l => l.addEventListener('click', () => setActive(l.dataset.tab)));
-            if (links.length) setActive('summary');
+                <!-- Payments -->
+                <div class="tab-content hidden" data-tab="payments">
+                    <h2 class="text-lg font-semibold mb-4">Historique des paiements</h2>
+                    <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] overflow-hidden">
+                        {% if item.payments %}
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50 dark:bg-[#191B20] text-left text-xs uppercase tracking-wide text-gray-500">
+                                <tr>
+                                    <th class="px-4 py-3">Date</th>
+                                    <th class="px-4 py-3">Frais</th>
+                                    <th class="px-4 py-3">Montant</th>
+                                    <th class="px-4 py-3">Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                                {% for payment in item.payments %}
+                                <tr>
+                                    <td class="px-4 py-3">{{ payment.payment_date }}</td>
+                                    <td class="px-4 py-3">{{ payment.fee.name }}</td>
+                                    <td class="px-4 py-3">{{ payment.amount_paid }} {{ payment.payment_currency }}</td>
+                                    <td class="px-4 py-3">{{ payment.get_status_display }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <p class="p-6 text-sm text-gray-500">Aucun paiement enregistré.</p>
+                        {% endif %}
+                    </div>
+                </div>
 
-            const selector = document.getElementById('student-selector');
-            if (selector) {
-                selector.addEventListener('change', () => {
-                    const idx = parseInt(selector.value, 10);
-                    panels.forEach(p => p.classList.toggle('hidden', parseInt(p.dataset.index, 10) !== idx));
-                    const active = document.querySelector('.side-link.bg-\\[\\#D95745\\]\\/10')?.dataset.tab || 'summary';
-                    setActive(active);
-                });
-            }
-        })();
-    </script>
-</body>
-</html>
+                <!-- Punishments -->
+                <div class="tab-content hidden" data-tab="punishments">
+                    <h2 class="text-lg font-semibold mb-4">Discipline</h2>
+                    <div class="space-y-3">
+                        {% for p in item.punishment %}
+                        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <span class="text-sm font-semibold">{{ p.incident_date }}</span>
+                                <span class="text-xs px-2 py-1 rounded-full bg-[#D95745]/10 text-[#D95745] font-medium">{{ p.get_status_display }}</span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">{{ p.description }}</p>
+                            <p class="text-xs text-gray-500 mt-2"><strong>Sanction :</strong> {{ p.sanction }}</p>
+                        </div>
+                        {% empty %}
+                        <p class="p-6 text-sm text-gray-500 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c]">Aucune sanction enregistrée.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Fees -->
+                <div class="tab-content hidden" data-tab="fees">
+                    <h2 class="text-lg font-semibold mb-4">Frais scolaires</h2>
+                    <div class="space-y-3">
+                        {% for f in item.fee %}
+                        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-5 flex flex-wrap items-center justify-between gap-3">
+                            <div>
+                                <p class="font-semibold">{{ f.name }}</p>
+                                {% if f.due_date %}<p class="text-xs text-gray-500">Échéance : {{ f.due_date }}</p>{% endif %}
+                            </div>
+                            <p class="text-lg font-bold text-[#D95745]">{{ f.amount_due }} {{ f.currency }}</p>
+                        </div>
+                        {% empty %}
+                        <p class="p-6 text-sm text-gray-500 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c]">Aucun frais enregistré.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+        </section>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+<!-- Override footer to be completely empty -->
+{% block footer %}{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Tabs and Student Selector Script
+    (function () {
+        const links = document.querySelectorAll('.side-link');
+        const panels = document.querySelectorAll('.student-panel');
+
+        function setActive(tab) {
+            links.forEach(l => {
+                const active = l.dataset.tab === tab;
+                l.classList.toggle('bg-[#D95745]/10', active);
+                l.classList.toggle('text-[#D95745]', active);
+                l.classList.toggle('hover:bg-gray-100', !active);
+                l.classList.toggle('dark:hover:bg-gray-800', !active);
+            });
+            panels.forEach(p => {
+                if (!p.classList.contains('hidden')) {
+                    p.querySelectorAll('.tab-content').forEach(c => {
+                        c.classList.toggle('hidden', c.dataset.tab !== tab);
+                    });
+                }
+            });
+        }
+
+        links.forEach(l => l.addEventListener('click', () => setActive(l.dataset.tab)));
+        if (links.length) setActive('summary');
+
+        const selector = document.getElementById('student-selector');
+        if (selector) {
+            selector.addEventListener('change', () => {
+                const idx = parseInt(selector.value, 10);
+                panels.forEach(p => p.classList.toggle('hidden', parseInt(p.dataset.index, 10) !== idx));
+                const active = document.querySelector('.side-link.bg-\\[\\#D95745\\]\\/10')?.dataset.tab || 'summary';
+                setActive(active);
+            });
+        }
+    })();
+</script>
+{% endblock %}
