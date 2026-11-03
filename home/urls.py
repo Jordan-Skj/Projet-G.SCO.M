@@ -4,9 +4,9 @@ from . import views
 app_name = 'home'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('notre-ecole/', views.ecole, name='ecole'),
-    path('vie-scolaire/', views.vie_scolaire, name='vie_scolaire'),
-    path('nous-contacter/', views.contact, name='contact'),
+    path('our-school/', views.school, name='school'),
+    path('school-life/', views.school_life, name='school_life'),
+    path('contact/', views.contact, name='contact'),
     path('formations/', views.formations, name='formations'),
-    path('inscriptions/', views.inscriptions, name='inscriptions'),
+    path('enrollments/', views.inscriptions, name='inscriptions'),
 ]

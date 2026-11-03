@@ -14,12 +14,12 @@ def formations(request):
     return render(request, 'home/formations.html')
 
 
-def ecole(request):
-    return render(request, 'home/ecole.html')
+def school(request):
+    return render(request, 'home/school.html')
 
 
-def vie_scolaire(request):
-    return render(request, 'home/vie_scolaire.html')
+def school_life(request):
+    return render(request, 'home/school_life.html')
 
 
 def contact(request):
