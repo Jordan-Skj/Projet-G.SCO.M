@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }} — G.SCO.M{% endblock %}
+{% block content %}
+<section id="press" aria-label="Actualité">
+    <div class="press-top"><a href="{% url 'press:list' %}" class="press-voir-tout">← Toutes les actualités</a></div>
+    <article class="press-card featured">
+        <div class="press-img"><img src="{{ article.image_url }}" alt="{{ article.image_alt|default:article.title }}"></div>
+        <div class="press-body">
+            <div class="press-meta"><span class="press-cat">{{ article.category }}</span><span class="press-sep" aria-hidden="true"></span><time class="press-date" datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"j F Y" }}</time></div>
+            <h1>{{ article.title }}</h1>
+            {{ article.content|linebreaks }}
+        </div>
+    </article>
+</section>
+{% endblock %}
