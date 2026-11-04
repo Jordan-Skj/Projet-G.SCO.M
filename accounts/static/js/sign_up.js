@@ -161,12 +161,12 @@
 
     // Cascading Commune -> Quartier
     const township = form.querySelector('select[name="township"]');
-    const quater   = form.querySelector('select[name="quater"]');
+    const quarter   = form.querySelector('select[name="quarter"]');
 
-    if (township && quater) {
+    if (township && quarter) {
         township.addEventListener('change', () => {
-            quater.innerHTML = '<option value="">Choisir un quartier</option>';
-            quater.disabled = true;
+            quarter.innerHTML = '<option value="">Choisir un quartier</option>';
+            quarter.disabled = true;
 
             const selectedTownship = township.value;
             if (window.KINSHASA_QUARTIERS && window.KINSHASA_QUARTIERS[selectedTownship]) {
@@ -174,14 +174,14 @@
                     const opt = document.createElement('option');
                     opt.value = q;
                     opt.textContent = q;
-                    quater.appendChild(opt);
+                    quarter.appendChild(opt);
                 });
-                quater.disabled = false;
+                quarter.disabled = false;
             }
         });
 
         if (township.value && window.KINSHASA_QUARTIERS && window.KINSHASA_QUARTIERS[township.value]) {
-            quater.disabled = false;
+            quarter.disabled = false;
         }
     }
 

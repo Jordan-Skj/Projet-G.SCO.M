@@ -1,34 +1,34 @@
 KINSHASA = {
-    "Bandalungwa": [
+    'Bandalungwa': [
         "Tshibangu", "Makelele", "Kasa-Vubu", "Bisengo",
         "Adoula", "Lubundi", "Molaert", "Lumumba",
     ],
-    "Barumbu": [
+    'Barumbu': [
         "Bitshaka", "Funa I", "Funa II", "Kapinga Bapu",
         "Kasafi", "Libulu", "Mozindo", "N'Dolo", "Tshimanga",
     ],
-    "Bumbu": [
+    'Bumbu': [
         "Dიპiya", "Mongala", "Ubangi", "Lokoro", "Kasaï",
         "Kwango", "Lukenie", "Mai-Ndombe", "Matadi",
         "Lieutenant Mbaki", "Mbandaka", "Mfimi", "Ntomba",
     ],
-    "Gombe": [
+    'Gombe': [
         "Batetela", "Haut Commandement", "Croix-Rouge",
         "Lemera", "Golf", "Fleuve", "Grare", "Commerce",
         "Révolution", "Clinique",
     ],
-    "Kalamu": [
+    'Kalamu': [
         "Matonge I", "Matonge II", "Matonge III",
         "Yolo Nord I", "Yolo Nord II", "Yolo Nord III",
         "Kauka I", "Kauka II", "Kauka III",
         "Yolo Sud I", "Yolo Sud II", "Yolo Sud III",
         "Yolo Sud IV", "Pinzi", "Immo Congo",
     ],
-    "Kasa-Vubu": [
+    'Kasa-Vubu': [
         "Anciens Combattants", "Assossa", "Katanga",
         "Lodja", "Lubumbashi", "ONC", "Salongo",
     ],
-    "Kimbanseke": [
+    'Kimbanseke': [
         "17 Mai", "Bahumbi", "Bamboma", "Biyela", "Boma",
         "Dissasi", "Esanga", "Kamba Mulumba", "Kasa-Vubu",
         "Kikimi", "Kingasani", "Kisantu IR Ben", "Kutu",
@@ -38,41 +38,41 @@ KINSHASA = {
         "Nsanga", "Nsumabwa", "Révolution", "Sakombi",
         "Salongo",
     ],
-    "Kinshasa": [
+    'Kinshasa': [
         "Aketi", "Boyoma", "Djelo", "Madimba",
         "Mongala", "Ngbaka", "Pende",
     ],
-    "Kintambo": [
+    'Kintambo': [
         "Itimbiri", "Kilimani", "Lisala", "Lubudi-Luka",
         "Nganda", "Salongo", "Tshinkela", "Wenze",
     ],
-    "Kisenso": [
+    'Kisenso': [
         "Régideso", "Kumbu", "Mbuku", "Amba",
         "Mission Mujinga", "Libération", "17 Mai",
         "Nsola", "Bikanga",
     ],
-    "Lemba": [
+    'Lemba': [
         "Madrandelle", "Masano", "Kimpwanza", "Commerciale",
         "Molo", "Foire", "De l'École", "Échangeur",
         "Gombeli", "Salongo", "Livulu", "Kemi",
         "Mbanza-Lemba",
     ],
-    "Limete": [
+    'Limete': [
         "Agricole", "Funa", "Industriel", "Kingabwa",
         "Masiala", "Mayulu", "Mbamu", "Mombele",
         "Mososo", "Moteba", "Ndanu", "Nzadi",
         "Résidentiel", "Salongo",
     ],
-    "Lingwala": [
+    'Lingwala': [
         "Lufungula", "Singa", "Mopepe", "Wenze", "PLC",
         "30 Juin", "Lokole", "Paka-Djuma",
         "Voix du Peuple", "Ngunda-Lokombe",
     ],
-    "Makala": [
+    'Makala': [
         "Bagota", "Bahumbu", "Bolima", "Kabila",
         "Kisantu", "Kwango", "Lemba Village", "Mabulu",
     ],
-    "Maluku": [
+    'Maluku': [
         "Bu", "Dumi", "Kikimi", "Kimpoko", "Kingakati",
         "Kingono", "Kinzono", "Mbankana", "Maluku",
         "Maï-Ndombe", "Mange-Ngenge", "Menkao", "Monaco",
@@ -84,7 +84,7 @@ KINSHASA = {
         "Nzuzi wa Mbombo", "Pelende", "Sans-Fil",
         "Tshango", "Tshuenge", "Télévision",
     ],
-    "Matete": [
+    'Matete': [
         "Mandina", "Maï-Ndombe", "Mboloko", "Kwenge I",
         "Kwenge II", "Ngilima I", "Ngilima II", "Lokoro",
         "Anunga", "Ngufu", "Kinda I", "Kinda II",
@@ -97,7 +97,7 @@ KINSHASA = {
         "Malandi II", "Lokole I", "Lokole II", "Bateke",
         "Singa", "Kinsimbu",
     ],
-    "Mont-Ngafula": [
+    'Mont-Ngafula': [
         "CPA Mushie", "Kimbondo", "Kimbuta", "Kimw enzo",
         "Kimbuala", "Kindele", "Lutendele", "Mama Mobutu",
         "Mama Yemo", "Masanga Mbila", "Musagu-Telecom",
@@ -105,18 +105,18 @@ KINSHASA = {
         "Mitendi", "Mbuki", "Ndjili-Kilamba", "Ngansele",
         "Plateau I", "Plateau II", "Vunda-Manenga",
     ],
-    "N'Djili": [
+    'N\'Djili': [
         "Quartier I", "Quartier II", "Quartier III",
         "Quartier IV", "Quartier V", "Quartier VI",
         "Quartier VII", "Quartier VIII", "Quartier IX",
         "Quartier X", "Quartier XI", "Quartier XII",
         "Quartier XIII",
     ],
-    "Ngaba": [
+    'Ngaba': [
         "Mukulua", "Bula-Mbemba", "Mateba",
         "Luyi", "Mpila", "Baobab",
     ],
-    "Ngaliema": [
+    'Ngaliema': [
         "Lukunga", "Ngomba Kikusa", "Bumba", "Binza Pigeon",
         "Djelo Binza", "Bangu", "Punda", "Kimpe",
         "Anciens Combattants", "Basoko", "Congo", "Joli Parc",
@@ -124,11 +124,11 @@ KINSHASA = {
         "Maman-Yemo", "Manenga", "Mfinda", "Monganya",
         "Lubudi",
     ],
-    "Ngiri-Ngiri": [
+    'Ngiri-Ngiri': [
         "Diangenda", "24 Novembre", "Saio", "Petit-Petit",
         "Assossa", "Diomi", "Karthoum", "Elengesa",
     ],
-    "N'Sele": [
+    'N\'Sele': [
         "Badara", "Bibwa", "D.I.C", "Dingi-Dingi",
         "Domaine", "Mikala I", "Mikala II", "Kikonle",
         "Pêcheurs", "Bahumbu I", "Bahumbu II",
@@ -138,7 +138,7 @@ KINSHASA = {
         "Menkao (Village)", "Monaco", "Ngina (Village)",
         "Kingakati (Village)", "Talangai",
     ],
-    "Selembao": [
+    'Selembao': [
         "Badiading", "Cité Verte", "Inga", "Herady",
         "Kalunga", "Kingu", "Konde", "Libération",
         "Lubudi", "Madiata", "Mbola", "Molende", "Muana",
