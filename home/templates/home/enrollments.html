@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Inscriptions — Procédure et documents | G.SCO.M{% endblock %}
-{% block meta_description %}Préparez l'inscription de votre enfant au G.SCO.M : niveaux proposés, démarches au secrétariat, documents à préparer et renseignements pratiques.{% endblock %}
+{% block meta_description %}Commencez en ligne l'inscription de votre enfant au G.SCO.M, puis contactez le secrétariat pour confirmer les conditions et les documents à fournir.{% endblock %}
 {% block extra_css %}<link rel="stylesheet" href="{% static 'inscriptions.css' %}">{% endblock %}
 {% block content %}
 <div class="admissions">
@@ -10,14 +10,14 @@
         <div>
             <p class="subsub_title">Rejoindre le G.SCO.M</p>
             <h1 id="admissions-title">Un nouveau chapitre<br>pour votre enfant.</h1>
-            <p class="admissions-lead">De la maternelle aux humanités, préparez votre démarche avec les informations essentielles. Le secrétariat vous accompagne pour choisir le niveau adapté et constituer le dossier.</p>
-            <div class="admissions-actions"><a class="btn-primary" href="#procedure">Découvrir les étapes</a><a class="news-voir-tout" href="{% url 'home:contact' %}">Contacter le secrétariat</a></div>
+            <p class="admissions-lead">Les inscriptions commencent en ligne. Créez un compte parent pour démarrer la démarche, puis contactez le secrétariat pour confirmer le niveau, les conditions d'admission et les pièces à fournir.</p>
+            <div class="admissions-actions"><a class="btn-primary" href="{% url 'student:enroll_child' %}">Inscrire mon enfant en ligne</a><a class="news-voir-tout" href="#procedure">Découvrir les étapes</a></div>
         </div>
         <aside class="admissions-panel" aria-labelledby="visit-title">
             <p class="subsub_title">Votre point de départ</p>
-            <h2 id="visit-title">Le secrétariat vous accueille</h2>
-            <dl><dt>Horaires du secrétariat</dt><dd>Du lundi au samedi, de 7h30 à 14h00</dd><dt>Adresse</dt><dd>Quartier Mont-Ngafula, Kinshasa, RDC</dd><dt>E-mail</dt><dd><a href="mailto:gscom.montngafula@gmail.com">gscom.montngafula@gmail.com</a></dd></dl>
-            <p>Avant votre déplacement, demandez les dates d'inscription et les disponibilités pour la classe souhaitée.</p>
+            <h2 id="visit-title">Commencez en ligne</h2>
+            <dl><dt>Première étape</dt><dd>Créez un compte parent pour démarrer votre démarche.</dd><dt>Besoin d'aide ?</dt><dd><a href="mailto:gscom.montngafula@gmail.com">gscom.montngafula@gmail.com</a></dd><dt>Horaires du secrétariat</dt><dd>Du lundi au samedi, de 7h30 à 14h00</dd></dl>
+            <p>Le secrétariat peut confirmer les disponibilités, les conditions d'admission et les documents nécessaires.</p>
         </aside>
     </section>
     <section class="admissions-section" aria-labelledby="levels-title">
@@ -28,15 +28,15 @@
             <article><span>03</span><h3>7ème et 8ème</h3><p>Consolider les acquis et préparer l'orientation.</p></article>
             <article><span>04</span><h3>Humanités</h3><p>Scientifique, littéraire, pédagogie, commercial et électricité.</p></article>
         </div>
-        <p class="admissions-note">Le secrétariat précise les conditions d'admission et les places disponibles selon le niveau et la filière.</p>
+        <p class="admissions-note">La demande commence en ligne. Le secrétariat confirme les conditions d'admission et les places disponibles selon le niveau et la filière.</p>
     </section>
     <section id="procedure" class="admissions-section" aria-labelledby="steps-title">
-        <p class="subsub_title">La démarche</p><h2 id="steps-title">Préparer l'inscription, étape par étape</h2>
+        <p class="subsub_title">La démarche en ligne</p><h2 id="steps-title">Inscrire votre enfant, étape par étape</h2>
         <ol class="admissions-steps">
-            <li><h3>Renseignez-vous sur la classe souhaitée</h3><p>Indiquez le niveau actuel de votre enfant et la classe envisagée. Demandez au secrétariat les conditions d'admission, le calendrier et les frais applicables.</p></li>
-            <li><h3>Préparez les documents de votre enfant</h3><p>Rassemblez les pièces indiquées ci-dessous. Faites confirmer la liste exacte, le nombre de copies et le format des photos avant de vous déplacer.</p></li>
-            <li><h3>Présentez-vous au secrétariat</h3><p>Apportez votre dossier pendant les horaires d'accueil. L'équipe vous guidera dans les formalités et vous indiquera les éventuelles pièces complémentaires.</p></li>
-            <li><h3>Faites confirmer la suite de la démarche</h3><p>Vérifiez auprès du secrétariat que votre dossier est complet et demandez comment obtenir la confirmation de l'inscription ainsi que les consignes pour la rentrée.</p></li>
+            <li><h3>Créez votre compte parent</h3><p>Commencez la démarche en ligne en créant votre compte parent.</p></li>
+            <li><h3>Préparez les informations de votre enfant</h3><p>Rassemblez les informations scolaires et les documents utiles. La liste exacte dépend du niveau demandé et doit être confirmée par le secrétariat.</p></li>
+            <li><h3>Confirmez les conditions d'admission</h3><p>Contactez le secrétariat pour vérifier les disponibilités, le calendrier, les frais et les éventuelles pièces complémentaires.</p></li>
+            <li><h3>Suivez les indications de l'école</h3><p>Après examen de votre demande, l'équipe vous précisera les prochaines étapes et les consignes pour la rentrée.</p></li>
         </ol>
     </section>
     <div class="admissions-columns">
@@ -52,10 +52,10 @@
     </div>
     <section class="admissions-section admissions-questions" aria-labelledby="questions-title">
         <h2 id="questions-title">Vos questions fréquentes</h2>
-        <details><summary>Peut-on s'inscrire directement sur le site ?</summary><p>Cette page vous aide à préparer la démarche. Le formulaire de contact permet de demander des renseignements ; il ne valide pas une inscription. Contactez le secrétariat pour connaître les formalités à accomplir.</p></details>
+        <details><summary>Peut-on commencer l'inscription sur le site ?</summary><p>Oui. La démarche commence en ligne par la création d'un compte parent. Contactez ensuite le secrétariat pour confirmer les pièces à fournir et les conditions d'admission.</p></details>
         <details><summary>Mon enfant vient d'une autre école. Comment procéder ?</summary><p>Précisez sa dernière classe et présentez son bulletin au secrétariat. L'équipe vous indiquera les documents complémentaires éventuels et les conditions pour rejoindre le niveau souhaité.</p></details>
         <details><summary>Quels documents fournir pour une première scolarisation ?</summary><p>Signalez qu'il s'agit d'une première inscription à l'école. Le secrétariat vous indiquera les pièces adaptées à cette situation et les conditions d'accueil en maternelle.</p></details>
     </section>
-    <section class="admissions-help" aria-labelledby="help-title"><h2 id="help-title">Préparons ensemble son arrivée.</h2><p>Précisez la classe souhaitée dans votre message : notre équipe pourra vous orienter.</p><a class="btn-primary" href="{% url 'home:contact' %}">Demander des renseignements</a></section>
+    <section class="admissions-help" aria-labelledby="help-title"><h2 id="help-title">Commencez son inscription en ligne.</h2><p>Créez votre compte parent, puis contactez le secrétariat pour connaître les prochaines étapes.</p><a class="btn-primary" href="{% url 'account:parent_sign_up' %}">Créer un compte parent</a><a class="news-voir-tout" href="{% url 'home:contact' %}">Contacter le secrétariat</a></section>
 </div>
 {% endblock %}

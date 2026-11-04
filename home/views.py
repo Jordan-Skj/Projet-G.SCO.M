@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from news.models import News
+from press.models import News
 from contact.forms import ContactForm
 
 def index(request):
@@ -7,7 +7,7 @@ def index(request):
 
 
 def inscriptions(request):
-    return render(request, 'home/inscriptions.html')
+    return render(request, 'home/enrollments.html')
 
 
 def formations(request):

@@ -5,12 +5,12 @@ from django.db import models
 
 class Auditlog(models.Model):
     class Action(models.TextChoices):
-        CREATE = 'create', 'Création'
-        UPDATE = 'update', 'Modification'
-        VERIFY = 'verify', 'Vérification'
-        REJECT = 'reject', 'Rejet'
-        VOID = 'void', 'Annulation'
-        AUTHORIZE_RETURN = 'authorize_return', 'Autorisation de retour en classe'
+        CREATE = 'create', "Création"
+        UPDATE = 'update', "Modification"
+        VERIFY = 'verify', "Vérification"
+        REJECT = 'reject', "Rejet"
+        VOID = 'void', "Annulation"
+        AUTHORIZE_RETURN = 'authorize_return', "Autorisation de retour en classe"
 
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='audit_logs', verbose_name='Auteur de l\'action')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Date et heure de l\'action')
@@ -33,7 +33,7 @@ class Auditlog(models.Model):
         
     def save(self, *args : object, **kwargs : object) -> None:
         if not self._state.adding:
-            raise PermissionDenied("In journal d'audit ne peut pas être modifié.")
+            raise PermissionDenied("Un journal d'audit ne peut pas être modifié.")
         super().save(*args, **kwargs)
         
     def delete(self, *args : object, **kwargs) -> None:

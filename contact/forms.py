@@ -1,11 +1,24 @@
 from django import forms
-
+from tools.styling import style_form_fields
 
 class ContactForm(forms.Form):
-    name = forms.CharField(label='Nom complet', max_length=150)
-    email = forms.EmailField(label='Adresse e-mail')
-    objet = forms.ChoiceField(label='Objet', required=False, choices=[
-        ('', 'Sélectionnez un objet…'), ('inscription', 'Inscription'),
-        ('infos', 'Informations générales'), ('partenariat', 'Partenariat'), ('autre', 'Autre'),
-    ])
-    message = forms.CharField(label='Votre message', max_length=10000)
+    name = forms.CharField(max_length=150, widget=forms.TextInput(attrs={
+        'placeholder': "Nom"
+    }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'placeholder': "Email"
+    }))
+    objet = forms.ChoiceField(label="Objet", required=False,
+        choices=[
+            ("", "Sélectionnez un objet…"), ('enrollment', "Inscription"),
+            ('infos', "Informations générales"), ('partnership', "Partenariat"), ("other", "Autre"),
+        ],
+        widget=forms.Select(attrs={})
+    )
+    message = forms.CharField(widget=forms.Textarea(attrs={
+        'placeholder': "Votre message"
+    }))
+
+    def __int__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        style_form_fields(self)

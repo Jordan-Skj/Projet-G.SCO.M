@@ -5,7 +5,7 @@
 <section id="hero" class="home-hero" aria-label="Accueil">
     <h1><span>Groupe Scolaire</span><br>de Mont-Ngafula</h1>
     <p>De la maternelle aux humanités, une école pour grandir et apprendre à Kinshasa depuis 1986.</p>
-    <div class="hero-buttons"><a href="{% url 'home:inscriptions' %}" class="btn-primary">Inscrire mon enfant</a><a href="{% url 'home:formations' %}" class="btn-secondary">Découvrir les formations</a></div>
+    <div class="hero-buttons"><a href="{% url 'account:parent_sign_up' %}" class="btn-primary">Inscrire mon enfant en ligne</a><a href="{% url 'home:formations' %}" class="btn-secondary">Découvrir les formations</a></div>
 </section>
 <section class="home-shortcuts" aria-labelledby="shortcuts-title">
     <h2 id="shortcuts-title">L'essentiel pour votre famille</h2>
@@ -25,7 +25,7 @@
                     <p class="subsub_title">Actualités</p>
                     <h2>Dernières nouvelles</h2>
                 </div>
-                <a href="{% url 'news:list' %}" class="news-voir-tout">Voir tous les articles <span
+                <a href="{% url 'press:list' %}" class="press-voir-tout">Voir tous les articles <span
                         aria-hidden="true">→</span></a>
             </div>
 
