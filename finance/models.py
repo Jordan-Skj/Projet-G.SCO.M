@@ -9,7 +9,6 @@ from students.models import AcademicYear, Enrollment, SchoolClass
 
 MONEY_STEP: Decimal = Decimal('0.01')
 
-
 class Fee(models.Model):
     class Currency(models.TextChoices):
         USD = 'USD', 'Dollar américain'
@@ -50,8 +49,7 @@ class Fee(models.Model):
             Decimal('0.00'),
         )
         return max(self.amount_due - total_paid, Decimal('0.00'))
-
-
+    
 class FeePaymentQuerySet(models.QuerySet["FeePayment"]):
     def verified(self) -> "FeePaymentQuerySet":
         return self.filter(status=FeePayment.Status.VERIFIED)
@@ -72,7 +70,7 @@ class FeePayment(models.Model):
         NOT_SUBMITTED = 'not_submitted', 'Reçu non remis'
         SUBMITTED = 'submitted', 'Reçu remis'
 
-    enrollment = models.ForeignKey(Enrollment, on_delete=models.PROTECT, related_name='fee_payments', verbose_name='Inscription de l\'élève')
+    enrollment = models.ForeignKey(Enrollment, on_delete=models.PROTECT, related_name='fee_payments', verbose_name='Pour l\'élève')
     fee = models.ForeignKey(Fee, on_delete=models.PROTECT, related_name='fee_payments', verbose_name='Frais concernés')
     amount_paid = models.DecimalField(
         max_digits=12, decimal_places=2, verbose_name='Montant payé',
@@ -156,3 +154,33 @@ class FeePayment(models.Model):
 
     def __str__(self) -> str:
         return f'{self.enrollment.student} - {self.fee.name} - {self.amount_paid} {self.payment_currency} - Numero du reçu: {self.receipt_reference}'
+    
+class Exemption(models.Model):
+    class Status(models.TextChoices):
+        APPROVED = 'approved', 'Approuve'
+        REJECTED = 'rejected', 'Rejete'
+        CANCELED = 'canceled', 'Annule'
+        PENDING = 'pending', 'En cours de verification'
+        EXPIRED = 'expired', 'Expire'
+        
+    description = models.TextField(verbose_name='Description')
+    enrollement = models.ForeignKey(Enrollment, on_delete=models.PROTECT, verbose_name="Pour l'eleve")
+    status = models.CharField(max_length=40, choices=Status.choices, verbose_name="Statut", default=Status.PENDING)
+    approved_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, verbose_name="Approuve par ")
+    fee = models.ForeignKey(Fee, on_delete=models.PROTECT, verbose_name="Frais concerne")
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    expire_at = models.DateTimeField(verbose_name="Date d'expiration")
+    
+    
+    class Meta:
+        ordering = ['-submitted_at']
+        verbose_name = "Derogation"
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(status='approved') | models.Q(approved_by__isnull=False),
+                name='exemption_approved_needs_approved_by'
+            )
+        ]
+        
+    def __str__(self) -> str:
+        return f"Derogation pour l'eleve {self.enrollement.student} pour {self.fee} jusqu'au {self.expired_at}"
