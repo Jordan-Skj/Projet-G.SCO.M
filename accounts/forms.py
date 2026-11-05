@@ -1,8 +1,8 @@
 from typing import Any
 
 from django import forms
-from django.conf import settings
 
+from tools.styling import SELECT_CLASSES, TEXT_INPUT_CLASSES, style_form_fields
 from accounts.models import Gender
 from .localisation import KINSHASA
 
@@ -11,74 +11,77 @@ from .localisation import KINSHASA
 class ParentLoginForm(forms.Form):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
         'placeholder': "Email",
-        'class': settings.TEXT_INPUT_CLASSES,
     }))
     password = forms.CharField(max_length=100, required=True, widget=forms.PasswordInput(attrs={
         'placeholder': "Mot de passe",
-        'class': settings.TEXT_INPUT_CLASSES,
     }))
+    
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        style_form_fields(self)
+        
 
 class ParentSignUpForm(forms.Form):
     first_name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
         'placeholder' : "Nom",
-        'class': f'identity {settings.TEXT_INPUT_CLASSES}',
+        'class': f'identity {TEXT_INPUT_CLASSES}',
     }))
     middle_name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
         'placeholder': "Postnom",
-        'class': f'identity {settings.TEXT_INPUT_CLASSES}',
+        'class': f'identity {TEXT_INPUT_CLASSES}',
     }))
     last_name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
         'placeholder': "Prenom",
-        'class': f'identity {settings.TEXT_INPUT_CLASSES}',
+        'class': f'identity {TEXT_INPUT_CLASSES}',
     }))
     gender = forms.ChoiceField(choices=Gender.choices, widget=forms.Select(attrs={
-            'class': f'identity {settings.SELECT_CLASSES}',
+            'class': f'identity {SELECT_CLASSES}',
         }),
     )
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
         'placeholder': "Email",
-        'class': f'electronic_coordonates {settings.TEXT_INPUT_CLASSES}',
+        'class': f'electronic_coordonates {TEXT_INPUT_CLASSES}',
     }))
     phone_number = forms.IntegerField(required=True, widget=forms.TextInput(attrs={
         'placeholder': "Numero de telephone",
         'type': 'tel',
-        'class': f'electronic_coordonates {settings.TEXT_INPUT_CLASSES}',
+        'class': f'electronic_coordonates {TEXT_INPUT_CLASSES}',
     }))
     alternate_phone_number = forms.IntegerField(required=False, widget=forms.TextInput(attrs={
         'placeholder': "Numero de telephone alternative",
         'type': 'tel',
-        'class': f'electronic_coordonates {settings.TEXT_INPUT_CLASSES}',
+        'class': f'electronic_coordonates {TEXT_INPUT_CLASSES}',
     }))
     township = forms.ChoiceField(
         choices=[("", "Choisir une commune")] + [(name, name) for name in KINSHASA],
         widget=forms.Select(attrs={
-            'class': f'adress {settings.SELECT_CLASSES}',
+            'class': f'adress {SELECT_CLASSES}',
             'id': 'id_commune',
         }),
     )
     quarter = forms.ChoiceField(
         choices=[("", "Choisir d'abord une commune")],
         widget=forms.Select(attrs={
-            'class': f'adress {settings.SELECT_CLASSES}',
+            'class': f'adress {SELECT_CLASSES}',
             'id': 'id_quartier',
             'disabled': True,
         }),
     )
     street = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
         'placeholder': "Avenue / rue",
-        'class': f'adress {settings.TEXT_INPUT_CLASSES}',
+        'class': f'adress {TEXT_INPUT_CLASSES}',
     }))
     street_number = forms.CharField(max_length=20, required=True, widget=forms.TextInput(attrs={
         'placeholder': "Numéro (ex: 12)",
-        'class': f'adress {settings.TEXT_INPUT_CLASSES}',
+        'class': f'adress {TEXT_INPUT_CLASSES}',
     }))
     password = forms.CharField(max_length=100, required=True, widget=forms.PasswordInput(attrs={
         'placeholder': "Mot de passe",
-        'class': f'security {settings.TEXT_INPUT_CLASSES}',
+        'class': f'security {TEXT_INPUT_CLASSES}',
     }))
     confirm_password = forms.CharField(max_length=100, required=True, widget=forms.PasswordInput(attrs={
         'placeholder': "Confirmer votre mot de passe",
-        'class': f'security {settings.TEXT_INPUT_CLASSES}',
+        'class': f'security {TEXT_INPUT_CLASSES}',
     }))
     
     def __init__(self, *args, **kwargs) -> None:
