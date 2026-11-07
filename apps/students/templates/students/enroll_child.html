@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Demande de derogation{% endblock %}
+{% block header %}
+{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block content %}
+<main class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <h1 class="text-2xl font-bold tracking-tight">Espace Parent</h1>
+      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        Demander une derogation pour votre enfant.
+      </p>
+    </div>
+
+    <form method="post" novalidate
+      class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-6 sm:p-8 shadow-sm space-y-5">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+      <div
+        class="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm px-4 py-3">
+        {{ form.non_field_errors }}
+      </div>
+      {% endif %}
+
+      <div>
+        {{ form.first_name }}
+        {% if form.first_name.errors %}
+        <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ form.fee.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        <div class="relative">
+          {{ form.middle_name }}
+        </div>
+        {% if form.middle_name.errors %}
+        <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ form.expire_at.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div>
+          <div class="relative">
+              {{ form.last_name }}
+          </div>
+          {% if form.last_name.errors %}
+          <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ form.description.errors.0 }}</p>
+          {% endif %}
+      </div>
+
+      <div>
+          <div class="relative">
+              {{ form.profile_img }}
+          </div>
+          {% if form.profile_img.errors %}
+          <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ form.profile_img.errors.0 }}</p>
+          {% endif %}
+      </div>
+
+      <div>
+         <div class="relative">
+             {{ form.gender }}
+         </div>
+         {% if form.gender.errors %}
+         <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ form.profile_img.errors.0 }}</p>
+         {% endif %}
+      </div>
+
+
+
+      <button type="submit"
+        class="w-full bg-brand hover:bg-brand-600 text-white font-semibold py-3 rounded-lg transition-colors">
+        Conifrmer la demande
+      </button>
+    </form>
+  </div>
+</main>
+{% endblock %}

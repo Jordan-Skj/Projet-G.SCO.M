@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Espace Parent — G.S.CO.M{% endblock %}
+
+{% block extra_css %}
+<style>
+  .parent-tab[hidden],
+  .student-panel[hidden],
+  .parent-modal[hidden] {
+    display: none !important;
+  }
+
+  .parent-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: rgb(15 23 42 / .58);
+  }
+
+  .parent-modal__dialog {
+    width: min(42rem, 100%);
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+  }
+
+  .button-spinner {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: parent-spin .7s linear infinite;
+  }
+
+  @keyframes parent-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+{% endblock %}
+
+{% block header %}
+<header class="bg-white dark:bg-[#15171c] border-b border-gray-200 dark:border-gray-800 sticky top-0 z-30">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="{% url 'home:index' %}" class="flex items-center gap-3"><img
+        src="{% static 'assets/image/LOGO_GSCOM.png' %}" alt="G.SCO.M" class="h-9 w-9 object-contain"><span
+        class="font-semibold">G.S.CO.M · Espace parent</span></a>
+    <a href="{% url 'account:parent_logout' %}" class="text-sm font-medium text-red-600 hover:underline">Déconnexion</a>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 min-h-[calc(100vh-4rem)]">
+  <div id="parent-flash" class="hidden mb-5 rounded-lg px-4 py-3 text-sm" role="status"></div>
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-7">
+    <div>
+      <h1 class="text-2xl font-bold">Tableau de bord</h1>
+      <p class="text-sm text-gray-500 mt-1">Suivez la scolarité de vos enfants depuis un seul espace.</p>
+    </div>
+    <button type="button" data-open-modal="enrollment-modal" class="rounded-lg bg-[#D95745] text-white font-semibold px-4 py-2.5 hover:bg-[#bd4334]">
+      Inscrire un enfant
+    </button>
+  </div>
+
+  <div class="grid lg:grid-cols-[250px,minmax(0,1fr)] gap-6">
+    <aside class="lg:sticky lg:top-24 self-start rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-3 shadow-sm">
+      {% if children %}
+      <label for="student-selector" class="block px-2 mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Élève</label>
+      <select id="student-selector" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm mb-5">
+        {% for child in children %}<option value="{{ forloop.counter0 }}">{{ child.enrollment.student.first_name }} {{ child.enrollment.student.last_name }} — {{ child.enrollment.school_class }}</option>{% endfor %}
+      </select>
+      {% endif %}
+      <nav class="space-y-1" aria-label="Navigation parentale">
+        <button type="button" data-tab-target="home" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Accueil</button>
+        <button type="button" data-tab-target="students" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Mes élèves</button>
+        <button type="button" data-tab-target="payments" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Paiements</button>
+        <button type="button" data-tab-target="discipline" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Discipline</button>
+        <button type="button" data-tab-target="fees" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Frais scolaires</button>
+      </nav>
+    </aside>
+
+    <section class="min-w-0">
+      <div class="parent-tab" data-tab="home">
+        <h2 class="text-xl font-semibold mb-4">Informations urgentes</h2>
+        {% if children %}
+        <div class="grid sm:grid-cols-2 gap-4">
+          {% for child in children %}
+          {% if child.enrollment.status == 'pending' %}<article
+            class="rounded-2xl border border-amber-200 bg-amber-50 dark:bg-amber-950/20 p-5">
+            <p class="font-semibold">Inscription en attente</p>
+            <p class="text-sm mt-1">L'inscription de {{ child.enrollment.student.first_name }} doit encore être traitée
+              par l'établissement.</p>
+          </article>
+          {% endif %}
+          {% for payment in child.payments %}
+
+          {% if payment.status == 'pending' %}
+          <article class="rounded-2xl border border-blue-200 bg-blue-50 dark:bg-blue-950/20 p-5">
+            <p class="font-semibold">Paiement à vérifier</p>
+            <p class="text-sm mt-1">
+              {{ payment.fee.name }} pour {{ child.enrollment.student.first_name }} est en attente de vérification.
+            </p>
+          </article>
+          {% endif %}
+
+          {% endfor %}
+          {% endfor %}
+        </div>
+        <p class="empty-urgent hidden rounded-2xl border border-gray-200 p-6 text-sm text-gray-500">Aucune information urgente.</p>
+        {% else %}
+        <div class="rounded-2xl border border-dashed border-gray-300 p-8 text-center">
+          <p class="font-semibold">Aucun enfant inscrit</p>
+          <button type="button" data-open-modal="enrollment-modal" class="mt-4 text-[#D95745] font-medium">Commencer une inscription</button>
+        </div>
+        {% endif %}
+      </div>
+
+      {% for child in children %}
+      <div class="student-panel" data-student-index="{{ forloop.counter0 }}" {% if not forloop.first %}hidden{% endif %}>
+        <div class="parent-tab" data-tab="students" hidden>
+          <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-6">
+            <h2 class="text-xl font-semibold">
+              {{ child.enrollment.student.first_name }} {{ child.enrollment.student.middle_name }} {{ child.enrollment.student.last_name }}
+            </h2>
+            <dl class="grid sm:grid-cols-3 gap-5 mt-6 text-sm">
+              <div>
+                <dt class="text-gray-500">Classe</dt>
+                <dd class="font-medium mt-1">{{ child.enrollment.school_class }}</dd>
+              </div>
+              <div>
+                <dt class="text-gray-500">Année scolaire</dt>
+                <dd class="font-medium mt-1">{{ child.enrollment.academic_year }}</dd>
+              </div>
+              <div>
+                <dt class="text-gray-500">Statut</dt>
+                <dd class="font-medium mt-1">{{ child.enrollment.get_status_display }}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="parent-tab" data-tab="payments" hidden>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Paiements</h2>
+          </div>
+          <div class="rounded-2xl border border-gray-200 overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="bg-gray-50 dark:bg-gray-800 text-left">
+                <tr>
+                  <th class="p-3">Frais</th>
+                  <th class="p-3">Montant</th>
+                  <th class="p-3">Date</th>
+                  <th class="p-3">Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for payment in child.payments %}
+                <tr class="border-t">
+                  <td class="p-3">{{ payment.fee.name }}</td>
+                  <td class="p-3">{{ payment.amount_paid }} {{ payment.payment_currency }}</td>
+                  <td class="p-3">{{ payment.payment_date }}</td>
+                  <td class="p-3">{{ payment.get_status_display }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td class="p-5 text-gray-500" colspan="4">Aucun paiement enregistré.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <div class="parent-tab" data-tab="discipline" hidden>
+          <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+            <h2 class="text-xl font-semibold">Discipline</h2><button type="button"
+              data-open-modal="justification-modal-{{ child.enrollment.id }}"
+              class="rounded-lg border border-[#D95745] text-[#D95745] px-3 py-2 text-sm font-medium">Justifier une
+              absence</button>
+          </div>
+          <div class="space-y-3">{% for punishment in child.punishments %}<article
+              class="rounded-2xl border border-gray-200 p-5">
+              <div class="flex justify-between gap-3"><strong>{{ punishment.incident_date }}</strong><span>{{
+                  punishment.get_status_display }}</span></div>
+              <p class="mt-2 text-sm">{{ punishment.description }}</p>
+              <p class="mt-2 text-sm text-gray-500">Sanction : {{ punishment.sanction }}</p>
+            </article>{% empty %}<p class="rounded-2xl border border-gray-200 p-6 text-sm text-gray-500">Aucune sanction
+              enregistrée.</p>{% endfor %}</div>
+        </div>
+        <div class="parent-tab" data-tab="fees" hidden>
+          <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+            <h2 class="text-xl font-semibold">Frais scolaires</h2><button type="button"
+              data-open-modal="exemption-modal-{{ child.enrollment.id }}"
+              class="rounded-lg border border-[#D95745] text-[#D95745] px-3 py-2 text-sm font-medium">Demander une
+              dérogation</button>
+          </div>
+          <div class="space-y-3">{% for fee in child.fees %}<article
+              class="rounded-2xl border border-gray-200 p-5 flex items-center justify-between gap-3">
+              <div>
+                <p class="font-semibold">{{ fee.name }}</p>
+                <p class="text-xs text-gray-500">Échéance : {{ fee.due_date|default:'Non définie' }}</p>
+              </div><strong>{{ fee.amount_due }} {{ fee.currency }}</strong>
+            </article>{% empty %}<p class="rounded-2xl border border-gray-200 p-6 text-sm text-gray-500">Aucun frais
+              défini.</p>{% endfor %}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+  </div>
+</main>
+
+<div id="enrollment-modal" class="parent-modal" hidden aria-modal="true" role="dialog">
+  <div class="parent-modal__dialog rounded-2xl bg-white dark:bg-[#15171c] p-6 shadow-xl">
+    <div class="flex justify-between gap-4 mb-5">
+      <h2 class="text-xl font-semibold">Inscrire un enfant</h2><button type="button" data-close-modal
+        aria-label="Fermer">✕</button>
+    </div>
+    <form data-ajax-form action="{% url 'student:enroll_child' %}" method="post" enctype="multipart/form-data"
+      class="grid sm:grid-cols-2 gap-4">{% csrf_token %}{% for field in enrollment_form %}<div
+        class="{% if field.name == 'profile_img' %}sm:col-span-2{% endif %}"><label for="{{ field.id_for_label }}"
+          class="block text-sm font-medium mb-1">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<p
+          class="text-sm text-red-600">{{ error }}</p>{% endfor %}</div>{% endfor %}<div
+        class="sm:col-span-2 flex justify-end gap-3 mt-2"><button type="button" data-close-modal
+          class="px-4 py-2">Annuler</button><button type="submit"
+          class="submit-button rounded-lg bg-[#D95745] text-white font-semibold px-4 py-2">Soumettre
+          l’inscription</button></div>
+    </form>
+  </div>
+</div>
+
+{% for child in children %}
+<div id="exemption-modal-{{ child.enrollment.id }}" class="parent-modal" hidden aria-modal="true" role="dialog">
+  <div class="parent-modal__dialog rounded-2xl bg-white dark:bg-[#15171c] p-6 shadow-xl">
+    <div class="flex justify-between gap-4 mb-5">
+      <h2 class="text-xl font-semibold">Demander une dérogation</h2><button type="button" data-close-modal
+        aria-label="Fermer">✕</button>
+    </div>
+    <form data-ajax-form action="{% url 'finance:ask_exemption' child.enrollment.id %}" method="post"
+      class="grid gap-4">{% csrf_token %}{% for field in child.exemption_form %}<div><label
+          for="{{ field.id_for_label }}" class="block text-sm font-medium mb-1">{{ field.label }}</label>{{ field }}
+      </div>{% endfor %}<div class="flex justify-end gap-3"><button type="button" data-close-modal
+          class="px-4 py-2">Annuler</button><button type="submit"
+          class="submit-button rounded-lg bg-[#D95745] text-white font-semibold px-4 py-2">Envoyer la demande</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="justification-modal-{{ child.enrollment.id }}" class="parent-modal" hidden aria-modal="true" role="dialog">
+  <div class="parent-modal__dialog rounded-2xl bg-white dark:bg-[#15171c] p-6 shadow-xl">
+    <div class="flex justify-between gap-4 mb-5">
+      <h2 class="text-xl font-semibold">Justifier une absence ou un retard</h2><button type="button" data-close-modal
+        aria-label="Fermer">✕</button>
+    </div>
+    <form data-ajax-form action="{% url 'discipline:justify_student' child.enrollment.id %}" method="post"
+      class="grid gap-4">{% csrf_token %}{% for field in child.justification_form %}<div><label
+          for="{{ field.id_for_label }}" class="block text-sm font-medium mb-1">{{ field.label }}</label>{{ field }}
+      </div>{% endfor %}<div class="flex justify-end gap-3"><button type="button" data-close-modal
+          class="px-4 py-2">Annuler</button><button type="submit"
+          class="submit-button rounded-lg bg-[#D95745] text-white font-semibold px-4 py-2">Envoyer la
+          justification</button></div>
+    </form>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block footer %}{% endblock %}
+{% block extra_js %}
+<script>
+  (() => {
+    const buttons = [...document.querySelectorAll('[data-tab-target]')]; const panels = [...document.querySelectorAll('.student-panel')]; let activeTab = 'home';
+    const updateTabs = () => { buttons.forEach((button) => { const active = button.dataset.tabTarget === activeTab; button.classList.toggle('bg-[#D95745]/10', active); button.classList.toggle('text-[#D95745]', active); }); document.querySelectorAll('.parent-tab').forEach((tab) => { const visibleStudent = !tab.closest('.student-panel') || !tab.closest('.student-panel').hidden; tab.hidden = tab.dataset.tab !== activeTab || !visibleStudent; }); };
+    buttons.forEach((button) => button.addEventListener('click', () => { activeTab = button.dataset.tabTarget; updateTabs(); }));
+    document.getElementById('student-selector')?.addEventListener('change', (event) => { panels.forEach((panel) => panel.hidden = panel.dataset.studentIndex !== event.target.value); updateTabs(); }); updateTabs();
+    const closeModal = (modal) => { modal.hidden = true; }; document.querySelectorAll('[data-open-modal]').forEach((button) => button.addEventListener('click', () => document.getElementById(button.dataset.openModal).hidden = false)); document.querySelectorAll('[data-close-modal]').forEach((button) => button.addEventListener('click', () => closeModal(button.closest('.parent-modal')))); document.querySelectorAll('.parent-modal').forEach((modal) => modal.addEventListener('click', (event) => { if (event.target === modal) closeModal(modal); }));
+    const flash = document.getElementById('parent-flash'); const showMessage = (message, success) => { flash.textContent = message; flash.className = `mb-5 rounded-lg px-4 py-3 text-sm ${success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`; };
+    document.querySelectorAll('[data-ajax-form]').forEach((form) => form.addEventListener('submit', async (event) => { event.preventDefault(); if (form.dataset.submitting === 'true') return; form.dataset.submitting = 'true'; const submit = form.querySelector('.submit-button'); const label = submit.innerHTML; submit.disabled = true; submit.innerHTML = '<span class="button-spinner" aria-label="Envoi en cours"></span>'; try { const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'X-Requested-With': 'XMLHttpRequest' } }); const data = await response.json(); if (!response.ok || !data.success) throw new Error(data.message || 'La demande n’a pas pu être traitée.'); closeModal(form.closest('.parent-modal')); form.reset(); showMessage(data.message, true); window.setTimeout(() => window.location.reload(), 700); } catch (error) { showMessage(error.message, false); } finally { form.dataset.submitting = 'false'; submit.disabled = false; submit.innerHTML = label; } }));
+  })();
+</script>
+{% endblock %}
