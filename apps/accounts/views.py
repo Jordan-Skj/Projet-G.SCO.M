@@ -1,22 +1,17 @@
-from django.forms import Form, ModelForm
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.db import transaction
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout, get_user_model
 
-
+from apps.accounts.services import create_parent_user
 from apps.discipline.forms import JustificationForm
-from apps.finance.forms import ExemptionForm, FeePaymentForm, MobileMoneyPaymentForm
+from apps.finance.forms import ExemptionForm, FeePaymentForm
 from apps.students.models import Enrollment
 from apps.students.forms import EnrollmentForm
 
 from .models import CustomUser, Parent
 from .forms import ParentLoginForm, ParentSignUpForm
 from .localisation import KINSHASA
-from apps.audit.models import Auditlog
-from apps.audit.services import log_action
 
 User = get_user_model()
 
@@ -52,32 +47,7 @@ def parent_sign_up(request: HttpRequest) -> HttpResponse:
     form = ParentSignUpForm(request.POST or None)
     
     if request.method == 'POST' and form.is_valid():            
-
-        name = form.cleaned_data.get('first_name')
-        last_name = form.cleaned_data.get('last_name')
-        role = CustomUser.Role.PARENT
-        email = form.cleaned_data.get('email', '')
-        phone_number = form.cleaned_data.get('phone_number')
-        alternate_phone_number = form.cleaned_data.get('alternate_phone_number')
-        
-        township = form.cleaned_data.get('township')
-        quarter = form.cleaned_data.get('quarter')
-        street = form.cleaned_data.get('street')
-        address = f'Commune de {township}, quartier {quarter}, avenue / rue {street}'
-        
-        password = form.cleaned_data.get('password')
-        
-        with transaction.atomic():
-            user = User.objects.create_user(username=email, email=email, password=password, first_name=name, last_name=last_name, role=role)
-            parent = Parent.objects.create(
-                user=user,
-                phone_number=phone_number,
-                alternate_phone_number=alternate_phone_number or None,
-                address=address,
-                gender=form.cleaned_data['gender'],
-            )
-            log_action(actor=user, action=Auditlog.Action.CREATE, target=user)
-            log_action(actor=user, action=Auditlog.Action.CREATE, target=parent)
+        user = create_parent_user(form.cleaned_data)
         login(request, user)
         return redirect('account:parent_account')
         
@@ -90,7 +60,7 @@ def parent_logout(request: HttpRequest) -> HttpResponse:
     return redirect('home:index')
 
 
-@login_required(login_url='account:parent_login')
+@login_required
 def parent_account(request: HttpRequest) -> HttpResponse:
     data = {}
     if getattr(request.user, 'role') == CustomUser.Role.PARENT:
@@ -113,8 +83,10 @@ def parent_account(request: HttpRequest) -> HttpResponse:
                     'payments': enrollment.fee_payments.all(),
                     'punishments': enrollment.punishments.all(),
                     'fees': enrollment.school_class.fees.filter(academic_year=enrollment.academic_year),
+                    'tests': enrollment.grade.filter.all(),
                     'exemption_form': ExemptionForm(enrollment=enrollment),
                     'justification_form': JustificationForm(enrollment=enrollment),
+                    'fee_paymment_form': FeePaymentForm(enrollment=enrollment),
                 })
 
             data['children'] = children
