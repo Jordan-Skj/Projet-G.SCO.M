@@ -26,8 +26,8 @@ class Teacher(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=120, verbose_name="Nom du cours")
-    school_class = models.ForeignKey(SchoolClass, on_delete=models.PROTECT, verbose_name="Classe")
-    teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT, verbose_name="Professeur en charge", related_name='teacher_courses')
+    school_class = models.ForeignKey(SchoolClass, on_delete=models.PROTECT, verbose_name="Classe", related_name='courses')
+    teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT, verbose_name="Professeur en charge", related_name='courses')
     max_points = models.IntegerField(default=0, verbose_name="Max points")
     chapter_nb = models.IntegerField(default=0, verbose_name="Nombre de chapitre")
 
@@ -46,7 +46,7 @@ class Lesson(models.Model):
     title = models.CharField(max_length=190, verbose_name="Titre de la lecon")
     description = models.TextField(verbose_name="Description de la lecon")
     explanation = models.TextField(verbose_name="Explication clee de la lecon")
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, verbose_name="Cours", related_name='course_lessons')
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, verbose_name="Cours", related_name='lessons')
     status = models.CharField(max_length=50, verbose_name="Status")
     course_chapter = models.IntegerField(default=0, verbose_name="Chapitre n*")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -75,7 +75,7 @@ class Test(models.Model):
         WRITTEN = 'written', "Ecrite"
         
     title = models.CharField(max_length=190, verbose_name="Titre de l'epreuve")
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, verbose_name="Cours", related_name='course_tests')
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, verbose_name="Cours", related_name='tests')
     type = models.CharField(max_length=40, choices=Type.choices, verbose_name="Type d'epreuve")
     method = models.CharField(max_length=40, choices=Method.choices, verbose_name="Methode d'epreuve", default=Method.WRITTEN)
     max_points = models.IntegerField(default=0, verbose_name="Max points")
@@ -103,8 +103,8 @@ class Test(models.Model):
         return f"{self.type.lower()} de {self.course.name} : {self.title}"
     
 class Grade(models.Model):
-    enrollment = models.ForeignKey('students.Enrollment', on_delete=models.PROTECT, verbose_name="L'élève", related_name='student_grades')
-    test = models.ForeignKey(Test, on_delete=models.PROTECT, verbose_name="Epreuve", related_name='test_grades')
+    enrollment = models.ForeignKey('students.Enrollment', on_delete=models.PROTECT, verbose_name="L'élève", related_name='grades')
+    test = models.ForeignKey(Test, on_delete=models.PROTECT, verbose_name="Epreuve", related_name='grades')
     score = models.FloatField(default=0.0, verbose_name="Score de l'eleve")
     graded_at = models.DateTimeField(auto_now_add=True)
     
@@ -114,3 +114,24 @@ class Grade(models.Model):
         
     def __str__(self) -> str:
         return f"Note de l'eleve {self.enrollment.student} pour l'epreuve {self.test.title} : {self.score}"
+
+
+class CourseSchedule(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='schedule_entries', verbose_name="Cours")
+    date = models.DateField(verbose_name="Date du cours")
+    start_time = models.TimeField(verbose_name="Heure de début")
+    end_time = models.TimeField(verbose_name="Heure de fin")
+
+    class Meta:
+        verbose_name = "Horaire de cours"
+        verbose_name_plural = "Horaires de cours"
+        ordering = ['date', 'start_time']
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(end_time__gt=models.F('start_time')),
+                name='course_schedule_end_after_start',
+            )
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.course.name} - {self.date} ({self.start_time}-{self.end_time})"
