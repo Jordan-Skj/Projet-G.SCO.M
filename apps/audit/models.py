@@ -31,12 +31,12 @@ class Auditlog(models.Model):
             models.Index(fields=['target_type', 'target_id']),
         ]
         
-    def save(self, *args : object, **kwargs : object) -> None:
+    def save(self, *args, **kwargs) -> None:
         if not self._state.adding:
             raise PermissionDenied("Un journal d'audit ne peut pas être modifié.")
         super().save(*args, **kwargs)
         
-    def delete(self, *args : object, **kwargs) -> None:
+    def delete(self, *args, **kwargs) -> None:
         raise PermissionDenied("Un journal d'audit ne peut pas être supprimé.")
     
     def __str__(self) -> str:   
