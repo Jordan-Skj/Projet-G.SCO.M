@@ -13,9 +13,8 @@ from .models import Justification
 
 
 @require_POST
-@login_required(login_url='account:parent_login')
+@login_required
 def justify_student(request: HttpRequest, enrollment_slug: str) -> JsonResponse:
-    """Accept one parent justification for an enrollment owned by that parent."""
     enrollment = get_object_or_404(Enrollment, slug=enrollment_slug, academic_year__is_current=True)
     if not enrollment.student.guardian_links.filter(parent__user=request.user, is_active=True).exists():
         return JsonResponse({'success': False, 'message': "Action non autorisée."}, status=403)
@@ -30,7 +29,8 @@ def justify_student(request: HttpRequest, enrollment_slug: str) -> JsonResponse:
     justification = form.save(commit=False)
     justification.enrollment = enrollment
     justification.status = Justification.Status.PENDING
-    justification.expired_at = date.today() + timedelta(days=14)
+    if justification.type in ['uniform_violation', 'other', 'exemption']:
+        justification.expired_at = date.today() + timedelta(days=14)
     justification.save()
     log_action(actor=request.user, action=Auditlog.Action.CREATE, target=justification)
     return JsonResponse({'success': True, 'message': "Justification soumise avec succès."})

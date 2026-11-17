@@ -53,6 +53,7 @@ class Justification(models.Model):
         MISSED_ASSIGNMENT = 'missed_assignment', "Devoir non fait"
         MISSED_LIBRARY_STUDIES = 'missed_library_studies', "Absence aux etudes de la bibliotheque"
         UNIFORM_VIOLATION = 'uniform_violation', "Violation de la tenue exigee"
+        EXEMPTION = 'exemption', "Demande d'autorisation de non respect du reglement scolaire"
         OTHER = 'other', "Autre"
         
     description = models.TextField(verbose_name="Description")
