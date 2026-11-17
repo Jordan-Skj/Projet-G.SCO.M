@@ -72,14 +72,16 @@
   <div class="grid lg:grid-cols-[250px,minmax(0,1fr)] gap-6">
     <aside class="lg:sticky lg:top-24 self-start rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-3 shadow-sm">
       {% if children %}
-      <label for="student-selector" class="block px-2 mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Élève</label>
+      <label for="student-selector" class="block px-2 mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Enfant</label>
       <select id="student-selector" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm mb-5">
-        {% for child in children %}<option value="{{ forloop.counter0 }}">{{ child.enrollment.student.first_name }} {{ child.enrollment.student.last_name }} — {{ child.enrollment.school_class }}</option>{% endfor %}
+        {% for child in children %}<option value="{{ forloop.counter0 }}">{{ child.student.first_name }} {{ child.student.last_name }} — {{ child.enrollment.academic_year }}</option>{% endfor %}
       </select>
       {% endif %}
       <nav class="space-y-1" aria-label="Navigation parentale">
         <button type="button" data-tab-target="home" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Accueil</button>
-        <button type="button" data-tab-target="students" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Mes élèves</button>
+        <button type="button" data-tab-target="students" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Mes enfants</button>
+        <button type="button" data-tab-target="documents" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Dossiers et documents</button>
+        <button type="button" data-tab-target="grades" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Résultats scolaires</button>
         <button type="button" data-tab-target="payments" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Paiements</button>
         <button type="button" data-tab-target="discipline" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Discipline</button>
         <button type="button" data-tab-target="fees" class="parent-tab-button w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium">Frais scolaires</button>
@@ -95,10 +97,17 @@
           {% if child.enrollment.status == 'pending' %}<article
             class="rounded-2xl border border-amber-200 bg-amber-50 dark:bg-amber-950/20 p-5">
             <p class="font-semibold">Inscription en attente</p>
-            <p class="text-sm mt-1">L'inscription de {{ child.enrollment.student.first_name }} doit encore être traitée
-              par l'établissement.</p>
+            <p class="text-sm mt-1">Le dossier de {{ child.student.first_name }} est en attente de vérification des pièces.</p>
           </article>
           {% endif %}
+          {% for document in child.documents %}
+          {% if document.status == 'rejected' %}
+          <article class="rounded-2xl border border-red-200 bg-red-50 dark:bg-red-950/20 p-5">
+            <p class="font-semibold">Pièce à corriger</p>
+            <p class="text-sm mt-1">{{ child.student.first_name }} : {{ document.get_document_type_display }} — {{ document.rejection_reason }}</p>
+          </article>
+          {% endif %}
+          {% endfor %}
           {% for payment in child.payments %}
 
           {% if payment.status == 'pending' %}
@@ -127,7 +136,7 @@
         <div class="parent-tab" data-tab="students" hidden>
           <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-6">
             <h2 class="text-xl font-semibold">
-              {{ child.enrollment.student.first_name }} {{ child.enrollment.student.middle_name }} {{ child.enrollment.student.last_name }}
+              {{ child.student.first_name }} {{ child.student.middle_name }} {{ child.student.last_name }}
             </h2>
             <dl class="grid sm:grid-cols-3 gap-5 mt-6 text-sm">
               <div>
@@ -142,7 +151,151 @@
                 <dt class="text-gray-500">Statut</dt>
                 <dd class="font-medium mt-1">{{ child.enrollment.get_status_display }}</dd>
               </div>
+              <div>
+                <dt class="text-gray-500">Date de naissance</dt>
+                <dd class="font-medium mt-1">{{ child.student.date_of_birth }}</dd>
+              </div>
+              <div>
+                <dt class="text-gray-500">Genre</dt>
+                <dd class="font-medium mt-1">{{ child.student.get_gender_display }}</dd>
+              </div>
+              <div>
+                <dt class="text-gray-500">Matricule</dt>
+                <dd class="font-medium mt-1">{{ child.student.admission_number }}</dd>
+              </div>
+              <div>
+                <dt class="text-gray-500">Lien avec l'enfant</dt>
+                <dd class="font-medium mt-1">{{ child.guardian_link.get_relationship_display }}</dd>
+              </div>
+              <div>
+                <dt class="text-gray-500">Date de demande</dt>
+                <dd class="font-medium mt-1">{{ child.enrollment.enrollment_date }}</dd>
+              </div>
             </dl>
+            <h3 class="font-semibold mt-8 mb-3">Historique des inscriptions</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-gray-50 dark:bg-gray-800 text-left">
+                  <tr><th class="p-3">Année scolaire</th><th class="p-3">Classe</th><th class="p-3">Statut</th></tr>
+                </thead>
+                <tbody>
+                  {% for enrollment in child.enrollment_history %}
+                  <tr class="border-t">
+                    <td class="p-3">{{ enrollment.academic_year }}</td>
+                    <td class="p-3">{{ enrollment.school_class }}</td>
+                    <td class="p-3">{{ enrollment.get_status_display }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="parent-tab" data-tab="documents" hidden>
+          <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-6">
+            <h2 class="text-xl font-semibold">Dossier d'inscription</h2>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+              L'inscription ne sera validée qu'après vérification par l'école de l'acte de naissance et de la photo récente.
+              Les fichiers sont privés et accessibles uniquement au parent associé et au personnel autorisé.
+            </p>
+            <ol class="list-decimal pl-5 mt-4 space-y-1 text-sm text-gray-600 dark:text-gray-300">
+              <li>Téléversez les deux pièces demandées dans le formulaire d'inscription.</li>
+              <li>L'école vérifie chaque pièce dans son espace d'administration.</li>
+              <li>Si une pièce est refusée, son motif s'affiche ici et vous pourrez la remplacer.</li>
+              <li>L'inscription passe à « Inscrit » uniquement lorsque les deux pièces sont vérifiées.</li>
+            </ol>
+            <div class="mt-6 space-y-3">
+              {% for document in child.documents %}
+              <article class="rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p class="font-medium">{{ document.get_document_type_display }}</p>
+                    <p class="text-xs text-gray-500">Soumis le {{ document.submitted_at|date:"d/m/Y H:i" }}</p>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm">{{ document.get_status_display }}</span>
+                    <a class="text-sm text-[#D95745] underline"
+                      href="{% url 'student:download_enrollment_document' document.pk %}">Télécharger</a>
+                  </div>
+                </div>
+                {% if document.status == 'rejected' %}
+                <p class="mt-2 text-sm text-red-700 dark:text-red-300">Correction demandée : {{ document.rejection_reason }}</p>
+                {% endif %}
+              </article>
+              {% empty %}
+              <p class="text-sm text-amber-700">
+                {% if child.enrollment.status == 'pending' %}
+                Aucune pièce n'est enregistrée pour cette inscription. Veuillez soumettre les pièces ci-dessous.
+                {% else %}
+                Aucune pièce numérique n'est associée à cette inscription.
+                {% endif %}
+              {% endfor %}
+            </div>
+            {% if child.document_form.fields and child.enrollment.status == 'pending' %}
+            <form data-ajax-form action="{% url 'student:resubmit_enrollment_documents' child.enrollment.id %}"
+              method="post" enctype="multipart/form-data" class="mt-6 grid gap-4">
+              {% csrf_token %}
+              {% for field in child.document_form %}
+              <div>
+                <label for="{{ field.id_for_label }}" class="block text-sm font-medium mb-1">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}<p class="mt-1 text-xs text-red-600">{{ error }}</p>{% endfor %}
+              </div>
+              {% endfor %}
+              <button type="submit" class="submit-button rounded-lg bg-[#D95745] text-white font-semibold px-4 py-2">
+                Envoyer les pièces à vérifier
+              </button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="parent-tab" data-tab="grades" hidden>
+          <div class="space-y-6">
+            <section class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-6">
+              <h2 class="text-xl font-semibold mb-4">Résultats scolaires</h2>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-50 dark:bg-gray-800 text-left">
+                    <tr><th class="p-3">Épreuve</th><th class="p-3">Cours</th><th class="p-3">Note</th><th class="p-3">Date</th></tr>
+                  </thead>
+                  <tbody>
+                    {% for grade in child.grades %}
+                    <tr class="border-t">
+                      <td class="p-3">{{ grade.test.title }}</td>
+                      <td class="p-3">{{ grade.test.course.name }}</td>
+                      <td class="p-3">{{ grade.score }} / {{ grade.test.max_points }}</td>
+                      <td class="p-3">{{ grade.graded_at|date:"d/m/Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td class="p-4 text-gray-500" colspan="4">Aucun résultat publié.</td></tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <section class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-6">
+              <h3 class="text-lg font-semibold mb-4">Horaire des cours</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-50 dark:bg-gray-800 text-left">
+                    <tr><th class="p-3">Date</th><th class="p-3">Cours</th><th class="p-3">Heure</th></tr>
+                  </thead>
+                  <tbody>
+                    {% for entry in child.course_schedule %}
+                    <tr class="border-t">
+                      <td class="p-3">{{ entry.date|date:"d/m/Y" }}</td>
+                      <td class="p-3">{{ entry.course.name }}</td>
+                      <td class="p-3">{{ entry.start_time|time:"H:i" }} – {{ entry.end_time|time:"H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td class="p-4 text-gray-500" colspan="3">Aucun horaire publié.</td></tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </section>
           </div>
         </div>
 
@@ -176,14 +329,17 @@
               </tbody>
             </table>
           </div>
-        </div>
+      </div>
         
         <div class="parent-tab" data-tab="discipline" hidden>
           <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
-            <h2 class="text-xl font-semibold">Discipline</h2><button type="button"
-              data-open-modal="justification-modal-{{ child.enrollment.id }}"
-              class="rounded-lg border border-[#D95745] text-[#D95745] px-3 py-2 text-sm font-medium">Justifier une
-              absence</button>
+            <h2 class="text-xl font-semibold">Discipline et présence</h2>
+            {% if child.can_manage_enrollment %}
+            <button type="button" data-open-modal="justification-modal-{{ child.enrollment.id }}"
+              class="rounded-lg border border-[#D95745] text-[#D95745] px-3 py-2 text-sm font-medium">
+              Envoyer une justification
+            </button>
+            {% endif %}
           </div>
           <div class="space-y-3">{% for punishment in child.punishments %}<article
               class="rounded-2xl border border-gray-200 p-5">
@@ -192,23 +348,57 @@
               <p class="mt-2 text-sm">{{ punishment.description }}</p>
               <p class="mt-2 text-sm text-gray-500">Sanction : {{ punishment.sanction }}</p>
             </article>{% empty %}<p class="rounded-2xl border border-gray-200 p-6 text-sm text-gray-500">Aucune sanction
-              enregistrée.</p>{% endfor %}</div>
+              enregistrée.</p>{% endfor %}
+            <h3 class="font-semibold mt-6">Absences</h3>
+            <ul class="mt-2 space-y-2 text-sm">
+              {% for absence in child.absences %}
+              <li class="rounded-lg border border-gray-200 p-3">{{ absence.date }} — {{ absence.get_status_display }}</li>
+              {% empty %}<li class="text-gray-500">Aucune absence enregistrée.</li>{% endfor %}
+            </ul>
+            <h3 class="font-semibold mt-6">Retards</h3>
+            <ul class="mt-2 space-y-2 text-sm">
+              {% for lateness in child.latenesses %}
+              <li class="rounded-lg border border-gray-200 p-3">{{ lateness.arrived_at|date:"d/m/Y H:i" }} — {{ lateness.get_status_display }}</li>
+              {% empty %}<li class="text-gray-500">Aucun retard enregistré.</li>{% endfor %}
+            </ul>
+          </div>
         </div>
         <div class="parent-tab" data-tab="fees" hidden>
           <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
-            <h2 class="text-xl font-semibold">Frais scolaires</h2><button type="button"
+            <h2 class="text-xl font-semibold">Frais scolaires</h2>
+            {% if child.can_manage_enrollment %}
+            <button type="button"
               data-open-modal="exemption-modal-{{ child.enrollment.id }}"
               class="rounded-lg border border-[#D95745] text-[#D95745] px-3 py-2 text-sm font-medium">Demander une
               dérogation</button>
+            {% endif %}
+            {% if child.can_pay_fees %}
+            <button type="button" data-open-modal="fee-payment-modal-{{ child.enrollment.id }}"
+              class="rounded-lg bg-[#D95745] text-white px-3 py-2 text-sm font-medium">Payer des frais</button>
+            {% elif child.enrollment.status == 'pending' %}
+            <p class="w-full text-sm text-amber-700">Le paiement sera disponible après la vérification du dossier par l'école.</p>
+            {% else %}
+            <p class="w-full text-sm text-gray-500">Aucun solde disponible pour cette inscription.</p>
+            {% endif %}
           </div>
-          <div class="space-y-3">{% for fee in child.fees %}<article
+          <div class="space-y-3">{% for balance in child.fee_balances %}<article
               class="rounded-2xl border border-gray-200 p-5 flex items-center justify-between gap-3">
               <div>
-                <p class="font-semibold">{{ fee.name }}</p>
-                <p class="text-xs text-gray-500">Échéance : {{ fee.due_date|default:'Non définie' }}</p>
-              </div><strong>{{ fee.amount_due }} {{ fee.currency }}</strong>
+                <p class="font-semibold">{{ balance.fee.name }}</p>
+                <p class="text-xs text-gray-500">Échéance : {{ balance.fee.due_date|default:'Non définie' }}</p>
+                <p class="text-sm mt-1">Solde restant : {{ balance.outstanding }} {{ balance.fee.currency }}</p>
+              </div><strong>{{ balance.fee.amount_due }} {{ balance.fee.currency }}</strong>
             </article>{% empty %}<p class="rounded-2xl border border-gray-200 p-6 text-sm text-gray-500">Aucun frais
               défini.</p>{% endfor %}</div>
+          <h3 class="font-semibold mt-6 mb-3">Demandes de dérogation</h3>
+          <div class="space-y-2">
+            {% for exemption in child.exemptions %}
+            <article class="rounded-lg border border-gray-200 p-3 text-sm">
+              <p>{{ exemption.fee.name }} — {{ exemption.get_status_display }}</p>
+              <p class="text-gray-500">{{ exemption.description }}</p>
+            </article>
+            {% empty %}<p class="text-sm text-gray-500">Aucune demande de dérogation.</p>{% endfor %}
+          </div>
         </div>
       </div>
       {% endfor %}
@@ -222,20 +412,33 @@
       <h2 class="text-xl font-semibold">Inscrire un enfant</h2><button type="button" data-close-modal
         aria-label="Fermer">✕</button>
     </div>
+    <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">
+      Remplissez les renseignements de l'enfant et téléversez obligatoirement son acte de naissance
+      ainsi qu'une photo récente (10 Mo maximum par fichier). L'école vérifiera les pièces avant de valider l'inscription.
+      Formats de l'acte : PDF, JPG ou PNG. La photo doit être une image.
+    </p>
     <form data-ajax-form action="{% url 'student:enroll_child' %}" method="post" enctype="multipart/form-data"
-      class="grid sm:grid-cols-2 gap-4">{% csrf_token %}{% for field in enrollment_form %}<div
-        class="{% if field.name == 'profile_img' %}sm:col-span-2{% endif %}"><label for="{{ field.id_for_label }}"
-          class="block text-sm font-medium mb-1">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<p
-          class="text-sm text-red-600">{{ error }}</p>{% endfor %}</div>{% endfor %}<div
-        class="sm:col-span-2 flex justify-end gap-3 mt-2"><button type="button" data-close-modal
+      class="grid sm:grid-cols-2 gap-4">
+      {% csrf_token %}
+      {% for field in enrollment_form %}
+      <div class="{% if field.name == 'birth_certificate' or field.name == 'student_photo' %}sm:col-span-2{% endif %}">
+        <label for="{{ field.id_for_label }}" class="block text-sm font-medium mb-1">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}<p class="mt-1 text-xs text-gray-500">{{ field.help_text }}</p>{% endif %}
+        {% for error in field.errors %}<p class="mt-1 text-sm text-red-600">{{ error }}</p>{% endfor %}
+      </div>
+      {% endfor %}
+      <div class="sm:col-span-2 flex justify-end gap-3 mt-2">
+        <button type="button" data-close-modal
           class="px-4 py-2">Annuler</button><button type="submit"
-          class="submit-button rounded-lg bg-[#D95745] text-white font-semibold px-4 py-2">Soumettre
-          l’inscription</button></div>
+          class="submit-button rounded-lg bg-[#D95745] text-white font-semibold px-4 py-2">Soumettre le dossier</button>
+      </div>
     </form>
   </div>
 </div>
 
 {% for child in children %}
+{% if child.can_manage_enrollment %}
 <div id="exemption-modal-{{ child.enrollment.id }}" class="parent-modal" hidden aria-modal="true" role="dialog">
   <div class="parent-modal__dialog rounded-2xl bg-white dark:bg-[#15171c] p-6 shadow-xl">
     <div class="flex justify-between gap-4 mb-5">
@@ -268,6 +471,36 @@
     </form>
   </div>
 </div>
+{% endif %}
+{% if child.can_pay_fees %}
+<div id="fee-payment-modal-{{ child.enrollment.id }}" class="parent-modal" hidden aria-modal="true" role="dialog">
+  <div class="parent-modal__dialog rounded-2xl bg-white dark:bg-[#15171c] p-6 shadow-xl">
+    <div class="flex justify-between gap-4 mb-5">
+      <h2 class="text-xl font-semibold">Payer les frais de {{ child.student.first_name }}</h2>
+      <button type="button" data-close-modal aria-label="Fermer">✕</button>
+    </div>
+    <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">
+      La demande sera envoyée à SasaPay. Le paiement restera en attente jusqu'à sa confirmation.
+    </p>
+    <form data-ajax-form action="{% url 'finance:pay_fee' child.enrollment.id %}" method="post" class="grid gap-4">
+      {% csrf_token %}
+      {% for field in child.fee_payment_form %}
+      <div>
+        <label for="{{ field.id_for_label }}" class="block text-sm font-medium mb-1">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}<p class="mt-1 text-sm text-red-600">{{ error }}</p>{% endfor %}
+      </div>
+      {% endfor %}
+      <div class="flex justify-end gap-3">
+        <button type="button" data-close-modal class="px-4 py-2">Annuler</button>
+        <button type="submit" class="submit-button rounded-lg bg-[#D95745] text-white font-semibold px-4 py-2">
+          Continuer vers SasaPay
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
 {% endfor %}
 {% endblock %}
 
@@ -275,13 +508,101 @@
 {% block extra_js %}
 <script>
   (() => {
-    const buttons = [...document.querySelectorAll('[data-tab-target]')]; const panels = [...document.querySelectorAll('.student-panel')]; let activeTab = 'home';
-    const updateTabs = () => { buttons.forEach((button) => { const active = button.dataset.tabTarget === activeTab; button.classList.toggle('bg-[#D95745]/10', active); button.classList.toggle('text-[#D95745]', active); }); document.querySelectorAll('.parent-tab').forEach((tab) => { const visibleStudent = !tab.closest('.student-panel') || !tab.closest('.student-panel').hidden; tab.hidden = tab.dataset.tab !== activeTab || !visibleStudent; }); };
-    buttons.forEach((button) => button.addEventListener('click', () => { activeTab = button.dataset.tabTarget; updateTabs(); }));
-    document.getElementById('student-selector')?.addEventListener('change', (event) => { panels.forEach((panel) => panel.hidden = panel.dataset.studentIndex !== event.target.value); updateTabs(); }); updateTabs();
-    const closeModal = (modal) => { modal.hidden = true; }; document.querySelectorAll('[data-open-modal]').forEach((button) => button.addEventListener('click', () => document.getElementById(button.dataset.openModal).hidden = false)); document.querySelectorAll('[data-close-modal]').forEach((button) => button.addEventListener('click', () => closeModal(button.closest('.parent-modal')))); document.querySelectorAll('.parent-modal').forEach((modal) => modal.addEventListener('click', (event) => { if (event.target === modal) closeModal(modal); }));
-    const flash = document.getElementById('parent-flash'); const showMessage = (message, success) => { flash.textContent = message; flash.className = `mb-5 rounded-lg px-4 py-3 text-sm ${success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`; };
-    document.querySelectorAll('[data-ajax-form]').forEach((form) => form.addEventListener('submit', async (event) => { event.preventDefault(); if (form.dataset.submitting === 'true') return; form.dataset.submitting = 'true'; const submit = form.querySelector('.submit-button'); const label = submit.innerHTML; submit.disabled = true; submit.innerHTML = '<span class="button-spinner" aria-label="Envoi en cours"></span>'; try { const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'X-Requested-With': 'XMLHttpRequest' } }); const data = await response.json(); if (!response.ok || !data.success) throw new Error(data.message || 'La demande n’a pas pu être traitée.'); closeModal(form.closest('.parent-modal')); form.reset(); showMessage(data.message, true); window.setTimeout(() => window.location.reload(), 700); } catch (error) { showMessage(error.message, false); } finally { form.dataset.submitting = 'false'; submit.disabled = false; submit.innerHTML = label; } }));
+    const buttons = [...document.querySelectorAll('[data-tab-target]')];
+    const panels = [...document.querySelectorAll('.student-panel')];
+    let activeTab = 'home';
+
+    const updateTabs = () => {
+      buttons.forEach((button) => {
+        const active = button.dataset.tabTarget === activeTab;
+        button.classList.toggle('bg-[#D95745]/10', active);
+        button.classList.toggle('text-[#D95745]', active);
+      });
+      document.querySelectorAll('.parent-tab').forEach((tab) => {
+        const visibleStudent = !tab.closest('.student-panel') || !tab.closest('.student-panel').hidden;
+        tab.hidden = tab.dataset.tab !== activeTab || !visibleStudent;
+      });
+    };
+
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      activeTab = button.dataset.tabTarget;
+      updateTabs();
+    }));
+
+    document.getElementById('student-selector')?.addEventListener('change', (event) => {
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.studentIndex !== event.target.value;
+      });
+      updateTabs();
+    });
+    updateTabs();
+
+    const closeModal = (modal) => {
+      if (modal) modal.hidden = true;
+    };
+    document.querySelectorAll('[data-open-modal]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const modal = document.getElementById(button.dataset.openModal);
+        if (modal) modal.hidden = false;
+      });
+    });
+    document.querySelectorAll('[data-close-modal]').forEach((button) => {
+      button.addEventListener('click', () => closeModal(button.closest('.parent-modal')));
+    });
+    document.querySelectorAll('.parent-modal').forEach((modal) => {
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal(modal);
+      });
+    });
+
+    const flash = document.getElementById('parent-flash');
+    const showMessage = (message, success) => {
+      flash.textContent = message;
+      flash.className = `mb-5 rounded-lg px-4 py-3 text-sm ${success
+        ? 'bg-green-100 text-green-800'
+        : 'bg-red-100 text-red-800'}`;
+    };
+
+    document.querySelectorAll('[data-ajax-form]').forEach((form) => {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (form.dataset.submitting === 'true') return;
+
+        form.dataset.submitting = 'true';
+        const submit = form.querySelector('.submit-button');
+        const label = submit.innerHTML;
+        submit.disabled = true;
+        submit.innerHTML = '<span class="button-spinner" aria-label="Envoi en cours"></span>';
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+          });
+          const data = await response.json();
+          if (!response.ok || !data.success) {
+            const error = new Error(data.message || 'La demande n’a pas pu être traitée.');
+            error.responseData = data;
+            throw error;
+          }
+
+          closeModal(form.closest('.parent-modal'));
+          form.reset();
+          showMessage(data.message, true);
+          window.setTimeout(() => window.location.reload(), 700);
+        } catch (error) {
+          const details = Object.entries(error.responseData?.errors || {})
+            .flatMap(([field, errors]) => errors.map((item) => `${field} : ${item.message}`))
+            .join(' ');
+          showMessage(details ? `${error.message} ${details}` : error.message, false);
+        } finally {
+          form.dataset.submitting = 'false';
+          submit.disabled = false;
+          submit.innerHTML = label;
+        }
+      });
+    });
   })();
 </script>
 {% endblock %}

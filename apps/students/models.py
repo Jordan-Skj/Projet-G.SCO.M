@@ -1,6 +1,23 @@
+from pathlib import Path
+from uuid import uuid4
+
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from apps.accounts.models import Gender, Parent
+from .storage import PrivateEnrollmentDocumentStorage
+
+
+ENROLLMENT_REQUIRED_DOCUMENT_TYPES = (
+    'birth_certificate',
+    'student_photo',
+)
+
+
+def enrollment_document_upload_to(instance: "EnrollmentDocument", filename: str) -> str:
+    extension = Path(filename).suffix.lower()
+    return f"{instance.enrollment_id}/{uuid4().hex}{extension}"
 
 
 # Academic year model
@@ -135,3 +152,77 @@ class Enrollment(models.Model):
         
     def __str__(self) -> str:
         return f"{self.student} - {self.academic_year} - {self.school_class}"
+
+
+class EnrollmentDocument(models.Model):
+    class Type(models.TextChoices):
+        BIRTH_CERTIFICATE = 'birth_certificate', "Acte de naissance"
+        STUDENT_PHOTO = 'student_photo', "Photo de l'élève"
+
+    class Status(models.TextChoices):
+        PENDING = 'pending', "En attente de vérification"
+        APPROVED = 'approved', "Vérifié"
+        REJECTED = 'rejected', "À corriger"
+
+    enrollment = models.ForeignKey(
+        Enrollment,
+        on_delete=models.CASCADE,
+        related_name='documents',
+        verbose_name="Inscription",
+    )
+    document_type = models.CharField(
+        max_length=30,
+        choices=Type.choices,
+        verbose_name="Pièce à fournir",
+    )
+    file = models.FileField(
+        storage=PrivateEnrollmentDocumentStorage(),
+        upload_to=enrollment_document_upload_to,
+        validators=[FileExtensionValidator(['pdf', 'jpg', 'jpeg', 'png'])],
+        verbose_name="Fichier",
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.PENDING,
+        verbose_name="Statut",
+    )
+    rejection_reason = models.TextField(blank=True, verbose_name="Motif de rejet")
+    submitted_at = models.DateTimeField(auto_now_add=True, verbose_name="Soumis le")
+    reviewed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name='reviewed_enrollment_documents',
+        verbose_name="Vérifié par",
+    )
+    reviewed_at = models.DateTimeField(null=True, blank=True, verbose_name="Vérifié le")
+
+    class Meta:
+        ordering = ['document_type']
+        verbose_name = "Pièce d'inscription"
+        verbose_name_plural = "Pièces d'inscription"
+        constraints = [
+            models.UniqueConstraint(
+                fields=['enrollment', 'document_type'],
+                name='unique_enrollment_document_type',
+            ),
+            models.CheckConstraint(
+                condition=(
+                    ~models.Q(status='rejected')
+                    | ~models.Q(rejection_reason='')
+                ),
+                name='rejected_enrollment_document_needs_reason',
+            ),
+        ]
+
+    def clean(self) -> None:
+        super().clean()
+        if self.status == self.Status.REJECTED and not self.rejection_reason.strip():
+            raise ValidationError({
+                'rejection_reason': "Indiquez les corrections attendues pour cette pièce."
+            })
+
+    def __str__(self) -> str:
+        return f"{self.get_document_type_display()} — {self.enrollment}"

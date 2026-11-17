@@ -64,7 +64,6 @@ class ParentSignUpForm(forms.Form):
         widget=forms.Select(attrs={
             'class': f'adress {SELECT_CLASSES}',
             'id': 'id_quartier',
-            'disabled': True,
         }),
     )
     street = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
@@ -86,10 +85,13 @@ class ParentSignUpForm(forms.Form):
     
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        township = self.data.get('township') if self.is_bound else ''
+        township = self.data.get('township') if self.is_bound else self.initial.get('township', '')
         if township in KINSHASA:
             quarters = KINSHASA[township]
-            self.fields.get('quarter').choices = [("", "Choisir un quartier")] + [(quarter, quarter) for quarter in quarters]
+            self.fields['quarter'].choices = [("", "Choisir un quartier")] + [(quarter, quarter) for quarter in quarters]
+            self.fields['quarter'].widget.attrs.pop('disabled', None)
+        else:
+            self.fields['quarter'].widget.attrs['disabled'] = True
             
     def clean(self) -> dict[str, Any] | None:
         cleaned_data = super().clean()

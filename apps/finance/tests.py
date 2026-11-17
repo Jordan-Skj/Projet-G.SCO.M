@@ -159,6 +159,7 @@ class FeePaymentViewTests(TestCase):
             student=student,
             academic_year=year,
             school_class=school_class,
+            status=Enrollment.Status.ENROLLED,
         )
         StudentGuardian.objects.create(
             parent=parent,
@@ -205,6 +206,23 @@ class FeePaymentViewTests(TestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertIn('amount', response.json()['errors'])
+        self.assertFalse(FeePayment.objects.exists())
+        collect_payment.assert_not_called()
+
+    @patch('apps.finance.views.collect_fee_payment')
+    def test_unverified_enrollment_cannot_pay_fees(self, collect_payment) -> None:
+        Enrollment.objects.filter(pk=self.enrollment.pk).update(
+            status=Enrollment.Status.PENDING,
+        )
+        response = self.client.post(self.url, {
+            'fee': self.fee.pk,
+            'amount': '10.00',
+            'currency': Fee.Currency.USD,
+            'operator': 'vodacom_cd',
+            'phone_number': '0812345678',
+        })
+
+        self.assertEqual(response.status_code, 409)
         self.assertFalse(FeePayment.objects.exists())
         collect_payment.assert_not_called()
 

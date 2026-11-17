@@ -1,9 +1,9 @@
-from datetime import date
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Any
 
 from django import forms
 from django.db.models import TextChoices
+from django.utils import timezone
 
 from apps.tools.styling import style_form_fields
 from apps.students.models import Enrollment
@@ -26,7 +26,10 @@ class ExemptionForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.enrollment = enrollment
         if self.enrollment:
-            fees = Fee.objects.filter(school_class=self.enrollment.school_class)
+            fees = Fee.objects.filter(
+                school_class=self.enrollment.school_class,
+                academic_year=self.enrollment.academic_year,
+            )
             self.fields['fee'].queryset = Fee.objects.filter(
                 pk__in=[fee.pk for fee in fees if fee.outstanding_for(self.enrollment) > 0]
             )
@@ -34,7 +37,7 @@ class ExemptionForm(forms.ModelForm):
             
     def clean(self) -> dict[str, Any] | None:
         cleaned_data = super().clean()
-        if cleaned_data.get('expire_at', date.today())  <= date.today():
+        if cleaned_data.get('expire_at') and cleaned_data['expire_at'] <= timezone.now():
             self.add_error('expire_at', "La date d'expiration choisie est deja passe")
             
         return cleaned_data
@@ -77,10 +80,15 @@ class FeePaymentForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.enrollment = enrollment
         if self.enrollment:
-            self.fields['fee'].queryset = Fee.objects.filter(
+            fees = Fee.objects.filter(
                 school_class=self.enrollment.school_class,
                 academic_year=self.enrollment.academic_year,
             )
+            fees_with_balance = [
+                fee.pk for fee in fees
+                if fee.outstanding_for(self.enrollment) > 0
+            ]
+            self.fields['fee'].queryset = Fee.objects.filter(pk__in=fees_with_balance)
 
         style_form_fields(self)
 

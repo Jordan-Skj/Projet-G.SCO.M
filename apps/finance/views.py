@@ -25,10 +25,25 @@ def _parent_owns_enrollment(request: HttpRequest, enrollment: Enrollment) -> boo
 
 @require_POST
 @login_required
-def ask_exemption(request : HttpRequest, slug: str) -> JsonResponse:
-    enrollment = get_object_or_404(Enrollment, slug=slug, academic_year__is_current=True)
+def ask_exemption(request: HttpRequest, enrollment_id: int) -> JsonResponse:
+    enrollment = get_object_or_404(
+        Enrollment,
+        pk=enrollment_id,
+        academic_year__is_current=True,
+    )
     if not _parent_owns_enrollment(request, enrollment):
         return JsonResponse({'success': False, 'message': "Action non autorisée."}, status=403)
+    if enrollment.status != Enrollment.Status.ENROLLED:
+        return JsonResponse(
+            {
+                'success': False,
+                'message': (
+                    "Le dossier de l'enfant doit être vérifié par l'école "
+                    "avant de soumettre une demande."
+                ),
+            },
+            status=409,
+        )
 
     form = ExemptionForm(request.POST, enrollment=enrollment)
 
@@ -57,6 +72,17 @@ def pay_fee(request: HttpRequest, enrollment_id: int) -> JsonResponse:
         return JsonResponse(
             {'success': False, 'message': "Action non autorisée."},
             status=403,
+        )
+    if enrollment.status != Enrollment.Status.ENROLLED:
+        return JsonResponse(
+            {
+                'success': False,
+                'message': (
+                    "Le dossier de l'enfant doit être vérifié par l'école "
+                    "avant de pouvoir payer les frais."
+                ),
+            },
+            status=409,
         )
 
     form = FeePaymentForm(request.POST, enrollment=enrollment)

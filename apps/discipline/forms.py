@@ -15,7 +15,9 @@ class JustificationForm(forms.ModelForm):
         if enrollment:
             self.fields['absence_record'].queryset = enrollment.absences.filter(status='not_justified').order_by('-date')
             self.fields['lateness_record'].queryset = enrollment.latenesses.filter(status='not_justified').order_by('-created_at')
-            self.fields['missed_test'].queryset = Test.objects.filter(course__school_class=enrollment.school_class).order_by('date')
+            self.fields['missed_test'].queryset = Test.objects.filter(
+                course__school_class=enrollment.school_class
+            ).order_by('-conducted_at', '-created_at')
         else:
             self.fields['absence_record'].queryset = self.fields['absence_record'].queryset.none()
             self.fields['lateness_record'].queryset = self.fields['lateness_record'].queryset.none()

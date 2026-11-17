@@ -8,5 +8,6 @@ db.sqlite3.bak
 staticfiles/
 media/*
 !media/.gitkeep
+private_media/
 .idea/
 .vscode/

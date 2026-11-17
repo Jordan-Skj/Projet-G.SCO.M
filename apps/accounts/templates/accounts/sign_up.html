@@ -46,9 +46,24 @@
               class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#15171c] p-6 sm:p-8 shadow-sm">
             {% csrf_token %}
 
-            {% if form.non_field_errors %}
-                <div class="mb-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm px-4 py-3">
-                    {{ form.non_field_errors.0 }}
+            {% if form.errors %}
+                <div id="signup-error-summary" role="alert" tabindex="-1"
+                     class="mb-6 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm px-4 py-3">
+                    <p class="font-semibold mb-2">Veuillez corriger les erreurs suivantes :</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>
+                                    <a href="#{{ field.id_for_label }}" data-error-target="{{ field.id_for_label }}" class="underline">
+                                        {{ field.label }} : {{ error }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             {% endif %}
 
@@ -69,17 +84,30 @@
                     <div>
                         <label class="block text-sm font-medium mb-1.5">Prénom</label>
                         {{ form.first_name }}
-                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="first_name" hidden></p>
+                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="first_name" {% if not form.first_name.errors %}hidden{% endif %}>
+                            {{ form.first_name.errors.0 }}
+                        </p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1.5">Postnom</label>
                         {{ form.middle_name }}
-                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="middle_name" hidden></p>
+                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="middle_name" {% if not form.middle_name.errors %}hidden{% endif %}>
+                            {{ form.middle_name.errors.0 }}
+                        </p>
                     </div>
-                    <div class="sm:col-span-2">
+                    <div>
                         <label class="block text-sm font-medium mb-1.5">Nom</label>
                         {{ form.last_name }}
-                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="last_name" hidden></p>
+                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="last_name" {% if not form.last_name.errors %}hidden{% endif %}>
+                            {{ form.last_name.errors.0 }}
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">Genre</label>
+                        {{ form.gender }}
+                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="gender" {% if not form.gender.errors %}hidden{% endif %}>
+                            {{ form.gender.errors.0 }}
+                        </p>
                     </div>
                 </div>
             </section>
@@ -101,18 +129,24 @@
                     <div>
                         <label class="block text-sm font-medium mb-1.5">Email</label>
                         {{ form.email }}
-                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="email" hidden></p>
+                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="email" {% if not form.email.errors %}hidden{% endif %}>
+                            {{ form.email.errors.0 }}
+                        </p>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium mb-1.5">Téléphone</label>
                             {{ form.phone_number }}
-                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="phone_number" hidden></p>
+                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="phone_number" {% if not form.phone_number.errors %}hidden{% endif %}>
+                                {{ form.phone_number.errors.0 }}
+                            </p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-1.5">Téléphone alternatif</label>
                             {{ form.alternate_phone_number }}
-                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="alternate_phone_number" hidden></p>
+                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="alternate_phone_number" {% if not form.alternate_phone_number.errors %}hidden{% endif %}>
+                                {{ form.alternate_phone_number.errors.0 }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -137,24 +171,32 @@
                         <div>
                             <label class="block text-sm font-medium mb-1.5">Commune</label>
                             {{ form.township }}
-                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="township" hidden></p>
+                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="township" {% if not form.township.errors %}hidden{% endif %}>
+                                {{ form.township.errors.0 }}
+                            </p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-1.5">Quartier</label>
-                            {{ form.quater }}
-                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="quater" hidden></p>
+                            {{ form.quarter }}
+                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="quarter" {% if not form.quarter.errors %}hidden{% endif %}>
+                                {{ form.quarter.errors.0 }}
+                            </p>
                         </div>
                     </div>
                     <div class="grid grid-cols-3 gap-4">
                         <div class="col-span-2">
                             <label class="block text-sm font-medium mb-1.5">Avenue / Rue</label>
                             {{ form.street }}
-                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="street" hidden></p>
+                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="street" {% if not form.street.errors %}hidden{% endif %}>
+                                {{ form.street.errors.0 }}
+                            </p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-1.5">Numéro</label>
                             {{ form.street_number }}
-                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="street_number" hidden></p>
+                            <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="street_number" {% if not form.street_number.errors %}hidden{% endif %}>
+                                {{ form.street_number.errors.0 }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -177,12 +219,16 @@
                     <div>
                         <label class="block text-sm font-medium mb-1.5">Mot de passe</label>
                         {{ form.password }}
-                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="password" hidden></p>
+                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="password" {% if not form.password.errors %}hidden{% endif %}>
+                            {{ form.password.errors.0 }}
+                        </p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1.5">Confirmer le mot de passe</label>
                         {{ form.confirm_password }}
-                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="confirm_password" hidden></p>
+                        <p class="error-msg text-xs text-red-600 dark:text-red-400 mt-1" data-for="confirm_password" {% if not form.confirm_password.errors %}hidden{% endif %}>
+                            {{ form.confirm_password.errors.0 }}
+                        </p>
                     </div>
                 </div>
             </section>
