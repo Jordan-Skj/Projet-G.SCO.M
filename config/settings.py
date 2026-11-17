@@ -31,6 +31,10 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '[::1]'])
 
+SASPAY_API_TOKEN = env('SASPAY_API_TOKEN', default='')
+SASPAY_TIMEOUT = env.int('SASPAY_TIMEOUT', default=15)
+SASPAY_EXCHANGE_RATES = env.json('SASPAY_EXCHANGE_RATES', default={})
+
 INSTALLED_APPS = [
     'django.contrib.admin', 
     'django.contrib.auth',
@@ -134,4 +138,3 @@ UNFOLD = {
     'SITE_HEADER': 'G.SCO.M', 
     'SITE_SYMBOL': 'school'
 }
-

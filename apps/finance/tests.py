@@ -3,12 +3,20 @@ from decimal import Decimal
 
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils import timezone
+from unittest.mock import patch
 
-from apps.accounts.models import CustomUser
+from apps.accounts.models import CustomUser, Parent
 from apps.finance.models import Fee, FeePayment
-from apps.students.models import AcademicYear, Enrollment, SchoolClass, Student
+from apps.finance.saspay import PaymentError
+from apps.students.models import (
+    AcademicYear,
+    Enrollment,
+    SchoolClass,
+    Student,
+    StudentGuardian,
+)
 
 
 class FeePaymentRulesTests(TestCase):
@@ -114,3 +122,137 @@ class FeePaymentRulesTests(TestCase):
         )
         # 40 USD verified + 28,000 CDF (= 10 USD) verified; the pending 40 is ignored.
         self.assertEqual(self.fee.outstanding_for(self.enrollment), Decimal("50.00"))
+
+
+@override_settings(
+    ROOT_URLCONF='apps.finance.urls',
+    SASPAY_API_TOKEN='test-token',
+    SASPAY_EXCHANGE_RATES={'USD_CDF': '2800'},
+)
+class FeePaymentViewTests(TestCase):
+    def setUp(self) -> None:
+        self.user = CustomUser.objects.create_user(
+            username='fee-parent',
+            password='test-password',
+            role=CustomUser.Role.PARENT,
+        )
+        parent = Parent.objects.create(
+            user=self.user,
+            phone_number='0812345678',
+            address='Kinshasa',
+        )
+        year = AcademicYear.objects.create(
+            name='2027-2028',
+            start_date=date(2027, 9, 1),
+            end_date=date(2028, 7, 15),
+            is_current=True,
+        )
+        school_class = SchoolClass.objects.create(name='5A')
+        student = Student.objects.create(
+            admission_number='G002',
+            first_name='Marie',
+            last_name='Kabeya',
+            date_of_birth=date(2015, 2, 1),
+            gender=Student.Gender.FEMALE,
+        )
+        self.enrollment = Enrollment.objects.create(
+            student=student,
+            academic_year=year,
+            school_class=school_class,
+        )
+        StudentGuardian.objects.create(
+            parent=parent,
+            student=student,
+            relationship=StudentGuardian.Relationship.MOTHER,
+        )
+        self.fee = Fee.objects.create(
+            school_class=school_class,
+            academic_year=year,
+            name='Minerval',
+            amount_due=Decimal('100000.00'),
+            currency=Fee.Currency.CDF,
+            created_by=self.user,
+        )
+        self.client.force_login(self.user)
+        self.url = f'/enrollment/{self.enrollment.pk}/pay/'
+
+    @patch('apps.finance.views.collect_fee_payment')
+    def test_valid_payment_is_sent_to_saspay_and_saved_pending(self, collect_payment) -> None:
+        response = self.client.post(self.url, {
+            'fee': self.fee.pk,
+            'amount': '10.00',
+            'currency': Fee.Currency.USD,
+            'operator': 'vodacom_cd',
+            'phone_number': '0812345678',
+        })
+
+        self.assertEqual(response.status_code, 202)
+        payment = FeePayment.objects.get()
+        self.assertEqual(payment.status, FeePayment.Status.PENDING)
+        self.assertEqual(payment.exchange_rate, Decimal('2800'))
+        self.assertEqual(payment.receipt_reference, response.json()['payment_reference'])
+        collect_payment.assert_called_once()
+
+    @patch('apps.finance.views.collect_fee_payment')
+    def test_payment_exceeding_balance_is_rejected(self, collect_payment) -> None:
+        response = self.client.post(self.url, {
+            'fee': self.fee.pk,
+            'amount': '40.00',
+            'currency': Fee.Currency.USD,
+            'operator': 'vodacom_cd',
+            'phone_number': '0812345678',
+        })
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('amount', response.json()['errors'])
+        self.assertFalse(FeePayment.objects.exists())
+        collect_payment.assert_not_called()
+
+    @override_settings(SASPAY_API_TOKEN='')
+    @patch('apps.finance.views.collect_fee_payment')
+    def test_missing_saspay_token_does_not_create_payment(self, collect_payment) -> None:
+        response = self.client.post(self.url, {
+            'fee': self.fee.pk,
+            'amount': '10.00',
+            'currency': Fee.Currency.USD,
+            'operator': 'vodacom_cd',
+            'phone_number': '0812345678',
+        })
+
+        self.assertEqual(response.status_code, 503)
+        self.assertFalse(FeePayment.objects.exists())
+        collect_payment.assert_not_called()
+
+    @override_settings(SASPAY_EXCHANGE_RATES={})
+    @patch('apps.finance.views.collect_fee_payment')
+    def test_unconfigured_exchange_rate_is_rejected(self, collect_payment) -> None:
+        response = self.client.post(self.url, {
+            'fee': self.fee.pk,
+            'amount': '10.00',
+            'currency': Fee.Currency.USD,
+            'operator': 'vodacom_cd',
+            'phone_number': '0812345678',
+        })
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('currency', response.json()['errors'])
+        self.assertFalse(FeePayment.objects.exists())
+        collect_payment.assert_not_called()
+
+    @patch(
+        'apps.finance.views.collect_fee_payment',
+        side_effect=PaymentError("SasaPay ne répond pas pour le moment."),
+    )
+    def test_gateway_error_keeps_payment_pending_for_reconciliation(self, collect_payment) -> None:
+        response = self.client.post(self.url, {
+            'fee': self.fee.pk,
+            'amount': '10.00',
+            'currency': Fee.Currency.USD,
+            'operator': 'vodacom_cd',
+            'phone_number': '0812345678',
+        })
+
+        self.assertEqual(response.status_code, 502)
+        payment = FeePayment.objects.get()
+        self.assertEqual(payment.status, FeePayment.Status.PENDING)
+        self.assertIn(payment.receipt_reference, response.json()['message'])
