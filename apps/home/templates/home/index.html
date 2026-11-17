@@ -1,39 +1,72 @@
 {% extends "base.html" %}
 {% load static %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'pages.css' %}">{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'pages.css' %}">{% endblock %}
 {% block content %}
 <section id="hero" class="home-hero" aria-label="Accueil">
-    <h1><span>Groupe Scolaire</span><br>de Mont-Ngafula</h1>
-    <p>De la maternelle aux humanités, une école pour grandir et apprendre à Kinshasa depuis 1986.</p>
-    <div class="hero-buttons"><a href="{% url 'account:parent_sign_up' %}" class="btn-primary">Inscrire mon enfant en ligne</a><a href="{% url 'home:formations' %}" class="btn-secondary">Découvrir les formations</a></div>
+  <h1><span>Groupe Scolaire</span><br>de Mont-Ngafula</h1>
+  <p>De la maternelle aux humanités, une école pour grandir et apprendre à Kinshasa depuis 1986.</p>
+  <div class="hero-buttons">
+    {% if user.is_authentificated %}
+    <a href="{% url 'account:parent_account ' %}" class="btn-primary">
+    Acceder a l'espace parent
+    </a>
+    {% else %}
+    <a href="{% url 'account:parent_login' %}" class="btn-primary">
+    Inscrire mon enfant en ligne <small>Compte parent requis</small>
+    </a>
+    {% endif %}
+  <a href="{% url 'home:formations' %}" class="btn-secondary">Découvrir les formations</a></div>
 </section>
 <section class="home-shortcuts" aria-labelledby="shortcuts-title">
-    <h2 id="shortcuts-title">L'essentiel pour votre famille</h2>
-    <div class="home-shortcut-grid">
-        <a class="home-shortcut" id="formation" href="{% url 'home:formations' %}"><h3>Nos formations</h3><p>Maternelle, primaire, 7ème–8ème et humanités.</p><span>Voir les cycles et filières →</span></a>
-        <a class="home-shortcut" href="{% url 'home:inscriptions' %}"><h3>Les inscriptions</h3><p>Les étapes et les documents à préparer.</p><span>Préparer le dossier →</span></a>
-        <a class="home-shortcut" id="contact" href="{% url 'home:contact' %}"><h3>Nous contacter</h3><p>Coordonnées, horaires et formulaire de contact.</p><span>Contacter le secrétariat →</span></a>
-    </div>
+  <h2 id="shortcuts-title">L'essentiel pour votre famille</h2>
+  <div class="home-shortcut-grid">
+    <a class="home-shortcut" id="formation" href="{% url 'home:formations' %}">
+      <h3>Nos formations</h3>
+      <p>Maternelle, primaire, 7ème–8ème et humanités.</p><span>Voir les cycles et filières →</span>
+    </a>
+    <a class="home-shortcut" href="{% url 'home:inscriptions' %}">
+      <h3>Les inscriptions</h3>
+      <p>Les étapes et les documents à préparer.</p><span>Préparer le dossier →</span>
+    </a>
+    <a class="home-shortcut" id="contact" href="{% url 'home:contact' %}">
+      <h3>Nous contacter</h3>
+      <p>Coordonnées, horaires et formulaire de contact.</p><span>Contacter le secrétariat →</span>
+    </a>
+  </div>
 </section>
 <section id="about" class="home-about" aria-labelledby="home-about-title">
-    <div class="img_about"><img src="{% static 'assets/image/extérieur_school.png' %}" alt="Façade du Groupe Scolaire de Mont-Ngafula" loading="lazy"></div>
-    <div class="content"><p class="subsub_title">Notre école</p><h2 id="home-about-title">Apprendre et grandir depuis 1986</h2><p>À Mont-Ngafula, nous accompagnons les élèves de la maternelle aux humanités autour de quatre valeurs : Réflexion, Travail, Discipline et Distinction.</p><a class="news-voir-tout" href="{% url 'home:school' %}">Découvrir l'école et son équipe →</a><a id="school_life" class="home-life-link" href="{% url 'home:school_life' %}">Explorer la vie scolaire →</a></div>
+  <div class="img_about"><img src="{% static 'assets/image/extérieur_school.png' %}"
+      alt="Façade du Groupe Scolaire de Mont-Ngafula" loading="lazy"></div>
+  <div class="content">
+    <p class="subsub_title">Notre école</p>
+    <h2 id="home-about-title">Apprendre et grandir depuis 1986</h2>
+    <p>
+      À Mont-Ngafula, nous accompagnons les élèves de la maternelle aux humanités autour de quatre valeurs : Réflexion,
+      Travail, Discipline et Distinction.
+    </p>
+      <a class="press-voir-tout" href="{% url 'home:school' %}">Découvrir l'école et son équipe →</a>
+      <a id="school_life" class="home-life-link" href="{% url 'home:school_life' %}">Explorer la vie scolaire →</a>
+  </div>
 </section>
-<section id="news" aria-label="Actualités">
-            <div class="news-top">
-                <div class="news-left">
-                    <p class="subsub_title">Actualités</p>
-                    <h2>Dernières nouvelles</h2>
-                </div>
-                <a href="{% url 'press:list' %}" class="press-voir-tout">Voir tous les articles <span
-                        aria-hidden="true">→</span></a>
-            </div>
+<section id="press" class="justify-center" aria-label="Actualités">
+  <div class="press-top">
+    <div class="press-left">
+      <p class="subsub_title">Actualités</p>
+      <h2>Dernières nouvelles</h2>
+    </div>
+    <a href="{% url 'press:list' %}" class="press-voir-tout">Voir tous les articles <span
+        aria-hidden="true">→</span></a>
+  </div>
 
-            <div class="news-grid">
+  <div class="press-grid">
 
-{% for article in articles %}
-                {% include "news/_card.html" with featured=forloop.first %}
-                {% empty %}<p>Aucune actualité pour le moment.</p>{% endfor %}
+    {% for article in articles %}
+    {% include "press/_card.html" with featured=forloop.first %}
+    {% empty %}
+    <p class="text-center">Aucune actualité pour le moment.</p>
+    {% endfor %}
 
-            </div>
-        </section>{% endblock %}
+  </div>
+</section>
+{% endblock %}

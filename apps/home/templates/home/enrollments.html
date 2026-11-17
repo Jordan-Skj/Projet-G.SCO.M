@@ -1,61 +1,153 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Inscriptions — Procédure et documents | G.SCO.M{% endblock %}
-{% block meta_description %}Commencez en ligne l'inscription de votre enfant au G.SCO.M, puis contactez le secrétariat pour confirmer les conditions et les documents à fournir.{% endblock %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'inscriptions.css' %}">{% endblock %}
+{% block meta_description %}Commencez en ligne l'inscription de votre enfant au G.SCO.M, puis contactez le secrétariat
+pour confirmer les conditions et les documents à fournir.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'inscriptions.css' %}">{% endblock %}
 {% block content %}
 <div class="admissions">
-    <nav class="admissions-breadcrumb" aria-label="Fil d’Ariane"><a href="{% url 'home:index' %}">Accueil</a><span aria-hidden="true">/</span><span aria-current="page">Inscriptions</span></nav>
-    <section class="admissions-intro" aria-labelledby="admissions-title">
-        <div>
-            <p class="subsub_title">Rejoindre le G.SCO.M</p>
-            <h1 id="admissions-title">Un nouveau chapitre<br>pour votre enfant.</h1>
-            <p class="admissions-lead">Les inscriptions commencent en ligne. Créez un compte parent pour démarrer la démarche, puis contactez le secrétariat pour confirmer le niveau, les conditions d'admission et les pièces à fournir.</p>
-            <div class="admissions-actions"><a class="btn-primary" href="{% url 'student:enroll_child' %}">Inscrire mon enfant en ligne</a><a class="news-voir-tout" href="#procedure">Découvrir les étapes</a></div>
-        </div>
-        <aside class="admissions-panel" aria-labelledby="visit-title">
-            <p class="subsub_title">Votre point de départ</p>
-            <h2 id="visit-title">Commencez en ligne</h2>
-            <dl><dt>Première étape</dt><dd>Créez un compte parent pour démarrer votre démarche.</dd><dt>Besoin d'aide ?</dt><dd><a href="mailto:gscom.montngafula@gmail.com">gscom.montngafula@gmail.com</a></dd><dt>Horaires du secrétariat</dt><dd>Du lundi au samedi, de 7h30 à 14h00</dd></dl>
-            <p>Le secrétariat peut confirmer les disponibilités, les conditions d'admission et les documents nécessaires.</p>
-        </aside>
-    </section>
-    <section class="admissions-section" aria-labelledby="levels-title">
-        <p class="subsub_title">Les parcours</p><h2 id="levels-title">À chaque étape, un accompagnement</h2>
-        <div class="admissions-levels">
-            <article><span>01</span><h3>Maternelle</h3><p>Les premiers apprentissages, le jeu et l'éveil.</p></article>
-            <article><span>02</span><h3>Primaire</h3><p>Les bases de la lecture, de l'écriture et du calcul.</p></article>
-            <article><span>03</span><h3>7ème et 8ème</h3><p>Consolider les acquis et préparer l'orientation.</p></article>
-            <article><span>04</span><h3>Humanités</h3><p>Scientifique, littéraire, pédagogie, commercial et électricité.</p></article>
-        </div>
-        <p class="admissions-note">La demande commence en ligne. Le secrétariat confirme les conditions d'admission et les places disponibles selon le niveau et la filière.</p>
-    </section>
-    <section id="procedure" class="admissions-section" aria-labelledby="steps-title">
-        <p class="subsub_title">La démarche en ligne</p><h2 id="steps-title">Inscrire votre enfant, étape par étape</h2>
-        <ol class="admissions-steps">
-            <li><h3>Créez votre compte parent</h3><p>Commencez la démarche en ligne en créant votre compte parent.</p></li>
-            <li><h3>Préparez les informations de votre enfant</h3><p>Rassemblez les informations scolaires et les documents utiles. La liste exacte dépend du niveau demandé et doit être confirmée par le secrétariat.</p></li>
-            <li><h3>Confirmez les conditions d'admission</h3><p>Contactez le secrétariat pour vérifier les disponibilités, le calendrier, les frais et les éventuelles pièces complémentaires.</p></li>
-            <li><h3>Suivez les indications de l'école</h3><p>Après examen de votre demande, l'équipe vous précisera les prochaines étapes et les consignes pour la rentrée.</p></li>
-        </ol>
-    </section>
-    <div class="admissions-columns">
-        <section class="admissions-panel" aria-labelledby="documents-title">
-            <p class="subsub_title">Le dossier</p><h2 id="documents-title">Les documents à préparer</h2>
-            <ul class="admissions-documents"><li><strong>Bulletin scolaire</strong><span>Pour le parcours scolaire déjà effectué. En cas de première scolarisation, demandez quelles pièces fournir.</span></li><li><strong>Extrait de naissance</strong><span>Pour les informations d'identité de l'enfant.</span></li><li><strong>Photos d'identité</strong><span>Le nombre et le format sont à confirmer au secrétariat.</span></li></ul>
-            <p class="admissions-note">Cette liste reprend les documents indiqués par l'école sur ce site. Le secrétariat confirme les pièces nécessaires à votre situation.</p>
-        </section>
-        <section class="admissions-panel" aria-labelledby="practical-title">
-            <p class="subsub_title">Avant de venir</p><h2 id="practical-title">Les points à confirmer</h2>
-            <dl><dt>Dates d'inscription et de rentrée</dt><dd>Demandez le calendrier de l'année scolaire concernée.</dd><dt>Frais et paiement</dt><dd>Demandez les montants, les échéances et les moyens de paiement acceptés directement au secrétariat.</dd><dt>Conditions d'admission</dt><dd>Faites préciser les critères d'âge ou de niveau et l'existence éventuelle d'un entretien ou d'une évaluation.</dd><dt>Préparation de la rentrée</dt><dd>Demandez la liste des fournitures, les consignes vestimentaires et les horaires de la classe.</dd></dl>
-        </section>
+  <nav class="admissions-breadcrumb" aria-label="Fil d’Ariane"><a href="{% url 'home:index' %}">Accueil</a><span
+      aria-hidden="true">/</span><span aria-current="page">Inscriptions</span></nav>
+  <section class="admissions-intro" aria-labelledby="admissions-title">
+    <div>
+      <p class="subsub_title">Rejoindre le G.SCO.M</p>
+      <h1 id="admissions-title">Un nouveau chapitre<br>pour votre enfant.</h1>
+      <p class="admissions-lead">Les inscriptions commencent en ligne. Créez un compte parent pour démarrer la démarche,
+        puis contactez le secrétariat pour confirmer le niveau, les conditions d'admission et les pièces à fournir.</p>
+      <div class="admissions-actions">
+        <a class="btn-primary" href="{% url 'account:parent_login' %}">
+        Inscrire mon enfant en ligne
+        </a>
+        <a class="news-voir-tout" href="#procedure">Découvrir les étapes</a></div>
     </div>
-    <section class="admissions-section admissions-questions" aria-labelledby="questions-title">
-        <h2 id="questions-title">Vos questions fréquentes</h2>
-        <details><summary>Peut-on commencer l'inscription sur le site ?</summary><p>Oui. La démarche commence en ligne par la création d'un compte parent. Contactez ensuite le secrétariat pour confirmer les pièces à fournir et les conditions d'admission.</p></details>
-        <details><summary>Mon enfant vient d'une autre école. Comment procéder ?</summary><p>Précisez sa dernière classe et présentez son bulletin au secrétariat. L'équipe vous indiquera les documents complémentaires éventuels et les conditions pour rejoindre le niveau souhaité.</p></details>
-        <details><summary>Quels documents fournir pour une première scolarisation ?</summary><p>Signalez qu'il s'agit d'une première inscription à l'école. Le secrétariat vous indiquera les pièces adaptées à cette situation et les conditions d'accueil en maternelle.</p></details>
+    <aside class="admissions-panel" aria-labelledby="visit-title">
+      <p class="subsub_title">Votre point de départ</p>
+      <h2 id="visit-title">Commencez en ligne</h2>
+      <dl>
+        <dt>Première étape</dt>
+        <dd>Créez un compte parent pour démarrer votre démarche.</dd>
+        <dt>Besoin d'aide ?</dt>
+        <dd><a href="mailto:gscom.montngafula@gmail.com">gscom.montngafula@gmail.com</a></dd>
+        <dt>Horaires du secrétariat</dt>
+        <dd>Du lundi au samedi, de 7h30 à 14h00</dd>
+      </dl>
+      <p>Le secrétariat peut confirmer les disponibilités, les conditions d'admission et les documents nécessaires.</p>
+    </aside>
+  </section>
+  <section class="admissions-section" aria-labelledby="levels-title">
+    <p class="subsub_title">Les parcours</p>
+    <h2 id="levels-title">À chaque étape, un accompagnement</h2>
+    <div class="admissions-levels">
+      <article><span>01</span>
+        <h3>Maternelle</h3>
+        <p>Les premiers apprentissages, le jeu et l'éveil.</p>
+      </article>
+      <article><span>02</span>
+        <h3>Primaire</h3>
+        <p>Les bases de la lecture, de l'écriture et du calcul.</p>
+      </article>
+      <article><span>03</span>
+        <h3>7ème et 8ème</h3>
+        <p>Consolider les acquis et préparer l'orientation.</p>
+      </article>
+      <article><span>04</span>
+        <h3>Humanités</h3>
+        <p>Scientifique, littéraire, pédagogie, commercial et électricité.</p>
+      </article>
+    </div>
+    <p class="admissions-note">La demande commence en ligne. Le secrétariat confirme les conditions d'admission et les
+      places disponibles selon le niveau et la filière.</p>
+  </section>
+  <section id="procedure" class="admissions-section" aria-labelledby="steps-title">
+    <p class="subsub_title">La démarche en ligne</p>
+    <h2 id="steps-title">Inscrire votre enfant, étape par étape</h2>
+    <ol class="admissions-steps">
+      <li>
+        <h3>Créez votre compte parent</h3>
+        <p>Commencez la démarche en ligne en créant ou se connecteant a votre compte parent.</p>
+      </li>
+      <li>
+        <h3>Préparez les document et informations requis</h3>
+        <p>
+          Rassemblez les documents ainsi que les informations utiles. La liste exacte dépend du niveau demandé et
+          doit être confirmée par le secrétariat.
+        </p>
+      </li>
+      <li>
+        <h3>Remplissez le formulaire d'inscription</h3>
+        <p>Reseingez les informations demandées sur le formulaire d'inscription.</p>
+      </li>
+      <li>
+        <h3>Soumettez les documents nécessaires</h3>
+        <p>Certains documents seront nécessaires et devront etre soumis et verifier.</p>
+      </li>
+      <li>
+        <h3>Attender la confirmation de l'ecole</h3>
+        <p>
+          Après examen de votre demande et des documents de l'eleve, la direction confirmera votre demande. 
+        </p>
+      </li>
+      <li>
+        <h3>Payer le frais exiges</h3>
+        <p>
+          Après confirmation, il vous sera exiger un frais d'inscription a payer par mobile money (Mpesa, Afrimoney, Orange-money, Airtell money) pour finir
+          l'inscription de votre enfant 
+        </p>
+      </li>
+    </ol>
+  </section>
+  <div class="admissions-columns">
+    <section class="admissions-panel" aria-labelledby="documents-title">
+      <p class="subsub_title">Le dossier</p>
+      <h2 id="documents-title">Les documents à préparer</h2>
+      <ul class="admissions-documents">
+        <li><strong>Bulletin scolaire</strong><span>Pour le parcours scolaire déjà effectué. En cas de première
+            scolarisation, demandez quelles pièces fournir.</span></li>
+        <li><strong>Extrait de naissance</strong><span>Pour les informations d'identité de l'enfant.</span></li>
+        <li><strong>Photos d'identité</strong><span>Le nombre et le format sont à confirmer au secrétariat.</span></li>
+      </ul>
+      <p class="admissions-note">Cette liste reprend les documents indiqués par l'école sur ce site. Le secrétariat
+        confirme les pièces nécessaires à votre situation.</p>
     </section>
-    <section class="admissions-help" aria-labelledby="help-title"><h2 id="help-title">Commencez son inscription en ligne.</h2><p>Créez votre compte parent, puis contactez le secrétariat pour connaître les prochaines étapes.</p><a class="btn-primary" href="{% url 'account:parent_sign_up' %}">Créer un compte parent</a><a class="news-voir-tout" href="{% url 'home:contact' %}">Contacter le secrétariat</a></section>
+    <section class="admissions-panel" aria-labelledby="practical-title">
+      <p class="subsub_title">Avant de commencer</p>
+      <h2 id="practical-title">Les points à confirmer</h2>
+      <dl>
+        <dt>Dates d'inscription et de rentrée</dt>
+        <dd>Demandez le calendrier de l'année scolaire concernée.</dd>
+        <dt>Frais et paiement</dt>
+        <dd>Demandez les montants, les échéances et les moyens de paiement acceptés directement au secrétariat.</dd>
+        <dt>Conditions d'admission</dt>
+        <dd>Faites préciser les critères d'âge ou de niveau et l'existence éventuelle d'un entretien ou d'une évaluation.</dd>
+        <dt>Préparation de la rentrée</dt>
+        <dd>Demandez la liste des fournitures, les consignes vestimentaires et les horaires de la classe.</dd>
+      </dl>
+    </section>
+  </div>
+  <section class="admissions-section admissions-questions" aria-labelledby="questions-title">
+    <h2 id="questions-title">Vos questions fréquentes</h2>
+    <details>
+      <summary>Peut-on commencer l'inscription sur le site ?</summary>
+      <p>Oui. La démarche commence en ligne par la création d'un compte parent. Contactez ensuite le secrétariat pour
+        confirmer les pièces à fournir et les conditions d'admission.</p>
+    </details>
+    <details>
+      <summary>Mon enfant vient d'une autre école. Comment procéder ?</summary>
+      <p>Précisez sa dernière classe et présentez son bulletin au secrétariat. L'équipe vous indiquera les documents
+        complémentaires éventuels et les conditions pour rejoindre le niveau souhaité.</p>
+    </details>
+    <details>
+      <summary>Quels documents fournir pour une première scolarisation ?</summary>
+      <p>Signalez qu'il s'agit d'une première inscription à l'école. Le secrétariat vous indiquera les pièces adaptées à
+        cette situation et les conditions d'accueil en maternelle.</p>
+    </details>
+  </section>
+  <section class="admissions-help" aria-labelledby="help-title">
+    <h2 id="help-title">Commencez son inscription en ligne.</h2>
+    <p>Créez votre compte parent, puis contactez le secrétariat pour connaître les prochaines étapes.</p><a
+      class="btn-primary" href="{% url 'account:parent_sign_up' %}">Créer un compte parent</a><a class="news-voir-tout"
+      href="{% url 'home:contact' %}">Contacter le secrétariat</a>
+  </section>
 </div>
 {% endblock %}
